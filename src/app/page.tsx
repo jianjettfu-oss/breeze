@@ -182,6 +182,151 @@ const stats = [
   { value: "1K", label: "Minimum pilot run — no 10K gate" },
 ];
 
+const team = [
+  {
+    name: "Jett Fu",
+    role: "Founder & CEO",
+    bio: "15+ years cross-border operator. Founded AirPop — smart air wearable launched at CES 2021, covered by Tom's Guide, Wired, and Digital Trends. US (Delaware) + HK + Singapore entities. Native English and Chinese. Based in Shenzhen.",
+    avatar: "https://api.dicebear.com/9.x/personas/svg?seed=Jett",
+  },
+  {
+    name: "Jank Liu",
+    role: "Supply Chain + Quality Lead",
+    bio: "30 years across industrial valves, PCB, wire harness connectors, smart masks, and rail transit. GE Six Sigma Black Belt — led HX-5 rail NPI. Amphenol Medical cross-border supplier development and compliance lead. Alumni: Tyco, Amphenol, General Electric.",
+    avatar: "https://api.dicebear.com/9.x/personas/svg?seed=Jank",
+  },
+  {
+    name: "Sky",
+    role: "Engineering Lead",
+    bio: "10+ years in Shenzhen consumer electronics supply chain. Prototype to mass production for wearables, IoT devices, and audio products. Ground-truth knowledge of the supplier network within 50 km of our office.",
+    avatar: "https://api.dicebear.com/9.x/personas/svg?seed=Sky",
+  },
+  {
+    name: "Arting Chen",
+    role: "Partnerships & Deal Flow",
+    bio: "AI hardware incubator and investor network. Qualifies deal flow and connects AI hardware founders with Breeze. Direct relationships with YC/HAX-adjacent teams building their first physical product.",
+    avatar: "https://api.dicebear.com/9.x/personas/svg?seed=Arting",
+  },
+];
+
+const trackRecord = [
+  {
+    title: "AirPop Active+ Halo",
+    subtitle: "World's first smart air wearable — CES 2021",
+    desc: "Bluetooth respiratory sensor + iOS/Android app + certified mask manufacturing. Global retail launch via AirPopHealth direct and national retailers.",
+    coverage: "Tom's Guide · Hypebeast · Digital Trends · Wired · ComputerWeekly",
+  },
+  {
+    title: "Cross-Border Furniture Export",
+    subtitle: "End-to-end logistics to Brazil",
+    desc: "Showroom sample logistics, customs coordination, on-site installation support. Multi-country supply chain execution with timeline guarantees.",
+    coverage: null,
+  },
+  {
+    title: "EU Medical Packaging",
+    subtitle: "Hospital surgical tray systems",
+    desc: "Regulated medical device packaging — material sourcing, sterility validation, third-party lab testing, and full compliance documentation for EU hospital systems.",
+    coverage: null,
+  },
+];
+
+const comparisonRows = [
+  { feature: "Scope", breeze: "Whole product", fictiv: "Parts only", hax: "Accelerator + parts", titoma: "Whole product", trading: "Sourcing only" },
+  { feature: "Equity taken", breeze: "None", fictiv: "None", hax: "6–10%", titoma: "None", trading: "None" },
+  { feature: "Minimum order", breeze: "1,000 units", fictiv: "1 unit (parts)", hax: "Varies", titoma: "~1,000", trading: "10,000+" },
+  { feature: "Location", breeze: "Shenzhen", fictiv: "SF + global", hax: "SF + Shenzhen", titoma: "Taiwan", trading: "Shenzhen / Yiwu" },
+  { feature: "AI hardware focus", breeze: "Yes", fictiv: "No", hax: "Some", titoma: "Generalist", trading: "No" },
+  { feature: "Price transparency", breeze: "Tools upfront", fictiv: "Instant quote", hax: "Opaque", titoma: "Quote-based", trading: "Opaque" },
+  { feature: "Language", breeze: "Native EN + ZH", fictiv: "EN", hax: "EN", titoma: "EN", trading: "Broken EN" },
+  { feature: "IP policy", breeze: "Assignment standard", fictiv: "Assignment", hax: "Varies", titoma: "Case-by-case", trading: "Often unclear" },
+  { feature: "Open-source toolkit", breeze: "Yes (4 tools)", fictiv: "No", hax: "No", titoma: "No", trading: "No" },
+];
+
+const pricingTiers = [
+  {
+    name: "Scoping",
+    price: "Free",
+    description: "Initial concept review. 30-minute call plus a one-page feasibility note.",
+    items: [
+      "Device feasibility assessment",
+      "Ballpark BOM range",
+      "Certification needs summary",
+      "Timeline estimate",
+    ],
+    featured: false,
+  },
+  {
+    name: "NRE + Pilot",
+    price: "$50K – $150K",
+    description: "Engineering to working prototype plus pilot batch. Fixed-price.",
+    items: [
+      "Schematic, PCB, mechanical, firmware architecture",
+      "3–5 functional prototypes (EVT / DVT)",
+      "Tooling, jigs, fixtures",
+      "50–500 unit pilot run",
+      "Full source files delivered",
+    ],
+    featured: true,
+  },
+  {
+    name: "Production",
+    price: "$15 – $60 / unit",
+    description: "At 5K volume for typical AI wearables. Scales with volume and complexity.",
+    items: [
+      "1K – 100K+ unit runs",
+      "Ongoing QC + yield optimization",
+      "Logistics + fulfillment",
+      "Global shipping",
+      "Replenishment planning",
+    ],
+    featured: false,
+  },
+];
+
+const timeline = [
+  { week: "Week 1", phase: "Scoping", desc: "30-minute feasibility call + ballpark cost. Sign NDA." },
+  { week: "Week 2–4", phase: "Engineering Design", desc: "Schematic, PCB layout, mechanical CAD, firmware architecture. Weekly sync." },
+  { week: "Week 5–8", phase: "DFM + Prototyping", desc: "3–5 functional prototypes. DFM checks. EVT gate." },
+  { week: "Week 9–10", phase: "Tooling + Sourcing", desc: "Injection molds, jigs, fixtures. Component sourcing from 3,000+ suppliers. DVT." },
+  { week: "Week 11–12", phase: "Pilot Run", desc: "50–500 units. Test assembly line, QC process, packaging. PVT." },
+  { week: "Week 13+", phase: "Production", desc: "Ongoing scale to 1K, 10K, 100K+. QC, logistics, fulfillment." },
+];
+
+const faqs = [
+  {
+    q: "How do you protect my IP?",
+    a: "NDA + IP assignment is standard on every engagement — signed before any technical discussion. You receive full source files (schematics, PCB files, firmware, mechanical CAD, BOM) at the end of NRE. No hidden clauses, no exclusivity locks.",
+  },
+  {
+    q: "What's a typical project cost?",
+    a: "For most AI wearables and connected devices: NRE ranges from $50K to $150K, per-unit cost $15–$60 at 5K volume. Complexity (sensors, radios, battery chemistry, certifications) drives the range. Try the NRE Simulator for a tailored ballpark in 60 seconds.",
+  },
+  {
+    q: "How long from signed contract to first prototype?",
+    a: "8–12 weeks for most AI wearables, reaching a functional EVT prototype. Faster paths exist if you have a working PoC — we've turned around a DVT-ready design in under 6 weeks for projects with mature schematics.",
+  },
+  {
+    q: "What if my pilot is under 1,000 units?",
+    a: "Sub-1K orders require hand-assembly rather than full SMT lines. We can quote, but pricing structure differs — expect $30–$120 per unit at 200–500 volume. For a 100-unit dev run, we usually roll this into NRE.",
+  },
+  {
+    q: "Can you work with my existing contractor or PCB house?",
+    a: "Yes. We can join mid-stream, integrate your existing BOM, or coordinate with a fab you've already selected. We've also rescued stalled projects — if your current partner isn't delivering, tell us what's broken.",
+  },
+  {
+    q: "Do you only work on AI hardware?",
+    a: "AI hardware is our focus and default. We accept adjacent projects (consumer IoT, wearables, connected health devices) case-by-case. Pure mechanical products or under-500-unit hobby runs are usually a better fit elsewhere.",
+  },
+  {
+    q: "What certifications do you handle?",
+    a: "We run in-house pre-compliance (FCC Part 15, UN38.3 battery, CE RED pre-scan) and coordinate full testing through accredited labs — SGS, TÜV, ETL. Cert timeline and cost are budgeted into your NRE so there are no Week-11 surprises.",
+  },
+  {
+    q: "What are your payment terms?",
+    a: "NRE: 50% at kickoff, 50% on milestones (usually EVT + PVT gates). Per-unit production: standard T/T 30/70. All fixed-price — no T&M, no scope-creep billing. If scope changes, we scope it as a change order, not a surprise invoice.",
+  },
+];
+
 /* ─── Page ─── */
 
 export default function Home() {
@@ -327,7 +472,46 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── Section 5: Why Breeze ── */}
+      {/* ── Section 5: Open-Source Toolkit ── */}
+      <section id="opensource" className="bg-breeze-offwhite py-20 md:py-28">
+        <div className="max-w-5xl mx-auto px-6">
+          <div className="border border-breeze-teal/30 bg-white rounded-2xl p-10 md:p-14">
+            <span className="inline-flex items-center px-3 py-1 rounded-full bg-breeze-teal/10 text-breeze-teal text-xs font-semibold tracking-wide">
+              OPEN SOURCE
+            </span>
+            <h2 className="mt-5 text-3xl md:text-4xl font-bold text-breeze-navy leading-tight">
+              We&apos;ve built AI devices in Shenzhen for 10+ years.
+              <span className="block text-breeze-teal mt-2">
+                We open-sourced our cost data.
+              </span>
+            </h2>
+            <p className="mt-6 text-lg text-breeze-slate leading-relaxed max-w-3xl">
+              BOM cost references, DFM checklists, NRE guidelines, certification
+              playbooks — the same data we use every day, free on GitHub. No
+              signup, no email gate.
+            </p>
+            <div className="mt-8 flex flex-col sm:flex-row gap-4">
+              <a
+                href="https://github.com/jianjettfu-oss/ai-hardware-toolkit"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center gap-2 bg-breeze-deep text-white px-6 py-3.5 rounded-lg text-base font-semibold hover:bg-breeze-navy transition-colors"
+              >
+                View on GitHub
+                <ArrowRightIcon className="w-4 h-4" />
+              </a>
+              <a
+                href="#tools"
+                className="inline-flex items-center justify-center gap-2 border border-breeze-navy/20 text-breeze-navy px-6 py-3.5 rounded-lg text-base font-semibold hover:bg-breeze-navy/5 transition-colors"
+              >
+                Try the interactive tools
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── Section 6: Why Breeze ── */}
       <section id="why" className="bg-breeze-deep text-white py-20 md:py-28">
         <div className="max-w-6xl mx-auto px-6">
           <h2 className="text-3xl md:text-4xl font-bold mb-14">
@@ -357,7 +541,265 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── Section 6: Contact ── */}
+      {/* ── Section 7: Comparison Table ── */}
+      <section id="compare" className="bg-white py-20 md:py-28">
+        <div className="max-w-6xl mx-auto px-6">
+          <div className="max-w-2xl mb-10">
+            <h2 className="text-3xl md:text-4xl font-bold text-breeze-navy">
+              How we compare
+            </h2>
+            <p className="mt-4 text-lg text-breeze-slate">
+              Honest differences, not marketing fluff.
+            </p>
+          </div>
+          <div className="overflow-x-auto -mx-6 px-6 md:mx-0 md:px-0">
+            <table className="w-full text-sm min-w-[720px]">
+              <thead>
+                <tr className="border-b-2 border-breeze-navy">
+                  <th className="text-left py-4 pr-4 text-breeze-slate font-medium">
+                    Feature
+                  </th>
+                  <th className="text-left py-4 px-4 font-bold text-breeze-navy bg-breeze-teal/10">
+                    Breeze
+                  </th>
+                  <th className="text-left py-4 px-4 text-breeze-slate font-medium">
+                    Fictiv / Xometry
+                  </th>
+                  <th className="text-left py-4 px-4 text-breeze-slate font-medium">
+                    HAX / SOSV
+                  </th>
+                  <th className="text-left py-4 px-4 text-breeze-slate font-medium">
+                    Titoma
+                  </th>
+                  <th className="text-left py-4 px-4 text-breeze-slate font-medium">
+                    Trading Company
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {comparisonRows.map((row, i) => (
+                  <tr key={i} className="border-b border-gray-100">
+                    <td className="py-3 pr-4 font-medium text-breeze-navy">
+                      {row.feature}
+                    </td>
+                    <td className="py-3 px-4 bg-breeze-teal/5 font-semibold text-breeze-navy">
+                      {row.breeze}
+                    </td>
+                    <td className="py-3 px-4 text-breeze-slate">{row.fictiv}</td>
+                    <td className="py-3 px-4 text-breeze-slate">{row.hax}</td>
+                    <td className="py-3 px-4 text-breeze-slate">{row.titoma}</td>
+                    <td className="py-3 px-4 text-breeze-slate">{row.trading}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      {/* ── Section 8: Pricing Bands ── */}
+      <section id="pricing" className="bg-breeze-offwhite py-20 md:py-28">
+        <div className="max-w-6xl mx-auto px-6">
+          <div className="max-w-2xl mb-14">
+            <h2 className="text-3xl md:text-4xl font-bold text-breeze-navy">
+              Typical Project Costs
+            </h2>
+            <p className="mt-4 text-lg text-breeze-slate">
+              Fixed-price at every stage. No T&amp;M. No scope-creep invoices.
+            </p>
+          </div>
+          <div className="grid md:grid-cols-3 gap-6">
+            {pricingTiers.map((tier) => (
+              <div
+                key={tier.name}
+                className={`rounded-xl p-8 border ${
+                  tier.featured
+                    ? "border-breeze-teal bg-white shadow-md"
+                    : "border-gray-200 bg-white"
+                }`}
+              >
+                {tier.featured && (
+                  <span className="inline-block mb-3 px-3 py-1 rounded-full bg-breeze-teal/10 text-breeze-teal text-xs font-semibold tracking-wide">
+                    MOST ENGAGEMENTS
+                  </span>
+                )}
+                <h3 className="text-xl font-semibold text-breeze-navy">
+                  {tier.name}
+                </h3>
+                <p className="mt-2 text-3xl font-bold text-breeze-navy">
+                  {tier.price}
+                </p>
+                <p className="mt-3 text-sm text-breeze-slate leading-relaxed">
+                  {tier.description}
+                </p>
+                <ul className="mt-6 space-y-2.5">
+                  {tier.items.map((item) => (
+                    <li
+                      key={item}
+                      className="flex gap-2 text-sm text-breeze-slate"
+                    >
+                      <CheckIcon className="w-5 h-5 text-breeze-teal flex-shrink-0 mt-0.5" />
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+          <p className="mt-8 text-sm text-breeze-slate">
+            Complexity (sensors, radios, battery chemistry, certifications)
+            drives the final number. Try the{" "}
+            <a
+              href="/tools/nre-simulator"
+              className="text-breeze-teal font-medium hover:underline"
+            >
+              NRE Simulator
+            </a>{" "}
+            for a tailored estimate in 60 seconds.
+          </p>
+        </div>
+      </section>
+
+      {/* ── Section 9: Engagement Timeline ── */}
+      <section id="timeline" className="bg-white py-20 md:py-28">
+        <div className="max-w-6xl mx-auto px-6">
+          <div className="max-w-2xl mb-14">
+            <h2 className="text-3xl md:text-4xl font-bold text-breeze-navy">
+              What happens after you sign
+            </h2>
+            <p className="mt-4 text-lg text-breeze-slate">
+              A predictable 12-week path to pilot. Transparent weekly sync.
+            </p>
+          </div>
+          <div className="relative">
+            <div className="hidden md:block absolute top-6 left-4 right-4 h-0.5 bg-breeze-teal/20" />
+            <div className="grid md:grid-cols-6 gap-8 md:gap-4">
+              {timeline.map((t, idx) => (
+                <div key={idx} className="relative">
+                  <div className="hidden md:block absolute top-4 left-1/2 -translate-x-1/2 w-4 h-4 rounded-full bg-breeze-teal ring-4 ring-white" />
+                  <div className="md:pt-14">
+                    <p className="text-xs font-semibold text-breeze-teal uppercase tracking-wide">
+                      {t.week}
+                    </p>
+                    <h3 className="mt-2 text-base font-semibold text-breeze-navy">
+                      {t.phase}
+                    </h3>
+                    <p className="mt-2 text-xs text-breeze-slate leading-relaxed">
+                      {t.desc}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── Section 10: Team + Track Record ── */}
+      <section id="team" className="bg-breeze-offwhite py-20 md:py-28">
+        <div className="max-w-6xl mx-auto px-6">
+          <div className="max-w-2xl mb-14">
+            <h2 className="text-3xl md:text-4xl font-bold text-breeze-navy">
+              Who&apos;s behind Breeze
+            </h2>
+            <p className="mt-4 text-lg text-breeze-slate">
+              Four operators with 60+ combined years in Shenzhen supply chain,
+              smart hardware, and cross-border delivery.
+            </p>
+          </div>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {team.map((m) => (
+              <div
+                key={m.name}
+                className="bg-white rounded-xl p-6 border border-gray-100"
+              >
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={m.avatar}
+                  alt={m.name}
+                  className="w-20 h-20 rounded-full mb-4 bg-breeze-teal/10"
+                />
+                <h3 className="text-lg font-semibold text-breeze-navy">
+                  {m.name}
+                </h3>
+                <p className="text-sm text-breeze-teal font-medium">{m.role}</p>
+                <p className="mt-3 text-sm text-breeze-slate leading-relaxed">
+                  {m.bio}
+                </p>
+              </div>
+            ))}
+          </div>
+
+          {/* Track Record subsection */}
+          <div className="mt-20 border-t border-breeze-navy/10 pt-16">
+            <div className="max-w-2xl mb-10">
+              <h3 className="text-2xl md:text-3xl font-bold text-breeze-navy">
+                10+ Years. Not a New Company.
+              </h3>
+              <p className="mt-4 text-base text-breeze-slate">
+                Before Breeze Hardware, our team shipped production at scale:
+              </p>
+            </div>
+            <div className="grid md:grid-cols-3 gap-6">
+              {trackRecord.map((p) => (
+                <div
+                  key={p.title}
+                  className="bg-white rounded-xl p-6 border border-gray-100"
+                >
+                  <h4 className="font-semibold text-breeze-navy text-base">
+                    {p.title}
+                  </h4>
+                  <p className="mt-1 text-sm text-breeze-teal font-medium">
+                    {p.subtitle}
+                  </p>
+                  <p className="mt-3 text-sm text-breeze-slate leading-relaxed">
+                    {p.desc}
+                  </p>
+                  {p.coverage && (
+                    <p className="mt-4 pt-4 border-t border-gray-100 text-xs text-breeze-slate">
+                      <span className="font-semibold text-breeze-navy">
+                        Press:
+                      </span>{" "}
+                      {p.coverage}
+                    </p>
+                  )}
+                </div>
+              ))}
+            </div>
+            <p className="mt-8 text-sm text-breeze-slate italic max-w-3xl">
+              Breeze&apos;s co-founder Jett Fu is AirPop&apos;s founder &amp;
+              CEO. AirPop Halo was delivered by the same supply-chain and
+              engineering team now powering Breeze.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* ── Section 11: FAQ ── */}
+      <section id="faq" className="bg-white py-20 md:py-28">
+        <div className="max-w-4xl mx-auto px-6">
+          <div className="max-w-2xl mb-14">
+            <h2 className="text-3xl md:text-4xl font-bold text-breeze-navy">
+              Frequently asked
+            </h2>
+            <p className="mt-4 text-lg text-breeze-slate">
+              Real questions from founders we&apos;ve talked with.
+            </p>
+          </div>
+          <div className="space-y-6">
+            {faqs.map((f, i) => (
+              <div key={i} className="border-b border-gray-100 pb-6">
+                <h3 className="text-lg font-semibold text-breeze-navy">
+                  {f.q}
+                </h3>
+                <p className="mt-3 text-breeze-slate leading-relaxed">{f.a}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── Section 12: Contact ── */}
       <section id="contact" className="bg-breeze-offwhite py-20 md:py-28">
         <div className="max-w-6xl mx-auto px-6">
           <div className="max-w-xl mx-auto text-center">
@@ -519,8 +961,28 @@ export default function Home() {
                   </a>
                 </li>
                 <li>
-                  <a href="#why" className="hover:text-white transition-colors">
-                    Why Breeze
+                  <a href="#pricing" className="hover:text-white transition-colors">
+                    Pricing
+                  </a>
+                </li>
+                <li>
+                  <a href="#team" className="hover:text-white transition-colors">
+                    Team
+                  </a>
+                </li>
+                <li>
+                  <a href="#faq" className="hover:text-white transition-colors">
+                    FAQ
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="https://github.com/jianjettfu-oss/ai-hardware-toolkit"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="hover:text-white transition-colors"
+                  >
+                    GitHub
                   </a>
                 </li>
                 <li>
