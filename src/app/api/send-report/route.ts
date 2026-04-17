@@ -282,6 +282,19 @@ export async function POST(request: Request) {
       );
     }
 
+    // Admin notification — structured subject for DM lead monitor.
+    // Fire-and-forget; lead UX is not blocked if this fails.
+    try {
+      await resend.emails.send({
+        from: "Breeze Leads <hello@breezehw.com>",
+        to: ["hello@breezehw.com"],
+        subject: `[BREEZE LEAD] ${tool} — ${email}`,
+        text: `New lead via ${tool}\n\nEmail: ${email}\nTool: ${tool}\nTimestamp: ${new Date().toISOString()}\n\nData:\n${JSON.stringify(data, null, 2)}`,
+      });
+    } catch (adminErr) {
+      console.error("Admin notification failed:", adminErr);
+    }
+
     return NextResponse.json({ success: true });
   } catch (err) {
     console.error("API error:", err);

@@ -13,6 +13,26 @@ from reportlab.lib.pagesizes import A4
 from reportlab.lib.units import mm
 from reportlab.lib.colors import Color, HexColor, white
 from reportlab.pdfgen import canvas
+from reportlab.pdfbase import pdfmetrics
+from reportlab.pdfbase.ttfonts import TTFont
+
+# --- Font Registration (unify with website: Inter body + JetBrains Mono for data) ---
+_FONT_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "assets", "fonts")
+
+def _register_fonts():
+    """Register Inter + JetBrains Mono. Falls back to Helvetica if font files missing."""
+    try:
+        pdfmetrics.registerFont(TTFont("Inter", os.path.join(_FONT_DIR, "Inter-Regular.ttf")))
+        pdfmetrics.registerFont(TTFont("Inter-Bold", os.path.join(_FONT_DIR, "Inter-Bold.ttf")))
+        pdfmetrics.registerFont(TTFont("Inter-Medium", os.path.join(_FONT_DIR, "Inter-Medium.ttf")))
+        pdfmetrics.registerFont(TTFont("Inter-SemiBold", os.path.join(_FONT_DIR, "Inter-SemiBold.ttf")))
+        pdfmetrics.registerFont(TTFont("JetBrainsMono", os.path.join(_FONT_DIR, "JetBrainsMonoNerdFontMono-Regular.ttf")))
+        return ("Inter", "Inter-Bold", "JetBrainsMono")
+    except Exception as e:
+        print(f"[warn] Font registration failed ({e}); falling back to Helvetica")
+        return ("Helvetica", "Helvetica-Bold", "Courier")
+
+SANS, SANS_BOLD, MONO = _register_fonts()
 
 # --- Brand Colors ---
 TEAL = HexColor("#2DD4A8")
@@ -218,9 +238,9 @@ def draw_stat_callout(c, x, y, w, h, value_text, label_text, font_size_val=18, f
     c.setFillColor(TEAL)
     c.roundRect(x, y, w, h, 6, fill=1, stroke=0)
     c.setFillColor(WHITE)
-    c.setFont("Helvetica-Bold", font_size_val)
+    c.setFont(SANS_BOLD, font_size_val)
     c.drawCentredString(x + w/2, y + h - font_size_val - 8, value_text)
-    c.setFont("Helvetica", font_size_label)
+    c.setFont(SANS, font_size_label)
     c.drawCentredString(x + w/2, y + 8, label_text)
     c.restoreState()
 
@@ -233,7 +253,7 @@ def draw_footer(c, page_width, page_num, footer_y=25, font_size=8, text_color=No
     c.setLineWidth(0.5)
     c.line(50, footer_y + 12, page_width - 50, footer_y + 12)
     c.setFillColor(color)
-    c.setFont("Helvetica", font_size)
+    c.setFont(SANS, font_size)
     c.drawString(50, footer_y, "breezehw.com")
     c.drawRightString(page_width - 50, footer_y, str(page_num))
     c.restoreState()
@@ -314,15 +334,15 @@ def generate_portrait_kit():
 
     # Tagline
     c.setFillColor(WHITE)
-    c.setFont("Helvetica-Bold", 30)
+    c.setFont(SANS_BOLD, 30)
     c.drawCentredString(W/2, H - 320, "Your Engineering Partner")
     c.setFillColor(TEAL)
-    c.setFont("Helvetica-Bold", 30)
+    c.setFont(SANS_BOLD, 30)
     c.drawCentredString(W/2, H - 358, "for AI Hardware")
 
     # Subtitle
     c.setFillColor(Color(1, 1, 1, 0.7))
-    c.setFont("Helvetica", 12)
+    c.setFont(SANS, 12)
     c.drawCentredString(W/2, H - 400, "From concept to production -- BOM optimization, DFM,")
     c.drawCentredString(W/2, H - 416, "prototyping, and manufacturing. China supply chain")
     c.drawCentredString(W/2, H - 432, "expertise, global delivery.")
@@ -341,9 +361,9 @@ def generate_portrait_kit():
 
     # Contact
     c.setFillColor(Color(1, 1, 1, 0.5))
-    c.setFont("Helvetica", 10)
+    c.setFont(SANS, 10)
     c.drawCentredString(W/2, 90, "hello@breezehw.com  |  breezehw.com  |  Shenzhen, China")
-    c.setFont("Helvetica", 9)
+    c.setFont(SANS, 9)
     c.setFillColor(Color(1, 1, 1, 0.35))
     c.drawCentredString(W/2, 70, "No equity. No MOQ surprises. Just engineering.")
 
@@ -354,11 +374,11 @@ def generate_portrait_kit():
     y = H - MARGIN
 
     c.setFillColor(NAVY)
-    c.setFont("Helvetica-Bold", 30)
+    c.setFont(SANS_BOLD, 30)
     y -= 35
     c.drawString(MARGIN, y, "Building AI Hardware Is Hard.")
     c.setFillColor(SLATE)
-    c.setFont("Helvetica", 13)
+    c.setFont(SANS, 13)
     y -= 22
     c.drawString(MARGIN, y, "Finding the right manufacturing partner shouldn't be.")
 
@@ -368,10 +388,10 @@ def generate_portrait_kit():
     c.setFillColor(Color(DEEP_R, DEEP_G, DEEP_B, 0.95))
     c.roundRect(MARGIN, y, CW, callout_h, 6, fill=1, stroke=0)
     c.setFillColor(TEAL)
-    c.setFont("Helvetica-Bold", 24)
+    c.setFont(SANS_BOLD, 24)
     c.drawString(MARGIN + 18, y + 15, "80%")
     c.setFillColor(WHITE)
-    c.setFont("Helvetica", 13)
+    c.setFont(SANS, 13)
     c.drawString(MARGIN + 70, y + 17, "of hardware startups fail at the manufacturing stage.")
 
     # 2x3 pain point grid
@@ -391,16 +411,16 @@ def generate_portrait_kit():
         c.setFillColor(HexColor("#EF4444"))
         c.circle(px + 16, py + 8, 6, fill=1, stroke=0)
         c.setFillColor(WHITE)
-        c.setFont("Helvetica-Bold", 8)
+        c.setFont(SANS_BOLD, 8)
         c.drawCentredString(px + 16, py + 5, "X")
 
         c.setFillColor(NAVY)
-        c.setFont("Helvetica-Bold", 12)
+        c.setFont(SANS_BOLD, 12)
         c.drawString(px + 30, py + 3, title)
 
         c.setFillColor(SLATE)
-        c.setFont("Helvetica", 11)
-        lines = wrap_text(c, desc, "Helvetica", 11, col_w - 24)
+        c.setFont(SANS, 11)
+        lines = wrap_text(c, desc, SANS, 11, col_w - 24)
         ty = py - 18
         for ln in lines:
             c.drawString(px + 14, ty, ln)
@@ -413,10 +433,10 @@ def generate_portrait_kit():
 
     # Title reversed out in the photo strip
     c.setFillColor(WHITE)
-    c.setFont("Helvetica-Bold", 22)
+    c.setFont(SANS_BOLD, 22)
     c.drawString(MARGIN, H - 50, "Concept to Production in 6 Steps")
     c.setFillColor(Color(1, 1, 1, 0.7))
-    c.setFont("Helvetica", 12)
+    c.setFont(SANS, 12)
     c.drawString(MARGIN, H - 70, "A clear, predictable path from your idea to manufactured product.")
 
     y = H - 155
@@ -428,19 +448,19 @@ def generate_portrait_kit():
         by = y - row * 140
 
         c.setFillColor(Color(TEAL_R, TEAL_G, TEAL_B, 0.15))
-        c.setFont("Helvetica-Bold", 44)
+        c.setFont(SANS_BOLD, 44)
         c.drawString(bx, by - 10, num)
 
         c.setFillColor(NAVY)
-        c.setFont("Helvetica-Bold", 14)
-        c.drawString(bx + 55, by + 4, title)
+        c.setFont(SANS_BOLD, 14)
+        c.drawString(bx + 72, by + 4, title)
 
         c.setFillColor(SLATE)
-        c.setFont("Helvetica", 11)
-        lines = wrap_text(c, desc, "Helvetica", 11, CW/2 - 20)
+        c.setFont(SANS, 11)
+        lines = wrap_text(c, desc, SANS, 11, CW/2 - 80)
         ty = by - 18
         for ln in lines:
-            c.drawString(bx + 12, ty, ln)
+            c.drawString(bx + 72, ty, ln)
             ty -= 15
 
     # Bottom stats bar
@@ -458,11 +478,11 @@ def generate_portrait_kit():
     y = H - MARGIN
 
     c.setFillColor(NAVY)
-    c.setFont("Helvetica-Bold", 30)
+    c.setFont(SANS_BOLD, 30)
     y -= 35
     c.drawString(MARGIN, y, "Cost Reality Check")
     c.setFillColor(SLATE)
-    c.setFont("Helvetica", 13)
+    c.setFont(SANS, 13)
     y -= 20
     c.drawString(MARGIN, y, "Real BOM breakdown for a $99 AI wearable pendant (@ 5K units)")
 
@@ -471,9 +491,9 @@ def generate_portrait_kit():
     c.setFillColor(TEAL)
     c.roundRect(MARGIN, y, CW, 44, 6, fill=1, stroke=0)
     c.setFillColor(WHITE)
-    c.setFont("Helvetica-Bold", 22)
+    c.setFont(MONO, 22)
     c.drawString(MARGIN + 20, y + 13, "$26.40 / unit")
-    c.setFont("Helvetica", 11)
+    c.setFont(SANS, 11)
     c.drawRightString(MARGIN + CW - 20, y + 17, "avg landed cost (incl. assembly + packaging)")
 
     # BOM table
@@ -488,32 +508,41 @@ def generate_portrait_kit():
             c.setFillColor(NAVY)
             c.roundRect(MARGIN, ry - 5, CW, row_h, 3, fill=1, stroke=0)
             c.setFillColor(WHITE)
-            c.setFont("Helvetica-Bold", 10)
+            header_font = SANS_BOLD
+            data_font = SANS_BOLD
         elif ridx == len(BOM_TABLE) - 1:
             c.setFillColor(Color(TEAL_R, TEAL_G, TEAL_B, 0.12))
             c.rect(MARGIN, ry - 5, CW, row_h, fill=1, stroke=0)
             c.setFillColor(NAVY)
-            c.setFont("Helvetica-Bold", 10)
+            header_font = SANS_BOLD
+            data_font = SANS_BOLD
         elif ridx == len(BOM_TABLE) - 2:
             c.setFillColor(Color(0.95, 0.95, 0.95, 1))
             c.rect(MARGIN, ry - 5, CW, row_h, fill=1, stroke=0)
             c.setFillColor(NAVY)
-            c.setFont("Helvetica-Bold", 10)
+            header_font = SANS_BOLD
+            data_font = SANS_BOLD
         else:
             if ridx % 2 == 0:
                 c.setFillColor(Color(TEAL_R, TEAL_G, TEAL_B, 0.04))
                 c.rect(MARGIN, ry - 5, CW, row_h, fill=1, stroke=0)
             c.setFillColor(NAVY if ridx % 2 == 0 else HexColor("#334155"))
-            c.setFont("Helvetica", 10)
+            header_font = SANS
+            data_font = SANS
 
         cx = MARGIN + 8
         for cidx, cell in enumerate(row_data):
+            # Last column = cost range — monospace for price alignment
+            if cidx == 2 and ridx != 0:
+                c.setFont(MONO, 10)
+            else:
+                c.setFont(header_font if cidx == 0 else data_font, 10)
             c.drawString(cx, ry + 4, cell)
             cx += col_widths[cidx]
 
     y -= len(BOM_TABLE) * row_h + 15
     c.setFillColor(SLATE)
-    c.setFont("Helvetica-Oblique", 8)
+    c.setFont(SANS, 8)
     c.drawString(MARGIN, y, "* Landed cost includes BOM + PCBA + packaging + testing + 5% yield buffer + freight to US warehouse.")
     y -= 14
     c.drawString(MARGIN, y, "  Excludes NRE (one-time engineering), tooling amortization, and certification fees.")
@@ -525,10 +554,10 @@ def generate_portrait_kit():
 
     # Title reversed out in photo strip
     c.setFillColor(WHITE)
-    c.setFont("Helvetica-Bold", 22)
+    c.setFont(SANS_BOLD, 22)
     c.drawString(MARGIN, H - 50, "DFM: Top 10 Pitfalls in AI Hardware")
     c.setFillColor(Color(1, 1, 1, 0.7))
-    c.setFont("Helvetica", 12)
+    c.setFont(SANS, 12)
     c.drawString(MARGIN, H - 70, "Mistakes we've seen (and fixed) across 50+ hardware projects.")
 
     y = H - 140
@@ -537,16 +566,16 @@ def generate_portrait_kit():
         c.setFillColor(TEAL if idx < 5 else Color(TEAL_R, TEAL_G, TEAL_B, 0.7))
         c.circle(MARGIN + 12, y + 2, 11, fill=1, stroke=0)
         c.setFillColor(WHITE)
-        c.setFont("Helvetica-Bold", 10)
+        c.setFont(SANS_BOLD, 10)
         c.drawCentredString(MARGIN + 12, y - 1, str(idx + 1))
 
         c.setFillColor(NAVY)
-        c.setFont("Helvetica-Bold", 12)
+        c.setFont(SANS_BOLD, 12)
         c.drawString(MARGIN + 30, y - 1, title)
 
         c.setFillColor(SLATE)
-        c.setFont("Helvetica", 11)
-        lines = wrap_text(c, desc, "Helvetica", 11, CW - 40)
+        c.setFont(SANS, 11)
+        lines = wrap_text(c, desc, SANS, 11, CW - 40)
         ty = y - 17
         for ln in lines:
             c.drawString(MARGIN + 30, ty, ln)
@@ -563,11 +592,11 @@ def generate_portrait_kit():
     y = H - MARGIN
 
     c.setFillColor(NAVY)
-    c.setFont("Helvetica-Bold", 30)
+    c.setFont(SANS_BOLD, 30)
     y -= 35
     c.drawString(MARGIN, y, "Certification Roadmap")
     c.setFillColor(SLATE)
-    c.setFont("Helvetica", 13)
+    c.setFont(SANS, 13)
     y -= 22
     c.drawString(MARGIN, y, "What you need, how long it takes, and what it costs.")
 
@@ -582,13 +611,13 @@ def generate_portrait_kit():
             c.setFillColor(NAVY)
             c.roundRect(MARGIN, ry - 6, CW, row_h, 3, fill=1, stroke=0)
             c.setFillColor(WHITE)
-            c.setFont("Helvetica-Bold", 10)
+            c.setFont(SANS_BOLD, 10)
         else:
             if ridx % 2 == 0:
                 c.setFillColor(Color(TEAL_R, TEAL_G, TEAL_B, 0.04))
                 c.rect(MARGIN, ry - 6, CW, row_h, fill=1, stroke=0)
             c.setFillColor(NAVY)
-            c.setFont("Helvetica", 10)
+            c.setFont(SANS, 10)
 
         c.setStrokeColor(Color(0.9, 0.9, 0.9, 1))
         c.setLineWidth(0.3)
@@ -598,7 +627,7 @@ def generate_portrait_kit():
         for cidx, cell in enumerate(row_data):
             max_cell_w = cert_col_widths[cidx] - 8
             text = cell
-            font = "Helvetica-Bold" if ridx == 0 else "Helvetica"
+            font = SANS_BOLD if ridx == 0 else SANS
             fsize = 10
             while c.stringWidth(text, font, fsize) > max_cell_w and len(text) > 3:
                 text = text[:-4] + "..."
@@ -614,10 +643,10 @@ def generate_portrait_kit():
     c.setLineWidth(1)
     c.roundRect(MARGIN, y - tip_h + 20, CW, tip_h, 5, fill=1, stroke=1)
     c.setFillColor(TEAL)
-    c.setFont("Helvetica-Bold", 12)
+    c.setFont(SANS_BOLD, 12)
     c.drawString(MARGIN + 14, y + 4, "Pro Tip")
     c.setFillColor(NAVY)
-    c.setFont("Helvetica", 11)
+    c.setFont(SANS, 11)
     c.drawString(MARGIN + 14, y - 14, "Start certification pre-compliance testing during the DFM phase.")
     c.drawString(MARGIN + 14, y - 29, "Finding issues early saves 4-8 weeks and $5-10K in re-spins.")
     c.drawString(MARGIN + 14, y - 44, "We include pre-compliance checks in our standard engineering process.")
@@ -629,11 +658,11 @@ def generate_portrait_kit():
     y = H - MARGIN
 
     c.setFillColor(NAVY)
-    c.setFont("Helvetica-Bold", 30)
+    c.setFont(SANS_BOLD, 30)
     y -= 35
     c.drawString(MARGIN, y, "Free Tools for AI Hardware Founders")
     c.setFillColor(SLATE)
-    c.setFont("Helvetica", 13)
+    c.setFont(SANS, 13)
     y -= 22
     c.drawString(MARGIN, y, "No signup required. Start estimating your project now.")
 
@@ -653,23 +682,23 @@ def generate_portrait_kit():
         c.setFillColor(TEAL)
         c.circle(MARGIN + 28, card_y + card_h - 25, 14, fill=1, stroke=0)
         c.setFillColor(WHITE)
-        c.setFont("Helvetica-Bold", 14)
+        c.setFont(SANS_BOLD, 14)
         c.drawCentredString(MARGIN + 28, card_y + card_h - 30, str(idx + 1))
 
         c.setFillColor(NAVY)
-        c.setFont("Helvetica-Bold", 14)
+        c.setFont(SANS_BOLD, 14)
         c.drawString(MARGIN + 52, card_y + card_h - 28, title)
 
         c.setFillColor(SLATE)
-        c.setFont("Helvetica", 11)
-        lines = wrap_text(c, desc, "Helvetica", 11, CW - 65)
+        c.setFont(SANS, 11)
+        lines = wrap_text(c, desc, SANS, 11, CW - 65)
         ty = card_y + card_h - 50
         for ln in lines:
             c.drawString(MARGIN + 22, ty, ln)
             ty -= 15
 
         c.setFillColor(TEAL)
-        c.setFont("Helvetica-Bold", 10)
+        c.setFont(SANS_BOLD, 10)
         c.drawString(MARGIN + 22, card_y + 12, url)
 
         y -= card_h + 15
@@ -685,11 +714,11 @@ def generate_portrait_kit():
     y = H - MARGIN
 
     c.setFillColor(WHITE)
-    c.setFont("Helvetica-Bold", 30)
+    c.setFont(SANS_BOLD, 30)
     y -= 35
     c.drawString(MARGIN, y, "Why Breeze?")
     c.setFillColor(Color(1, 1, 1, 0.7))
-    c.setFont("Helvetica", 14)
+    c.setFont(SANS, 14)
     y -= 22
     c.drawString(MARGIN, y, "Four reasons founders choose us over brokers and trading companies.")
 
@@ -712,12 +741,12 @@ def generate_portrait_kit():
         c.rect(bx + 5, by + card_h - 3, bw - 10, 3, fill=1, stroke=0)
 
         c.setFillColor(WHITE)
-        c.setFont("Helvetica-Bold", 13)
+        c.setFont(SANS_BOLD, 13)
         c.drawString(bx + 15, by + card_h - 25, title)
 
         c.setFillColor(Color(1, 1, 1, 0.85))
-        c.setFont("Helvetica", 11)
-        lines = wrap_text(c, desc, "Helvetica", 11, bw - 30)
+        c.setFont(SANS, 11)
+        lines = wrap_text(c, desc, SANS, 11, bw - 30)
         ty = by + card_h - 44
         for ln in lines:
             c.drawString(bx + 15, ty, ln)
@@ -728,9 +757,9 @@ def generate_portrait_kit():
     c.setFillColor(Color(0, 0, 0, 0.3))
     c.roundRect(MARGIN, y - 5, CW, 60, 5, fill=1, stroke=0)
     c.setFillColor(WHITE)
-    c.setFont("Helvetica-Bold", 12)
+    c.setFont(SANS_BOLD, 12)
     c.drawString(MARGIN + 18, y + 35, "Breeze vs. the alternatives:")
-    c.setFont("Helvetica", 11)
+    c.setFont(SANS, 11)
     c.setFillColor(Color(1, 1, 1, 0.85))
     c.drawString(MARGIN + 18, y + 17, "Trading companies add 20-40% margin and zero engineering value.")
     c.drawString(MARGIN + 18, y + 1, "In-house teams cost $500K+/year and take 6+ months to hire. We're ready now.")
@@ -752,7 +781,7 @@ def generate_portrait_kit():
     draw_footer(c, W, page_num[0], text_color=Color(1, 1, 1, 0.4))
 
     c.setFillColor(WHITE)
-    c.setFont("Helvetica-Bold", 30)
+    c.setFont(SANS_BOLD, 30)
     c.drawCentredString(W/2, H - 80, "Ready to Start?")
 
     y = H - 140
@@ -771,16 +800,16 @@ def generate_portrait_kit():
         c.setFillColor(TEAL)
         c.circle(MARGIN + 24, box_y + box_h/2 + 2, 18, fill=1, stroke=0)
         c.setFillColor(DEEP_NAVY)
-        c.setFont("Helvetica-Bold", 16)
+        c.setFont(SANS_BOLD, 16)
         c.drawCentredString(MARGIN + 24, box_y + box_h/2 - 4, num)
 
         c.setFillColor(WHITE)
-        c.setFont("Helvetica-Bold", 14)
+        c.setFont(SANS_BOLD, 14)
         c.drawString(MARGIN + 55, box_y + box_h - 18, title)
 
         c.setFillColor(Color(1, 1, 1, 0.7))
-        c.setFont("Helvetica", 11)
-        lines = wrap_text(c, desc, "Helvetica", 11, CW - 70)
+        c.setFont(SANS, 11)
+        lines = wrap_text(c, desc, SANS, 11, CW - 70)
         ty = box_y + box_h - 38
         for ln in lines:
             c.drawString(MARGIN + 55, ty, ln)
@@ -808,18 +837,18 @@ def generate_portrait_kit():
     c.drawImage(LOGO_WHITE, MARGIN + 20, y - 5, mini_logo_w, mini_logo_h, mask='auto')
 
     c.setFillColor(WHITE)
-    c.setFont("Helvetica-Bold", 12)
+    c.setFont(SANS_BOLD, 12)
     c.drawString(MARGIN + 20, y - 30, "hello@breezehw.com")
-    c.setFont("Helvetica", 11)
+    c.setFont(SANS, 11)
     c.setFillColor(Color(1, 1, 1, 0.7))
     c.drawString(MARGIN + 20, y - 48, "breezehw.com")
     c.drawString(MARGIN + 20, y - 64, "Shenzhen, China")
 
     c.setFillColor(TEAL)
-    c.setFont("Helvetica-Bold", 11)
+    c.setFont(SANS_BOLD, 11)
     c.drawRightString(MARGIN + CW - 20, y - 30, "Your Engineering Partner for AI Hardware")
     c.setFillColor(Color(1, 1, 1, 0.5))
-    c.setFont("Helvetica", 10)
+    c.setFont(SANS, 10)
     c.drawRightString(MARGIN + CW - 20, y - 48, "NRE + per-unit  |  No equity  |  Full IP transfer")
 
     c.save()
@@ -876,15 +905,15 @@ def generate_landscape_deck():
 
     # Title
     c.setFillColor(WHITE)
-    c.setFont("Helvetica-Bold", 42)
+    c.setFont(SANS_BOLD, 42)
     c.drawCentredString(W/2, H - 240, "Your Engineering Partner")
     c.setFillColor(TEAL)
-    c.setFont("Helvetica-Bold", 42)
+    c.setFont(SANS_BOLD, 42)
     c.drawCentredString(W/2, H - 290, "for AI Hardware")
 
     # Subtitle
     c.setFillColor(Color(1, 1, 1, 0.65))
-    c.setFont("Helvetica", 18)
+    c.setFont(SANS, 18)
     c.drawCentredString(W/2, H - 330, "BOM optimization  |  DFM  |  Prototyping  |  Manufacturing")
 
     # Stats row
@@ -898,7 +927,7 @@ def generate_landscape_deck():
                           font_size_val=22, font_size_label=10)
 
     c.setFillColor(Color(1, 1, 1, 0.4))
-    c.setFont("Helvetica", 10)
+    c.setFont(SANS, 10)
     c.drawCentredString(W/2, 30, "hello@breezehw.com  |  breezehw.com  |  Shenzhen, China")
 
     # =================================================================
@@ -907,17 +936,17 @@ def generate_landscape_deck():
     new_white_slide("left")
 
     c.setFillColor(NAVY)
-    c.setFont("Helvetica-Bold", 42)
+    c.setFont(SANS_BOLD, 42)
     c.drawString(M + 10, H - 65, "Building AI Hardware Is Hard.")
 
     # 80% callout
     c.setFillColor(Color(DEEP_R, DEEP_G, DEEP_B, 0.95))
     c.roundRect(M + 10, H - 115, CW - 10, 40, 5, fill=1, stroke=0)
     c.setFillColor(TEAL)
-    c.setFont("Helvetica-Bold", 24)
+    c.setFont(SANS_BOLD, 24)
     c.drawString(M + 25, H - 106, "80%")
     c.setFillColor(WHITE)
-    c.setFont("Helvetica", 14)
+    c.setFont(SANS, 14)
     c.drawString(M + 80, H - 104, "of hardware startups fail at manufacturing, not the idea stage.")
 
     y_start = H - 145
@@ -931,16 +960,16 @@ def generate_landscape_deck():
         c.setFillColor(HexColor("#EF4444"))
         c.circle(px + 10, py - 4, 6, fill=1, stroke=0)
         c.setFillColor(WHITE)
-        c.setFont("Helvetica-Bold", 8)
+        c.setFont(SANS_BOLD, 8)
         c.drawCentredString(px + 10, py - 7, "X")
 
         c.setFillColor(NAVY)
-        c.setFont("Helvetica-Bold", 14)
+        c.setFont(SANS_BOLD, 14)
         c.drawString(px + 22, py - 8, title)
 
         c.setFillColor(SLATE)
-        c.setFont("Helvetica", 12)
-        lines = wrap_text(c, desc, "Helvetica", 12, col_w - 25)
+        c.setFont(SANS, 12)
+        lines = wrap_text(c, desc, SANS, 12, col_w - 25)
         ty = py - 26
         for ln in lines:
             c.drawString(px + 14, ty, ln)
@@ -953,10 +982,10 @@ def generate_landscape_deck():
 
     # Title in strip
     c.setFillColor(WHITE)
-    c.setFont("Helvetica-Bold", 32)
+    c.setFont(SANS_BOLD, 32)
     c.drawString(M, H - 45, "Concept to Production in 6 Steps")
     c.setFillColor(Color(1, 1, 1, 0.7))
-    c.setFont("Helvetica", 14)
+    c.setFont(SANS, 14)
     c.drawString(M, H - 68, "A clear, predictable path from idea to product.")
 
     y_start = H - 125
@@ -968,19 +997,19 @@ def generate_landscape_deck():
         by = y_start - row * 195
 
         c.setFillColor(Color(TEAL_R, TEAL_G, TEAL_B, 0.15))
-        c.setFont("Helvetica-Bold", 42)
+        c.setFont(SANS_BOLD, 42)
         c.drawString(bx, by - 10, num)
 
         c.setFillColor(NAVY)
-        c.setFont("Helvetica-Bold", 14)
-        c.drawString(bx + 48, by, title)
+        c.setFont(SANS_BOLD, 14)
+        c.drawString(bx + 68, by, title)
 
         c.setFillColor(SLATE)
-        c.setFont("Helvetica", 12)
-        lines = wrap_text(c, desc, "Helvetica", 12, col_w - 10)
+        c.setFont(SANS, 12)
+        lines = wrap_text(c, desc, SANS, 12, col_w - 70)
         ty = by - 22
         for ln in lines:
-            c.drawString(bx + 8, ty, ln)
+            c.drawString(bx + 68, ty, ln)
             ty -= 15
 
     # =================================================================
@@ -989,19 +1018,19 @@ def generate_landscape_deck():
     new_white_slide("left")
 
     c.setFillColor(NAVY)
-    c.setFont("Helvetica-Bold", 42)
+    c.setFont(SANS_BOLD, 42)
     c.drawString(M + 10, H - 60, "Cost Reality Check")
     c.setFillColor(SLATE)
-    c.setFont("Helvetica", 14)
+    c.setFont(SANS, 14)
     c.drawString(M + 10, H - 82, "$99 AI wearable pendant -- real BOM breakdown @ 5K units")
 
     # $26.40 callout
     c.setFillColor(TEAL)
     c.roundRect(M + 10, H - 118, 320, 30, 5, fill=1, stroke=0)
     c.setFillColor(WHITE)
-    c.setFont("Helvetica-Bold", 18)
+    c.setFont(MONO, 18)
     c.drawString(M + 25, H - 112, "$26.40 / unit")
-    c.setFont("Helvetica", 12)
+    c.setFont(SANS, 12)
     c.drawString(M + 195, H - 110, "avg landed cost")
 
     y = H - 135
@@ -1017,21 +1046,25 @@ def generate_landscape_deck():
             c.setFillColor(NAVY)
             c.roundRect(M + 10, ry - 4, CW - 20, row_h, 2, fill=1, stroke=0)
             c.setFillColor(WHITE)
-            c.setFont("Helvetica-Bold", 10)
+            is_emphasis = True
         elif ridx == len(bom_short) - 1:
             c.setFillColor(Color(TEAL_R, TEAL_G, TEAL_B, 0.12))
             c.rect(M + 10, ry - 4, CW - 20, row_h, fill=1, stroke=0)
             c.setFillColor(NAVY)
-            c.setFont("Helvetica-Bold", 10)
+            is_emphasis = True
         else:
             if ridx % 2 == 0:
                 c.setFillColor(Color(TEAL_R, TEAL_G, TEAL_B, 0.03))
                 c.rect(M + 10, ry - 4, CW - 20, row_h, fill=1, stroke=0)
             c.setFillColor(NAVY)
-            c.setFont("Helvetica", 10)
+            is_emphasis = False
 
         cx = M + 18
         for cidx, cell in enumerate(row_data):
+            if cidx == 2 and ridx != 0:
+                c.setFont(MONO, 10)
+            else:
+                c.setFont(SANS_BOLD if is_emphasis else SANS, 10)
             c.drawString(cx, ry + 3, cell)
             cx += col_widths_deck[cidx]
 
@@ -1042,10 +1075,10 @@ def generate_landscape_deck():
 
     # Title in strip
     c.setFillColor(WHITE)
-    c.setFont("Helvetica-Bold", 32)
+    c.setFont(SANS_BOLD, 32)
     c.drawString(M, H - 45, "DFM: Top 10 Pitfalls")
     c.setFillColor(Color(1, 1, 1, 0.7))
-    c.setFont("Helvetica", 14)
+    c.setFont(SANS, 14)
     c.drawString(M, H - 68, "Mistakes we've seen (and fixed) across 50+ hardware projects.")
 
     y = H - 125
@@ -1059,16 +1092,16 @@ def generate_landscape_deck():
         c.setFillColor(TEAL)
         c.circle(px + 10, py - 2, 10, fill=1, stroke=0)
         c.setFillColor(WHITE)
-        c.setFont("Helvetica-Bold", 10)
+        c.setFont(SANS_BOLD, 10)
         c.drawCentredString(px + 10, py - 5, str(idx + 1))
 
         c.setFillColor(NAVY)
-        c.setFont("Helvetica-Bold", 12)
+        c.setFont(SANS_BOLD, 12)
         c.drawString(px + 26, py - 6, title)
 
         c.setFillColor(SLATE)
-        c.setFont("Helvetica", 10)
-        lines = wrap_text(c, desc, "Helvetica", 10, col_w - 30)
+        c.setFont(SANS, 10)
+        lines = wrap_text(c, desc, SANS, 10, col_w - 30)
         ty = py - 22
         for ln in lines:
             c.drawString(px + 16, ty, ln)
@@ -1080,10 +1113,10 @@ def generate_landscape_deck():
     new_white_slide("left")
 
     c.setFillColor(NAVY)
-    c.setFont("Helvetica-Bold", 42)
+    c.setFont(SANS_BOLD, 42)
     c.drawString(M + 10, H - 60, "Certification Roadmap")
     c.setFillColor(SLATE)
-    c.setFont("Helvetica", 14)
+    c.setFont(SANS, 14)
     c.drawString(M + 10, H - 82, "What you need, how long it takes, and what it costs.")
 
     y = H - 105
@@ -1097,13 +1130,13 @@ def generate_landscape_deck():
             c.setFillColor(NAVY)
             c.roundRect(M + 10, ry - 5, CW - 20, row_h, 2, fill=1, stroke=0)
             c.setFillColor(WHITE)
-            c.setFont("Helvetica-Bold", 10)
+            c.setFont(SANS_BOLD, 10)
         else:
             if ridx % 2 == 0:
                 c.setFillColor(Color(TEAL_R, TEAL_G, TEAL_B, 0.04))
                 c.rect(M + 10, ry - 5, CW - 20, row_h, fill=1, stroke=0)
             c.setFillColor(NAVY)
-            c.setFont("Helvetica", 10)
+            c.setFont(SANS, 10)
             c.setStrokeColor(Color(0.9, 0.9, 0.9, 1))
             c.setLineWidth(0.2)
             c.line(M + 10, ry - 5, M + CW - 10, ry - 5)
@@ -1112,7 +1145,7 @@ def generate_landscape_deck():
         for cidx, cell in enumerate(row_data):
             max_cw = cert_col_widths_deck[cidx] - 8
             text = cell
-            font = "Helvetica-Bold" if ridx == 0 else "Helvetica"
+            font = SANS_BOLD if ridx == 0 else SANS
             fsize = 10
             while c.stringWidth(text, font, fsize) > max_cw and len(text) > 3:
                 text = text[:-4] + "..."
@@ -1125,10 +1158,10 @@ def generate_landscape_deck():
     c.setLineWidth(0.8)
     c.roundRect(M + 10, tip_y, CW - 20, 40, 4, fill=1, stroke=1)
     c.setFillColor(TEAL)
-    c.setFont("Helvetica-Bold", 11)
+    c.setFont(SANS_BOLD, 11)
     c.drawString(M + 25, tip_y + 22, "Pro Tip:")
     c.setFillColor(NAVY)
-    c.setFont("Helvetica", 11)
+    c.setFont(SANS, 11)
     c.drawString(M + 85, tip_y + 22, "Start pre-compliance testing during DFM. Saves 4-8 weeks and $5-10K.")
     c.drawString(M + 25, tip_y + 6, "We include pre-compliance checks in our standard engineering process.")
 
@@ -1138,10 +1171,10 @@ def generate_landscape_deck():
     new_white_slide("top")
 
     c.setFillColor(NAVY)
-    c.setFont("Helvetica-Bold", 42)
+    c.setFont(SANS_BOLD, 42)
     c.drawString(M, H - 60, "Free Tools")
     c.setFillColor(SLATE)
-    c.setFont("Helvetica", 14)
+    c.setFont(SANS, 14)
     c.drawString(M, H - 82, "No signup required. Start estimating your project now.")
 
     y_start = H - 110
@@ -1163,23 +1196,23 @@ def generate_landscape_deck():
         c.setFillColor(TEAL)
         c.circle(bx + 22, by + card_h - 20, 12, fill=1, stroke=0)
         c.setFillColor(WHITE)
-        c.setFont("Helvetica-Bold", 12)
+        c.setFont(SANS_BOLD, 12)
         c.drawCentredString(bx + 22, by + card_h - 24, str(idx + 1))
 
         c.setFillColor(NAVY)
-        c.setFont("Helvetica-Bold", 14)
+        c.setFont(SANS_BOLD, 14)
         c.drawString(bx + 40, by + card_h - 24, title)
 
         c.setFillColor(SLATE)
-        c.setFont("Helvetica", 11)
-        lines = wrap_text(c, desc, "Helvetica", 11, card_w - 28)
+        c.setFont(SANS, 11)
+        lines = wrap_text(c, desc, SANS, 11, card_w - 28)
         ty = by + card_h - 45
         for ln in lines:
             c.drawString(bx + 14, ty, ln)
             ty -= 14
 
         c.setFillColor(TEAL)
-        c.setFont("Helvetica-Bold", 10)
+        c.setFont(SANS_BOLD, 10)
         c.drawString(bx + 14, by + 10, url)
 
     # =================================================================
@@ -1192,10 +1225,10 @@ def generate_landscape_deck():
                 text_color=Color(1, 1, 1, 0.5))
 
     c.setFillColor(WHITE)
-    c.setFont("Helvetica-Bold", 42)
+    c.setFont(SANS_BOLD, 42)
     c.drawString(M + 10, H - 60, "Why Breeze?")
     c.setFillColor(Color(1, 1, 1, 0.7))
-    c.setFont("Helvetica", 16)
+    c.setFont(SANS, 16)
     c.drawString(M + 10, H - 84, "Four reasons founders choose us over brokers and trading companies.")
 
     y_start = H - 115
@@ -1215,12 +1248,12 @@ def generate_landscape_deck():
         c.rect(bx + 5, by + card_h - 3, card_w - 10, 3, fill=1, stroke=0)
 
         c.setFillColor(WHITE)
-        c.setFont("Helvetica-Bold", 14)
+        c.setFont(SANS_BOLD, 14)
         c.drawString(bx + 14, by + card_h - 24, title)
 
         c.setFillColor(Color(1, 1, 1, 0.85))
-        c.setFont("Helvetica", 12)
-        lines = wrap_text(c, desc, "Helvetica", 12, card_w - 28)
+        c.setFont(SANS, 12)
+        lines = wrap_text(c, desc, SANS, 12, card_w - 28)
         ty = by + card_h - 44
         for ln in lines:
             c.drawString(bx + 14, ty, ln)
@@ -1231,7 +1264,7 @@ def generate_landscape_deck():
     c.setFillColor(Color(0, 0, 0, 0.3))
     c.roundRect(M + 10, bar_y, CW - 20, 32, 4, fill=1, stroke=0)
     c.setFillColor(Color(1, 1, 1, 0.85))
-    c.setFont("Helvetica", 11)
+    c.setFont(SANS, 11)
     c.drawCentredString(W/2, bar_y + 10,
                         "Trading companies: 20-40% margin, zero engineering.  |  "
                         "In-house: $500K+/yr, 6+ months to hire.  |  Breeze: ready now.")
@@ -1251,7 +1284,7 @@ def generate_landscape_deck():
     c.rect(W/2 - 50, H - 90, 100, 3, fill=1, stroke=0)
 
     c.setFillColor(WHITE)
-    c.setFont("Helvetica-Bold", 42)
+    c.setFont(SANS_BOLD, 42)
     c.drawCentredString(W/2, H - 75, "Ready to Start?")
 
     next_steps = [
@@ -1278,15 +1311,15 @@ def generate_landscape_deck():
         c.setFillColor(TEAL)
         c.circle(bx + step_w/2, by + step_h - 18, 14, fill=1, stroke=0)
         c.setFillColor(WHITE)
-        c.setFont("Helvetica-Bold", 14)
+        c.setFont(SANS_BOLD, 14)
         c.drawCentredString(bx + step_w/2, by + step_h - 23, num)
 
         c.setFillColor(WHITE)
-        c.setFont("Helvetica-Bold", 14)
+        c.setFont(SANS_BOLD, 14)
         c.drawCentredString(bx + step_w/2, by + 35, title)
 
         c.setFillColor(Color(1, 1, 1, 0.6))
-        c.setFont("Helvetica", 12)
+        c.setFont(SANS, 12)
         c.drawCentredString(bx + step_w/2, by + 14, desc)
 
     # Logo + contact
@@ -1294,10 +1327,10 @@ def generate_landscape_deck():
     logo_h = logo_w * 202 / 1168
     c.drawImage(LOGO_WHITE, W/2 - logo_w/2, 60, logo_w, logo_h, mask='auto')
     c.setFillColor(Color(1, 1, 1, 0.5))
-    c.setFont("Helvetica", 11)
+    c.setFont(SANS, 11)
     c.drawCentredString(W/2, 42, "hello@breezehw.com  |  breezehw.com")
     c.setFillColor(Color(1, 1, 1, 0.35))
-    c.setFont("Helvetica", 9)
+    c.setFont(SANS, 9)
     c.drawCentredString(W/2, 25, "No equity. No MOQ surprises. Just engineering.")
 
     c.save()
