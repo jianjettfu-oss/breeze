@@ -205,7 +205,7 @@ const team = [
     name: "Arting Chen",
     role: "Partnerships & Deal Flow",
     bio: "AI hardware incubator and investor network. Qualifies deal flow and connects AI hardware founders with Breeze. Direct relationships with YC/HAX-adjacent teams building their first physical product.",
-    avatar: "https://api.dicebear.com/9.x/personas/svg?seed=Arting",
+    avatar: "https://api.dicebear.com/9.x/personas/svg?seed=ArtingChen&hair=fade&facialHair=shadow&facialHairProbability=100",
   },
 ];
 
@@ -217,9 +217,9 @@ const trackRecord = [
     coverage: "Tom's Guide · Hypebeast · Digital Trends · Wired · ComputerWeekly",
   },
   {
-    title: "Cross-Border Furniture Export",
-    subtitle: "End-to-end logistics to Brazil",
-    desc: "Showroom sample logistics, customs coordination, on-site installation support. Multi-country supply chain execution with timeline guarantees.",
+    title: "Cross-Border Supply Chain Execution",
+    subtitle: "Customs, logistics, international delivery",
+    desc: "Deep fluency in import/export customs clearance, HS-code classification, commercial invoicing, multi-modal freight (ocean, air, rail), bonded warehouse coordination, and destination-country fulfillment into US, EU, LATAM, and APAC markets.",
     coverage: null,
   },
   {

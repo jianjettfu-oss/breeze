@@ -161,6 +161,79 @@ STATS = [
     ("1,000", "Min pilot run"),
 ]
 
+AVATAR_DIR = os.path.join(BASE_DIR, "assets", "avatars")
+
+TEAM = [
+    ("Jett Fu", "Founder & CEO", "jett.png",
+     "15+ years cross-border operator. Founded AirPop -- smart air wearable launched at CES 2021, covered by Tom's Guide, Wired, Digital Trends. US (Delaware) + HK + Singapore entities. Native EN + ZH. Based in Shenzhen."),
+    ("Jank Liu", "Supply Chain + Quality Lead", "jank.png",
+     "30 years across industrial valves, PCB, wire harness connectors, smart masks, and rail transit. GE Six Sigma Black Belt -- led HX-5 rail NPI. Amphenol Medical cross-border supplier development and compliance lead. Alumni: Tyco, Amphenol, GE."),
+    ("Sky", "Engineering Lead", "sky.png",
+     "10+ years in Shenzhen consumer electronics supply chain. Prototype to mass production for wearables, IoT devices, and audio products. Ground-truth knowledge of the supplier network within 50 km of our office."),
+    ("Arting Chen", "Partnerships & Deal Flow", "arting.png",
+     "AI hardware incubator and investor network. Qualifies deal flow and connects AI hardware founders with Breeze. Direct relationships with YC/HAX-adjacent teams building their first physical product."),
+]
+
+TRACK_RECORD = [
+    ("AirPop Active+ Halo",
+     "World's first smart air wearable -- CES 2021",
+     "Bluetooth respiratory sensor + iOS/Android app + certified mask manufacturing. Global retail launch via AirPopHealth direct + national retailers.",
+     "Tom's Guide, Hypebeast, Digital Trends, Wired"),
+    ("Cross-Border Supply Chain Execution",
+     "Customs, logistics, international delivery",
+     "Deep fluency in import/export customs clearance, HS-code classification, commercial invoicing, multi-modal freight (ocean, air, rail), bonded warehouse coordination, and destination-country fulfillment into US, EU, LATAM, and APAC.",
+     None),
+    ("EU Medical Packaging",
+     "Hospital surgical tray systems",
+     "Regulated medical device packaging -- material sourcing, sterility validation, third-party lab testing, and full compliance documentation for EU hospital systems.",
+     None),
+]
+
+COMPARISON_ROWS = [
+    ("Feature", "Breeze", "Fictiv / Xometry", "HAX / SOSV", "Titoma", "Trading Co"),
+    ("Scope", "Whole product", "Parts only", "Accelerator", "Whole product", "Sourcing only"),
+    ("Equity taken", "None", "None", "6–10%", "None", "None"),
+    ("Minimum order", "1,000 units", "1 unit (parts)", "Varies", "~1,000", "10,000+"),
+    ("Location", "Shenzhen", "SF + global", "SF + Shenzhen", "Taiwan", "Shenzhen"),
+    ("AI hardware focus", "Yes", "No", "Some", "Generalist", "No"),
+    ("Price transparency", "Tools upfront", "Instant quote", "Opaque", "Quote-based", "Opaque"),
+    ("Language", "Native EN + ZH", "EN", "EN", "EN", "Broken EN"),
+    ("IP policy", "Assignment std", "Assignment", "Varies", "Case-by-case", "Often unclear"),
+    ("Open-source toolkit", "Yes (4 tools)", "No", "No", "No", "No"),
+]
+
+PRICING_TIERS = [
+    ("Scoping", "Free",
+     "Initial concept review. 30-minute call plus a one-page feasibility note.",
+     ["Device feasibility assessment", "Ballpark BOM range", "Certification needs summary", "Timeline estimate"],
+     False),
+    ("NRE + Pilot", "$50K – $150K",
+     "Engineering to working prototype plus pilot batch. Fixed-price.",
+     ["Schematic, PCB, mechanical, firmware architecture",
+      "3-5 functional prototypes (EVT / DVT)",
+      "Tooling, jigs, fixtures",
+      "50-500 unit pilot run",
+      "Full source files delivered"],
+     True),
+    ("Production", "$15 – $60 / unit",
+     "At 5K volume for typical AI wearables. Scales with volume and complexity.",
+     ["1K – 100K+ unit runs",
+      "Ongoing QC + yield optimization",
+      "Logistics + fulfillment",
+      "Global shipping",
+      "Replenishment planning"],
+     False),
+]
+
+TIMELINE = [
+    ("Week 1", "Scoping", "30-min feasibility call + ballpark cost. Sign NDA."),
+    ("Week 2-4", "Engineering Design", "Schematic, PCB layout, mechanical CAD, firmware architecture. Weekly sync."),
+    ("Week 5-8", "DFM + Prototyping", "3-5 functional prototypes. DFM checks. EVT gate."),
+    ("Week 9-10", "Tooling + Sourcing", "Injection molds, jigs, fixtures. Component sourcing. DVT."),
+    ("Week 11-12", "Pilot Run", "50-500 units. Test assembly line, QC, packaging. PVT."),
+    ("Week 13+", "Production", "Scale to 1K, 10K, 100K+. QC, logistics, fulfillment."),
+]
+
 
 # =====================================================================
 # Drawing Helpers
@@ -286,6 +359,390 @@ def wrap_text(c, text, font_name, font_size, max_width):
     if line:
         lines.append(line)
     return lines
+
+
+# =====================================================================
+# New Page Drawers (Team / Timeline / Pricing / Comparison)
+# Auto-adapt to portrait vs landscape via W/H aspect ratio.
+# =====================================================================
+
+def draw_team_page(c, W, H, MARGIN):
+    """Team + Track Record on a single page."""
+    is_portrait = W < H
+    CW = W - 2 * MARGIN
+    y = H - MARGIN - 10
+
+    # Title
+    c.setFillColor(NAVY)
+    c.setFont(SANS_BOLD, 26 if is_portrait else 32)
+    c.drawString(MARGIN, y - 22, "Who's behind Breeze")
+    c.setFillColor(SLATE)
+    c.setFont(SANS, 10 if is_portrait else 12)
+    c.drawString(MARGIN, y - 40,
+                 "Four operators. 60+ combined years in Shenzhen supply chain, smart hardware, and cross-border delivery.")
+
+    y -= 60
+
+    # Team grid: 2x2 portrait, 1x4 landscape
+    cols = 2 if is_portrait else 4
+    rows = 2 if is_portrait else 1
+    card_gap = 10
+    card_w = (CW - card_gap * (cols - 1)) / cols
+    card_h = 150 if is_portrait else 165
+
+    for idx, (name, role, avatar, bio) in enumerate(TEAM):
+        col = idx % cols
+        row = idx // cols
+        cx = MARGIN + col * (card_w + card_gap)
+        cy = y - row * (card_h + 10) - card_h
+
+        c.setFillColor(Color(0.99, 0.99, 0.99, 1))
+        c.setStrokeColor(Color(0, 0, 0, 0.1))
+        c.setLineWidth(0.5)
+        c.roundRect(cx, cy, card_w, card_h, 6, fill=1, stroke=1)
+
+        # Avatar
+        avatar_path = os.path.join(AVATAR_DIR, avatar)
+        avatar_size = 44
+        if os.path.exists(avatar_path):
+            c.setFillColor(Color(TEAL_R, TEAL_G, TEAL_B, 0.08))
+            c.circle(cx + 18 + avatar_size/2, cy + card_h - 18 - avatar_size/2,
+                     avatar_size/2 + 3, fill=1, stroke=0)
+            c.drawImage(avatar_path, cx + 18, cy + card_h - 18 - avatar_size,
+                        avatar_size, avatar_size, mask='auto')
+
+        text_x = cx + 18 + avatar_size + 10
+        c.setFillColor(NAVY)
+        c.setFont(SANS_BOLD, 12)
+        c.drawString(text_x, cy + card_h - 28, name)
+        c.setFillColor(TEAL)
+        c.setFont(SANS, 9)
+        c.drawString(text_x, cy + card_h - 40, role)
+
+        c.setFillColor(SLATE)
+        c.setFont(SANS, 8.5)
+        bio_lines = wrap_text(c, bio, SANS, 8.5, card_w - 28)
+        by = cy + card_h - avatar_size - 35
+        for line in bio_lines[:7]:
+            c.drawString(cx + 14, by, line)
+            by -= 10.5
+
+    y -= rows * (card_h + 10) + 15
+
+    # Divider
+    c.setStrokeColor(Color(NAVY_R, NAVY_G, NAVY_B, 0.15))
+    c.setLineWidth(0.5)
+    c.line(MARGIN, y, W - MARGIN, y)
+    y -= 22
+
+    # Track Record header
+    c.setFillColor(NAVY)
+    c.setFont(SANS_BOLD, 17 if is_portrait else 22)
+    c.drawString(MARGIN, y, "10+ Years. Not a New Company.")
+    y -= 14
+    c.setFillColor(SLATE)
+    c.setFont(SANS, 9.5)
+    c.drawString(MARGIN, y, "Before Breeze Hardware, our team shipped production at scale:")
+    y -= 16
+
+    tr_gap = 10
+    tr_cols = 3
+    tr_w = (CW - tr_gap * (tr_cols - 1)) / tr_cols
+    tr_h = 110 if is_portrait else 115
+
+    for idx, (title, subtitle, desc, press) in enumerate(TRACK_RECORD):
+        tx = MARGIN + idx * (tr_w + tr_gap)
+        ty = y - tr_h
+
+        c.setFillColor(WHITE)
+        c.setStrokeColor(Color(0, 0, 0, 0.12))
+        c.setLineWidth(0.5)
+        c.roundRect(tx, ty, tr_w, tr_h, 5, fill=1, stroke=1)
+
+        c.setFillColor(NAVY)
+        c.setFont(SANS_BOLD, 10)
+        title_lines = wrap_text(c, title, SANS_BOLD, 10, tr_w - 20)
+        ty_title = ty + tr_h - 16
+        for tl in title_lines[:2]:
+            c.drawString(tx + 10, ty_title, tl)
+            ty_title -= 12
+        c.setFillColor(TEAL)
+        c.setFont(SANS, 7.5)
+        sub_lines = wrap_text(c, subtitle, SANS, 7.5, tr_w - 20)
+        c.drawString(tx + 10, ty_title - 2, sub_lines[0] if sub_lines else subtitle)
+
+        c.setFillColor(SLATE)
+        c.setFont(SANS, 7.5)
+        desc_lines = wrap_text(c, desc, SANS, 7.5, tr_w - 20)
+        dy = ty_title - 16
+        max_desc_lines = 4 if press else 6
+        for line in desc_lines[:max_desc_lines]:
+            c.drawString(tx + 10, dy, line)
+            dy -= 10
+
+        if press:
+            c.setFillColor(Color(NAVY_R, NAVY_G, NAVY_B, 0.55))
+            c.setFont(SANS, 6.5)
+            press_lines = wrap_text(c, "Press: " + press, SANS, 6.5, tr_w - 20)
+            py = ty + 10
+            for line in press_lines[:2]:
+                c.drawString(tx + 10, py, line)
+                py -= 8
+
+    y -= tr_h + 12
+
+    # Disclosure footer
+    c.setFillColor(Color(NAVY_R, NAVY_G, NAVY_B, 0.6))
+    c.setFont(SANS, 8)
+    disclosure = "Breeze's co-founder Jett Fu is AirPop's founder & CEO. AirPop Halo was delivered by the same supply-chain and engineering team now powering Breeze."
+    disc_lines = wrap_text(c, disclosure, SANS, 8, CW)
+    for line in disc_lines:
+        c.drawString(MARGIN, y, line)
+        y -= 10
+
+
+def draw_timeline_page(c, W, H, MARGIN):
+    """Engagement Timeline — 6-phase horizontal gantt."""
+    is_portrait = W < H
+    CW = W - 2 * MARGIN
+    y = H - MARGIN - 10
+
+    c.setFillColor(NAVY)
+    c.setFont(SANS_BOLD, 26 if is_portrait else 32)
+    c.drawString(MARGIN, y - 22, "What happens after you sign")
+    c.setFillColor(SLATE)
+    c.setFont(SANS, 11 if is_portrait else 13)
+    c.drawString(MARGIN, y - 42,
+                 "A predictable 12-week path to pilot. Transparent weekly sync.")
+
+    # Rail
+    rail_y = y - 130 if is_portrait else y - 130
+    n = len(TIMELINE)
+    col_w = CW / n
+
+    c.setStrokeColor(Color(TEAL_R, TEAL_G, TEAL_B, 0.3))
+    c.setLineWidth(2)
+    c.line(MARGIN + col_w * 0.15, rail_y, W - MARGIN - col_w * 0.15, rail_y)
+
+    for idx, (week, phase, desc) in enumerate(TIMELINE):
+        cx = MARGIN + col_w * idx + col_w / 2
+
+        # Dot
+        c.setFillColor(TEAL)
+        c.circle(cx, rail_y, 6, fill=1, stroke=0)
+        c.setStrokeColor(WHITE)
+        c.setLineWidth(2)
+        c.circle(cx, rail_y, 6, fill=0, stroke=1)
+
+        # Week label above rail
+        c.setFillColor(TEAL)
+        c.setFont(SANS_BOLD, 9)
+        c.drawCentredString(cx, rail_y + 18, week.upper())
+
+        # Phase title below rail (wrap up to 2 lines)
+        c.setFillColor(NAVY)
+        c.setFont(SANS_BOLD, 10)
+        phase_lines = wrap_text(c, phase, SANS_BOLD, 10, col_w - 10)
+        py = rail_y - 22
+        for pl in phase_lines[:2]:
+            c.drawCentredString(cx, py, pl)
+            py -= 12
+
+        # Desc
+        c.setFillColor(SLATE)
+        c.setFont(SANS, 8)
+        desc_lines = wrap_text(c, desc, SANS, 8, col_w - 14)
+        dy = py - 4
+        for line in desc_lines[:4]:
+            c.drawCentredString(cx, dy, line)
+            dy -= 10
+
+    # Callout box
+    box_y = rail_y - 110
+    c.setFillColor(Color(TEAL_R, TEAL_G, TEAL_B, 0.08))
+    c.roundRect(MARGIN, box_y - 60, CW, 62, 6, fill=1, stroke=0)
+    c.setFillColor(NAVY)
+    c.setFont(SANS_BOLD, 13)
+    c.drawString(MARGIN + 20, box_y - 18, "Fixed-price at every gate.")
+    c.setFillColor(SLATE)
+    c.setFont(SANS, 10)
+    c.drawString(MARGIN + 20, box_y - 34,
+                 "EVT, DVT, and PVT gates each have defined deliverables and sign-off. No T&M. No scope-creep invoices.")
+    c.drawString(MARGIN + 20, box_y - 48,
+                 "Weekly status sync on Fridays with photos, videos, and next-week plan.")
+
+
+def draw_pricing_page(c, W, H, MARGIN):
+    """Pricing Bands — 3 tier cards."""
+    is_portrait = W < H
+    CW = W - 2 * MARGIN
+    y = H - MARGIN - 10
+
+    c.setFillColor(NAVY)
+    c.setFont(SANS_BOLD, 26 if is_portrait else 32)
+    c.drawString(MARGIN, y - 22, "Typical Project Costs")
+    c.setFillColor(SLATE)
+    c.setFont(SANS, 11 if is_portrait else 13)
+    c.drawString(MARGIN, y - 42,
+                 "Fixed-price at every stage. No T&M. No scope-creep invoices.")
+
+    y -= 60
+
+    gap = 12
+    card_w = (CW - gap * 2) / 3
+    card_h = 340 if is_portrait else 320
+
+    for idx, (name, price, desc, items, featured) in enumerate(PRICING_TIERS):
+        cx = MARGIN + idx * (card_w + gap)
+        cy = y - card_h
+
+        c.setFillColor(WHITE)
+        if featured:
+            c.setStrokeColor(TEAL)
+            c.setLineWidth(2)
+        else:
+            c.setStrokeColor(Color(0, 0, 0, 0.15))
+            c.setLineWidth(0.7)
+        c.roundRect(cx, cy, card_w, card_h, 8, fill=1, stroke=1)
+
+        inner_y = cy + card_h - 16
+
+        if featured:
+            c.setFillColor(Color(TEAL_R, TEAL_G, TEAL_B, 0.12))
+            c.roundRect(cx + 16, inner_y - 4, 120, 18, 3, fill=1, stroke=0)
+            c.setFillColor(TEAL)
+            c.setFont(SANS_BOLD, 7.5)
+            c.drawString(cx + 22, inner_y + 2, "MOST ENGAGEMENTS")
+            inner_y -= 24
+
+        c.setFillColor(NAVY)
+        c.setFont(SANS_BOLD, 16)
+        c.drawString(cx + 16, inner_y - 12, name)
+        inner_y -= 38
+
+        c.setFillColor(NAVY)
+        # Shrink font if price is long
+        price_font_size = 22 if len(price) <= 8 else 18
+        c.setFont(SANS_BOLD, price_font_size)
+        c.drawString(cx + 16, inner_y, price)
+        inner_y -= 22
+
+        c.setFillColor(SLATE)
+        c.setFont(SANS, 9)
+        desc_lines = wrap_text(c, desc, SANS, 9, card_w - 32)
+        for line in desc_lines[:4]:
+            c.drawString(cx + 16, inner_y, line)
+            inner_y -= 12
+
+        inner_y -= 8
+
+        for item in items:
+            c.setFillColor(TEAL)
+            c.setFont(SANS_BOLD, 10)
+            c.drawString(cx + 16, inner_y, "✓")
+            c.setFillColor(SLATE)
+            c.setFont(SANS, 9)
+            item_lines = wrap_text(c, item, SANS, 9, card_w - 44)
+            item_y = inner_y
+            for line in item_lines[:3]:
+                c.drawString(cx + 30, item_y, line)
+                item_y -= 11
+            inner_y = item_y - 4
+
+    y -= card_h + 15
+
+    c.setFillColor(SLATE)
+    c.setFont(SANS, 9)
+    footer = "Complexity (sensors, radios, battery chemistry, certifications) drives the final number. Try the NRE Simulator at breezehw.com/tools/nre-simulator for a tailored estimate in 60 seconds."
+    fl = wrap_text(c, footer, SANS, 9, CW)
+    for line in fl:
+        c.drawString(MARGIN, y, line)
+        y -= 11
+
+
+def draw_comparison_page(c, W, H, MARGIN):
+    """Comparison Table — Breeze vs 4 competitors."""
+    is_portrait = W < H
+    CW = W - 2 * MARGIN
+    y = H - MARGIN - 10
+
+    c.setFillColor(NAVY)
+    c.setFont(SANS_BOLD, 26 if is_portrait else 32)
+    c.drawString(MARGIN, y - 22, "How we compare")
+    c.setFillColor(SLATE)
+    c.setFont(SANS, 11 if is_portrait else 13)
+    c.drawString(MARGIN, y - 42, "Honest differences, not marketing fluff.")
+
+    y -= 60
+
+    feature_col_w = CW * 0.20
+    company_col_w = (CW - feature_col_w) / 5
+
+    row_h = 22 if is_portrait else 24
+    header_h = 28
+
+    # Header row
+    c.setFillColor(NAVY)
+    c.rect(MARGIN, y - header_h, CW, header_h, fill=1, stroke=0)
+    # Breeze column overlay
+    breeze_x = MARGIN + feature_col_w
+    c.setFillColor(Color(TEAL_R, TEAL_G, TEAL_B, 0.25))
+    c.rect(breeze_x, y - header_h, company_col_w, header_h, fill=1, stroke=0)
+
+    # Header text
+    for ci, cell in enumerate(COMPARISON_ROWS[0]):
+        if ci == 0:
+            x_pos = MARGIN + 8
+            c.setFillColor(Color(1, 1, 1, 0.7))
+            c.setFont(SANS_BOLD, 9 if is_portrait else 10)
+        elif ci == 1:
+            x_pos = MARGIN + feature_col_w + 8
+            c.setFillColor(WHITE)
+            c.setFont(SANS_BOLD, 11 if is_portrait else 12)
+        else:
+            x_pos = MARGIN + feature_col_w + (ci - 1) * company_col_w + 8
+            c.setFillColor(Color(1, 1, 1, 0.75))
+            c.setFont(SANS_BOLD, 8.5 if is_portrait else 9.5)
+        c.drawString(x_pos, y - header_h + 10, cell)
+
+    y -= header_h
+
+    # Data rows
+    for ri, row in enumerate(COMPARISON_ROWS[1:]):
+        ry = y - row_h
+
+        if ri % 2 == 0:
+            c.setFillColor(Color(0.97, 0.97, 0.97, 1))
+            c.rect(MARGIN, ry, CW, row_h, fill=1, stroke=0)
+
+        c.setFillColor(Color(TEAL_R, TEAL_G, TEAL_B, 0.05))
+        c.rect(MARGIN + feature_col_w, ry, company_col_w, row_h, fill=1, stroke=0)
+
+        for ci, cell in enumerate(row):
+            if ci == 0:
+                x_pos = MARGIN + 8
+                c.setFillColor(NAVY)
+                c.setFont(SANS_BOLD, 9)
+            elif ci == 1:
+                x_pos = MARGIN + feature_col_w + 8
+                c.setFillColor(NAVY)
+                c.setFont(SANS_BOLD, 9)
+            else:
+                x_pos = MARGIN + feature_col_w + (ci - 1) * company_col_w + 8
+                c.setFillColor(SLATE)
+                c.setFont(SANS, 8.5)
+            c.drawString(x_pos, ry + 7, cell)
+
+        y = ry
+
+    y -= 24
+    c.setFillColor(Color(NAVY_R, NAVY_G, NAVY_B, 0.65))
+    c.setFont(SANS, 9)
+    note = "Breeze is the only whole-product engineering partner in Shenzhen with open-source tools, 1K-unit MOQ, and native bilingual delivery."
+    nl = wrap_text(c, note, SANS, 9, CW)
+    for line in nl:
+        c.drawString(MARGIN, y, line)
+        y -= 11
 
 
 # =====================================================================
@@ -427,7 +884,13 @@ def generate_portrait_kit():
             ty -= 15
 
     # =================================================================
-    # PAGE 3: 6-STEP PROCESS  --  pcb strip top + white body
+    # PAGE 3: TEAM + TRACK RECORD
+    # =================================================================
+    new_white_page("left")
+    draw_team_page(c, W, H, MARGIN)
+
+    # =================================================================
+    # PAGE 4: 6-STEP PROCESS  --  pcb strip top + white body
     # =================================================================
     new_strip_page(PHOTO_PCB)
 
@@ -548,7 +1011,19 @@ def generate_portrait_kit():
     c.drawString(MARGIN, y, "  Excludes NRE (one-time engineering), tooling amortization, and certification fees.")
 
     # =================================================================
-    # PAGE 5: DFM TOP 10 PITFALLS  --  circuit-board strip top + white body
+    # PAGE 6: ENGAGEMENT TIMELINE
+    # =================================================================
+    new_white_page("left")
+    draw_timeline_page(c, W, H, MARGIN)
+
+    # =================================================================
+    # PAGE 7: PRICING BANDS
+    # =================================================================
+    new_white_page("left")
+    draw_pricing_page(c, W, H, MARGIN)
+
+    # =================================================================
+    # PAGE 8: DFM TOP 10 PITFALLS  --  circuit-board strip top + white body
     # =================================================================
     new_strip_page(PHOTO_CIRCUIT)
 
@@ -703,8 +1178,27 @@ def generate_portrait_kit():
 
         y -= card_h + 15
 
+    # OSS toolkit badge at bottom of Free Tools page
+    y -= 5
+    badge_h = 56
+    c.setFillColor(DEEP_NAVY)
+    c.roundRect(MARGIN, y - badge_h, CW, badge_h, 6, fill=1, stroke=0)
+    c.setFillColor(TEAL)
+    c.setFont(SANS_BOLD, 7.5)
+    c.drawString(MARGIN + 16, y - 16, "OPEN SOURCE")
+    c.setFillColor(WHITE)
+    c.setFont(SANS_BOLD, 12)
+    c.drawString(MARGIN + 16, y - 32, "AI Hardware Toolkit")
+    c.setFillColor(Color(1, 1, 1, 0.7))
+    c.setFont(SANS, 9)
+    c.drawString(MARGIN + 16, y - 46,
+                 "Same BOM data, DFM checklists, NRE guidelines we use every day -- free on GitHub.")
+    c.setFillColor(TEAL)
+    c.setFont(SANS_BOLD, 9)
+    c.drawRightString(MARGIN + CW - 16, y - 32, "github.com/jianjettfu-oss/ai-hardware-toolkit")
+
     # =================================================================
-    # PAGE 8: WHY BREEZE  --  pcb-closeup FULL BLEED + navy 80% overlay
+    # PAGE 11: WHY BREEZE  --  pcb-closeup FULL BLEED + navy 80% overlay
     # =================================================================
     c.showPage()
     page_num[0] += 1
@@ -765,7 +1259,13 @@ def generate_portrait_kit():
     c.drawString(MARGIN + 18, y + 1, "In-house teams cost $500K+/year and take 6+ months to hire. We're ready now.")
 
     # =================================================================
-    # PAGE 9: NEXT STEPS / CONTACT  --  navy solid background
+    # PAGE 12: COMPARISON TABLE
+    # =================================================================
+    new_white_page("left")
+    draw_comparison_page(c, W, H, MARGIN)
+
+    # =================================================================
+    # PAGE 13: NEXT STEPS / CONTACT  --  navy solid background
     # =================================================================
     c.showPage()
     page_num[0] += 1
@@ -976,7 +1476,13 @@ def generate_landscape_deck():
             ty -= 14
 
     # =================================================================
-    # SLIDE 3: 6-STEP PROCESS  --  pcb strip top + white
+    # SLIDE 3: TEAM + TRACK RECORD
+    # =================================================================
+    new_white_slide("left")
+    draw_team_page(c, W, H, M)
+
+    # =================================================================
+    # SLIDE 4: 6-STEP PROCESS  --  pcb strip top + white
     # =================================================================
     new_strip_slide(PHOTO_PCB)
 
@@ -1069,7 +1575,19 @@ def generate_landscape_deck():
             cx += col_widths_deck[cidx]
 
     # =================================================================
-    # SLIDE 5: DFM PITFALLS  --  circuit-board strip top + white
+    # SLIDE 6: ENGAGEMENT TIMELINE
+    # =================================================================
+    new_white_slide("left")
+    draw_timeline_page(c, W, H, M)
+
+    # =================================================================
+    # SLIDE 7: PRICING BANDS
+    # =================================================================
+    new_white_slide("left")
+    draw_pricing_page(c, W, H, M)
+
+    # =================================================================
+    # SLIDE 8: DFM PITFALLS  --  circuit-board strip top + white
     # =================================================================
     new_strip_slide(PHOTO_CIRCUIT)
 
@@ -1215,8 +1733,23 @@ def generate_landscape_deck():
         c.setFont(SANS_BOLD, 10)
         c.drawString(bx + 14, by + 10, url)
 
+    # OSS badge bottom
+    badge_y = y_start - 2 * (card_h + 15) - 15
+    badge_h = 42
+    c.setFillColor(DEEP_NAVY)
+    c.roundRect(M, badge_y - badge_h, CW, badge_h, 5, fill=1, stroke=0)
+    c.setFillColor(TEAL)
+    c.setFont(SANS_BOLD, 7.5)
+    c.drawString(M + 16, badge_y - 14, "OPEN SOURCE")
+    c.setFillColor(WHITE)
+    c.setFont(SANS_BOLD, 13)
+    c.drawString(M + 16, badge_y - 30, "AI Hardware Toolkit -- free on GitHub")
+    c.setFillColor(TEAL)
+    c.setFont(SANS_BOLD, 10)
+    c.drawRightString(M + CW - 16, badge_y - 24, "github.com/jianjettfu-oss/ai-hardware-toolkit")
+
     # =================================================================
-    # SLIDE 8: WHY BREEZE  --  pcb-closeup FULL BLEED + navy 80%
+    # SLIDE 11: WHY BREEZE  --  pcb-closeup FULL BLEED + navy 80%
     # =================================================================
     c.showPage()
     page_num[0] += 1
@@ -1270,7 +1803,13 @@ def generate_landscape_deck():
                         "In-house: $500K+/yr, 6+ months to hire.  |  Breeze: ready now.")
 
     # =================================================================
-    # SLIDE 9: NEXT STEPS / CONTACT  --  navy solid + teal accents
+    # SLIDE 12: COMPARISON TABLE
+    # =================================================================
+    new_white_slide("left")
+    draw_comparison_page(c, W, H, M)
+
+    # =================================================================
+    # SLIDE 13: NEXT STEPS / CONTACT  --  navy solid + teal accents
     # =================================================================
     c.showPage()
     page_num[0] += 1
