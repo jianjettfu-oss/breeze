@@ -367,88 +367,103 @@ def wrap_text(c, text, font_name, font_size, max_width):
 # =====================================================================
 
 def draw_team_page(c, W, H, MARGIN):
-    """Team + Track Record on a single page."""
+    """Team page — 4 member cards with avatars, bio."""
     is_portrait = W < H
     CW = W - 2 * MARGIN
     y = H - MARGIN - 10
 
     # Title
     c.setFillColor(NAVY)
-    c.setFont(SANS_BOLD, 26 if is_portrait else 32)
-    c.drawString(MARGIN, y - 22, "Who's behind Breeze")
+    c.setFont(SANS_BOLD, 30 if is_portrait else 36)
+    c.drawString(MARGIN, y - 25, "Who's behind Breeze")
     c.setFillColor(SLATE)
-    c.setFont(SANS, 10 if is_portrait else 12)
-    c.drawString(MARGIN, y - 40,
-                 "Four operators. 60+ combined years in Shenzhen supply chain, smart hardware, and cross-border delivery.")
+    sub_size = 12 if is_portrait else 14
+    c.setFont(SANS, sub_size)
+    subtitle = "Four operators. 60+ combined years in Shenzhen supply chain, smart hardware, and cross-border delivery."
+    sub_lines = wrap_text(c, subtitle, SANS, sub_size, CW)
+    sub_y = y - 46
+    for sl in sub_lines:
+        c.drawString(MARGIN, sub_y, sl)
+        sub_y -= sub_size + 4
 
-    y -= 60
+    y -= 75 + max(0, (len(sub_lines) - 1) * (sub_size + 4))
 
-    # Team grid: 2x2 portrait, 1x4 landscape
+    # Team grid: 2x2 portrait, 1x4 landscape — bigger cards with room to breathe
     cols = 2 if is_portrait else 4
     rows = 2 if is_portrait else 1
-    card_gap = 10
+    card_gap = 14
     card_w = (CW - card_gap * (cols - 1)) / cols
-    card_h = 150 if is_portrait else 165
+    card_h = 220 if is_portrait else 320
 
     for idx, (name, role, avatar, bio) in enumerate(TEAM):
         col = idx % cols
         row = idx // cols
         cx = MARGIN + col * (card_w + card_gap)
-        cy = y - row * (card_h + 10) - card_h
+        cy = y - row * (card_h + 14) - card_h
 
         c.setFillColor(Color(0.99, 0.99, 0.99, 1))
         c.setStrokeColor(Color(0, 0, 0, 0.1))
         c.setLineWidth(0.5)
-        c.roundRect(cx, cy, card_w, card_h, 6, fill=1, stroke=1)
+        c.roundRect(cx, cy, card_w, card_h, 8, fill=1, stroke=1)
 
-        # Avatar
+        # Avatar (bigger, centered top)
         avatar_path = os.path.join(AVATAR_DIR, avatar)
-        avatar_size = 44
+        avatar_size = 72 if is_portrait else 88
+        avatar_cx = cx + card_w / 2
+        avatar_cy = cy + card_h - 20 - avatar_size / 2
         if os.path.exists(avatar_path):
-            c.setFillColor(Color(TEAL_R, TEAL_G, TEAL_B, 0.08))
-            c.circle(cx + 18 + avatar_size/2, cy + card_h - 18 - avatar_size/2,
-                     avatar_size/2 + 3, fill=1, stroke=0)
-            c.drawImage(avatar_path, cx + 18, cy + card_h - 18 - avatar_size,
+            # Darker, more visible circle ring
+            c.setFillColor(Color(TEAL_R, TEAL_G, TEAL_B, 0.35))
+            c.circle(avatar_cx, avatar_cy, avatar_size / 2 + 4, fill=1, stroke=0)
+            c.setFillColor(WHITE)
+            c.circle(avatar_cx, avatar_cy, avatar_size / 2 + 1, fill=1, stroke=0)
+            c.drawImage(avatar_path, avatar_cx - avatar_size / 2,
+                        avatar_cy - avatar_size / 2,
                         avatar_size, avatar_size, mask='auto')
 
-        text_x = cx + 18 + avatar_size + 10
+        # Name + Role (centered under avatar)
         c.setFillColor(NAVY)
-        c.setFont(SANS_BOLD, 12)
-        c.drawString(text_x, cy + card_h - 28, name)
+        c.setFont(SANS_BOLD, 14 if is_portrait else 15)
+        c.drawCentredString(avatar_cx, cy + card_h - avatar_size - 40, name)
         c.setFillColor(TEAL)
-        c.setFont(SANS, 9)
-        c.drawString(text_x, cy + card_h - 40, role)
+        c.setFont(SANS, 10)
+        c.drawCentredString(avatar_cx, cy + card_h - avatar_size - 55, role)
 
+        # Bio (left-aligned, below)
         c.setFillColor(SLATE)
-        c.setFont(SANS, 8.5)
-        bio_lines = wrap_text(c, bio, SANS, 8.5, card_w - 28)
-        by = cy + card_h - avatar_size - 35
-        for line in bio_lines[:7]:
-            c.drawString(cx + 14, by, line)
-            by -= 10.5
+        c.setFont(SANS, 9)
+        bio_lines = wrap_text(c, bio, SANS, 9, card_w - 24)
+        by = cy + card_h - avatar_size - 75
+        max_lines = 10 if is_portrait else 13
+        for line in bio_lines[:max_lines]:
+            c.drawString(cx + 12, by, line)
+            by -= 11
 
-    y -= rows * (card_h + 10) + 15
 
-    # Divider
-    c.setStrokeColor(Color(NAVY_R, NAVY_G, NAVY_B, 0.15))
-    c.setLineWidth(0.5)
-    c.line(MARGIN, y, W - MARGIN, y)
-    y -= 22
+def draw_track_record_page(c, W, H, MARGIN):
+    """Track Record page — 3 past projects + AirPop disclosure footer."""
+    is_portrait = W < H
+    CW = W - 2 * MARGIN
+    y = H - MARGIN - 10
 
-    # Track Record header
+    # Title
     c.setFillColor(NAVY)
-    c.setFont(SANS_BOLD, 17 if is_portrait else 22)
-    c.drawString(MARGIN, y, "10+ Years. Not a New Company.")
-    y -= 14
+    c.setFont(SANS_BOLD, 30 if is_portrait else 36)
+    c.drawString(MARGIN, y - 25, "10+ Years. Not a New Company.")
     c.setFillColor(SLATE)
-    c.setFont(SANS, 9.5)
-    c.drawString(MARGIN, y, "Before Breeze Hardware, our team shipped production at scale:")
-    y -= 16
+    c.setFont(SANS, 12 if is_portrait else 14)
+    c.drawString(MARGIN, y - 46,
+                 "Before Breeze Hardware, our team shipped production at scale:")
 
-    tr_gap = 10
+    y -= 75
+
+    # Track record cards — 3 in a row
+    tr_gap = 14
     tr_cols = 3
     tr_w = (CW - tr_gap * (tr_cols - 1)) / tr_cols
-    tr_h = 110 if is_portrait else 115
+    # Compute height so cards fit above the pinned disclosure box
+    disclosure_top = MARGIN + 40 + 60  # box_y + box_h
+    tr_h = min(340, y - disclosure_top - 24)
 
     for idx, (title, subtitle, desc, press) in enumerate(TRACK_RECORD):
         tx = MARGIN + idx * (tr_w + tr_gap)
@@ -457,48 +472,71 @@ def draw_team_page(c, W, H, MARGIN):
         c.setFillColor(WHITE)
         c.setStrokeColor(Color(0, 0, 0, 0.12))
         c.setLineWidth(0.5)
-        c.roundRect(tx, ty, tr_w, tr_h, 5, fill=1, stroke=1)
-
-        c.setFillColor(NAVY)
-        c.setFont(SANS_BOLD, 10)
-        title_lines = wrap_text(c, title, SANS_BOLD, 10, tr_w - 20)
-        ty_title = ty + tr_h - 16
-        for tl in title_lines[:2]:
-            c.drawString(tx + 10, ty_title, tl)
-            ty_title -= 12
+        c.roundRect(tx, ty, tr_w, tr_h, 6, fill=1, stroke=1)
+        # Teal left accent strip
         c.setFillColor(TEAL)
-        c.setFont(SANS, 7.5)
-        sub_lines = wrap_text(c, subtitle, SANS, 7.5, tr_w - 20)
-        c.drawString(tx + 10, ty_title - 2, sub_lines[0] if sub_lines else subtitle)
+        c.rect(tx, ty, 3, tr_h, fill=1, stroke=0)
 
+        # Title (up to 2 lines)
+        c.setFillColor(NAVY)
+        c.setFont(SANS_BOLD, 13)
+        title_lines = wrap_text(c, title, SANS_BOLD, 13, tr_w - 28)
+        ty_title = ty + tr_h - 22
+        for tl in title_lines[:2]:
+            c.drawString(tx + 14, ty_title, tl)
+            ty_title -= 15
+
+        # Subtitle
+        c.setFillColor(TEAL)
+        c.setFont(SANS, 9.5)
+        sub_lines = wrap_text(c, subtitle, SANS, 9.5, tr_w - 28)
+        sy = ty_title - 2
+        for sl in sub_lines[:2]:
+            c.drawString(tx + 14, sy, sl)
+            sy -= 12
+
+        # Desc
         c.setFillColor(SLATE)
-        c.setFont(SANS, 7.5)
-        desc_lines = wrap_text(c, desc, SANS, 7.5, tr_w - 20)
-        dy = ty_title - 16
-        max_desc_lines = 4 if press else 6
-        for line in desc_lines[:max_desc_lines]:
-            c.drawString(tx + 10, dy, line)
-            dy -= 10
+        c.setFont(SANS, 10)
+        desc_lines = wrap_text(c, desc, SANS, 10, tr_w - 28)
+        dy = sy - 12
+        max_desc = 12 if press else 16
+        for line in desc_lines[:max_desc]:
+            c.drawString(tx + 14, dy, line)
+            dy -= 13
 
+        # Press (bottom of card)
         if press:
-            c.setFillColor(Color(NAVY_R, NAVY_G, NAVY_B, 0.55))
-            c.setFont(SANS, 6.5)
-            press_lines = wrap_text(c, "Press: " + press, SANS, 6.5, tr_w - 20)
-            py = ty + 10
+            c.setStrokeColor(Color(0, 0, 0, 0.08))
+            c.setLineWidth(0.5)
+            c.line(tx + 14, ty + 40, tx + tr_w - 14, ty + 40)
+            c.setFillColor(Color(NAVY_R, NAVY_G, NAVY_B, 0.6))
+            c.setFont(SANS_BOLD, 8)
+            c.drawString(tx + 14, ty + 28, "PRESS")
+            c.setFillColor(SLATE)
+            c.setFont(SANS, 8)
+            press_lines = wrap_text(c, press, SANS, 8, tr_w - 28)
+            py = ty + 15
             for line in press_lines[:2]:
-                c.drawString(tx + 10, py, line)
-                py -= 8
+                c.drawString(tx + 14, py, line)
+                py -= 10
 
-    y -= tr_h + 12
-
-    # Disclosure footer
-    c.setFillColor(Color(NAVY_R, NAVY_G, NAVY_B, 0.6))
-    c.setFont(SANS, 8)
-    disclosure = "Breeze's co-founder Jett Fu is AirPop's founder & CEO. AirPop Halo was delivered by the same supply-chain and engineering team now powering Breeze."
-    disc_lines = wrap_text(c, disclosure, SANS, 8, CW)
-    for line in disc_lines:
-        c.drawString(MARGIN, y, line)
-        y -= 10
+    # Disclosure callout box — pinned near bottom of page
+    box_h = 60
+    box_y = MARGIN + 40
+    c.setFillColor(Color(TEAL_R, TEAL_G, TEAL_B, 0.08))
+    c.setStrokeColor(Color(TEAL_R, TEAL_G, TEAL_B, 0.4))
+    c.setLineWidth(0.75)
+    c.roundRect(MARGIN, box_y, CW, box_h, 6, fill=1, stroke=1)
+    c.setFillColor(NAVY)
+    c.setFont(SANS_BOLD, 11)
+    c.drawString(MARGIN + 18, box_y + box_h - 20, "Full disclosure.")
+    c.setFillColor(SLATE)
+    c.setFont(SANS, 10)
+    c.drawString(MARGIN + 18, box_y + box_h - 36,
+                 "Breeze's co-founder Jett Fu is AirPop's founder & CEO. AirPop Halo was delivered by the same")
+    c.drawString(MARGIN + 18, box_y + box_h - 50,
+                 "supply-chain and engineering team now powering Breeze.")
 
 
 def draw_timeline_page(c, W, H, MARGIN):
@@ -849,7 +887,7 @@ def generate_portrait_kit():
     c.drawString(MARGIN + 18, y + 15, "80%")
     c.setFillColor(WHITE)
     c.setFont(SANS, 13)
-    c.drawString(MARGIN + 70, y + 17, "of hardware startups fail at the manufacturing stage.")
+    c.drawString(MARGIN + 92, y + 17, "of hardware startups fail at the manufacturing stage.")
 
     # 2x3 pain point grid
     y -= 35
@@ -884,13 +922,19 @@ def generate_portrait_kit():
             ty -= 15
 
     # =================================================================
-    # PAGE 3: TEAM + TRACK RECORD
+    # PAGE 3: TEAM
     # =================================================================
     new_white_page("left")
     draw_team_page(c, W, H, MARGIN)
 
     # =================================================================
-    # PAGE 4: 6-STEP PROCESS  --  pcb strip top + white body
+    # PAGE 4: TRACK RECORD
+    # =================================================================
+    new_white_page("left")
+    draw_track_record_page(c, W, H, MARGIN)
+
+    # =================================================================
+    # PAGE 5: 6-STEP PROCESS  --  pcb strip top + white body
     # =================================================================
     new_strip_page(PHOTO_PCB)
 
@@ -1447,7 +1491,7 @@ def generate_landscape_deck():
     c.drawString(M + 25, H - 106, "80%")
     c.setFillColor(WHITE)
     c.setFont(SANS, 14)
-    c.drawString(M + 80, H - 104, "of hardware startups fail at manufacturing, not the idea stage.")
+    c.drawString(M + 100, H - 104, "of hardware startups fail at manufacturing, not the idea stage.")
 
     y_start = H - 145
     col_w = (CW - 30) / 2
@@ -1476,13 +1520,19 @@ def generate_landscape_deck():
             ty -= 14
 
     # =================================================================
-    # SLIDE 3: TEAM + TRACK RECORD
+    # SLIDE 3: TEAM
     # =================================================================
     new_white_slide("left")
     draw_team_page(c, W, H, M)
 
     # =================================================================
-    # SLIDE 4: 6-STEP PROCESS  --  pcb strip top + white
+    # SLIDE 4: TRACK RECORD
+    # =================================================================
+    new_white_slide("left")
+    draw_track_record_page(c, W, H, M)
+
+    # =================================================================
+    # SLIDE 5: 6-STEP PROCESS  --  pcb strip top + white
     # =================================================================
     new_strip_slide(PHOTO_PCB)
 
