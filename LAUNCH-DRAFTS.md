@@ -4,7 +4,7 @@
 
 ---
 
-## Slot 1 — HN @ Wed 00:00 CST (Tue 09:00 PT)
+## Slot 1 — HN @ Wed 2026-04-22 21:00 CST (Wed 09:00 ET)
 
 **Submit:** https://news.ycombinator.com/submitlink
 
@@ -40,7 +40,7 @@ Prices shift. Cert requirements change. If you spot something off, open an issue
 
 ---
 
-## Slot 2 — r/embedded @ Wed 00:15 CST
+## Slot 2 — r/embedded @ Wed 2026-04-22 21:30 CST
 
 **Submit:** https://www.reddit.com/r/embedded/submit
 
@@ -69,7 +69,7 @@ Feedback I'm looking for: if you've shipped Rockchip or Genio products in 2025-2
 
 ---
 
-## Slot 3 — r/electronics @ Wed 01:00 CST
+## Slot 3 — r/electronics @ Wed 2026-04-22 22:00 CST
 
 **Submit:** https://www.reddit.com/r/electronics/submit
 
@@ -98,7 +98,9 @@ Disclosure: I run a hardware engineering services shop. Tools are free regardles
 
 ---
 
-## Slot 4 — r/AI_Agents @ Wed 02:00 CST
+## Slot 4 — r/AI_Agents @ Wed 2026-04-22 22:30 CST
+
+(Final engagement sweep calendar reminder at 23:15 CST — reply to any unanswered comments before sleep.)
 
 **Submit:** https://www.reddit.com/r/AI_Agents/submit
 
