@@ -13,14 +13,24 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://breezehw.com"),
   title: "Breeze — Your Shenzhen Engineering Partner for AI Hardware",
   description:
     "From concept to production — BOM optimization, DFM, prototyping, and manufacturing for AI wearables and devices. No equity. No MOQ surprises. Just engineering.",
   openGraph: {
-    title: "Breeze — AI Hardware Manufacturing Partner",
+    title: "Breeze — Your Shenzhen Engineering Partner for AI Hardware",
     description:
-      "From concept to production — BOM optimization, DFM, prototyping, and manufacturing for AI wearables and devices.",
+      "Four free tools to pressure-test BOM, NRE, DFM, and certification before you commit a dollar. Open-source data, real Shenzhen pricing.",
+    url: "https://breezehw.com",
+    siteName: "Breeze",
     type: "website",
+    locale: "en_US",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Breeze — Your Shenzhen Engineering Partner for AI Hardware",
+    description:
+      "Four free tools to pressure-test BOM, NRE, DFM, and certification before you commit a dollar.",
   },
 };
 

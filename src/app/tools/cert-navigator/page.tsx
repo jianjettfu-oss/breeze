@@ -215,7 +215,7 @@ export default function CertNavigator() {
             Certification Navigator
           </h1>
           <p className="mt-3 text-lg text-[#64748B] max-w-2xl">
-            Tell us what your device does and where you want to sell it. We'll
+            Tell us what your device does and where you want to sell it. We&apos;ll
             show you exactly which certifications you need, how long they take,
             and what they cost.
           </p>

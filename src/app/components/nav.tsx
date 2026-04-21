@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { useState } from "react";
 
 export function Nav() {
@@ -9,7 +10,7 @@ export function Nav() {
   return (
     <nav className="sticky top-0 z-50 bg-white/90 backdrop-blur border-b border-gray-100">
       <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
-        <a href="/">
+        <Link href="/">
           <Image
             src="/breeze-logo.png"
             alt="Breeze"
@@ -18,7 +19,7 @@ export function Nav() {
             priority
             className="h-8 w-auto"
           />
-        </a>
+        </Link>
 
         {/* Desktop nav */}
         <div className="hidden sm:flex items-center gap-8 text-sm font-medium text-[#64748B]">
