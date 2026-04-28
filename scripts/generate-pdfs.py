@@ -540,11 +540,12 @@ def draw_track_record_page(c, W, H, MARGIN):
 
 
 def draw_timeline_page(c, W, H, MARGIN):
-    """Engagement Timeline — 6-phase horizontal gantt."""
+    """Engagement Timeline — 6-phase vertical timeline (rail on left)."""
     is_portrait = W < H
     CW = W - 2 * MARGIN
     y = H - MARGIN - 10
 
+    # Header
     c.setFillColor(NAVY)
     c.setFont(SANS_BOLD, 26 if is_portrait else 32)
     c.drawString(MARGIN, y - 22, "What happens after you sign")
@@ -553,60 +554,68 @@ def draw_timeline_page(c, W, H, MARGIN):
     c.drawString(MARGIN, y - 42,
                  "A predictable 12-week path to pilot. Transparent weekly sync.")
 
-    # Rail
-    rail_y = y - 130 if is_portrait else y - 130
+    # Vertical rail layout
     n = len(TIMELINE)
-    col_w = CW / n
+    rail_x = MARGIN + 28
+    rail_top = y - 90
+    row_h = 72 if is_portrait else 54  # tighter spacing in landscape (shorter page)
+    last_dot_y = rail_top - (n - 1) * row_h
 
+    # Rail line (vertical)
     c.setStrokeColor(Color(TEAL_R, TEAL_G, TEAL_B, 0.3))
     c.setLineWidth(2)
-    c.line(MARGIN + col_w * 0.15, rail_y, W - MARGIN - col_w * 0.15, rail_y)
+    c.line(rail_x, rail_top + 8, rail_x, last_dot_y - 8)
+
+    # Column geometry to the right of the rail
+    label_x = rail_x + 18           # week label
+    week_col_w = 78
+    text_x = label_x + week_col_w + 4   # phase title + desc
+    text_w = W - MARGIN - text_x - 4
 
     for idx, (week, phase, desc) in enumerate(TIMELINE):
-        cx = MARGIN + col_w * idx + col_w / 2
+        cy = rail_top - idx * row_h
 
         # Dot
         c.setFillColor(TEAL)
-        c.circle(cx, rail_y, 6, fill=1, stroke=0)
+        c.circle(rail_x, cy, 6, fill=1, stroke=0)
         c.setStrokeColor(WHITE)
         c.setLineWidth(2)
-        c.circle(cx, rail_y, 6, fill=0, stroke=1)
+        c.circle(rail_x, cy, 6, fill=0, stroke=1)
 
-        # Week label above rail
+        # Week label (teal, bold, uppercase)
         c.setFillColor(TEAL)
         c.setFont(SANS_BOLD, 9)
-        c.drawCentredString(cx, rail_y + 18, week.upper())
+        c.drawString(label_x, cy + 2, week.upper())
 
-        # Phase title below rail (wrap up to 2 lines)
+        # Phase title (navy, bold)
         c.setFillColor(NAVY)
-        c.setFont(SANS_BOLD, 10)
-        phase_lines = wrap_text(c, phase, SANS_BOLD, 10, col_w - 10)
-        py = rail_y - 22
-        for pl in phase_lines[:2]:
-            c.drawCentredString(cx, py, pl)
-            py -= 12
+        phase_size = 12 if is_portrait else 13
+        c.setFont(SANS_BOLD, phase_size)
+        c.drawString(text_x, cy + 6, phase)
 
-        # Desc
+        # Desc (slate, wrap up to 2 lines)
         c.setFillColor(SLATE)
-        c.setFont(SANS, 8)
-        desc_lines = wrap_text(c, desc, SANS, 8, col_w - 14)
-        dy = py - 4
-        for line in desc_lines[:4]:
-            c.drawCentredString(cx, dy, line)
-            dy -= 10
+        desc_size = 9 if is_portrait else 10
+        c.setFont(SANS, desc_size)
+        desc_lines = wrap_text(c, desc, SANS, desc_size, text_w)
+        dy = cy - 8
+        for line in desc_lines[:2]:
+            c.drawString(text_x, dy, line)
+            dy -= 11
 
-    # Callout box
-    box_y = rail_y - 110
+    # Callout box at bottom — tighter gap + height in landscape to clear footer
+    box_top_y = last_dot_y - (30 if is_portrait else 24)
+    box_h = 64 if is_portrait else 58
     c.setFillColor(Color(TEAL_R, TEAL_G, TEAL_B, 0.08))
-    c.roundRect(MARGIN, box_y - 60, CW, 62, 6, fill=1, stroke=0)
+    c.roundRect(MARGIN, box_top_y - box_h, CW, box_h, 6, fill=1, stroke=0)
     c.setFillColor(NAVY)
     c.setFont(SANS_BOLD, 13)
-    c.drawString(MARGIN + 20, box_y - 18, "Fixed-price at every gate.")
+    c.drawString(MARGIN + 20, box_top_y - 20, "Fixed-price at every gate.")
     c.setFillColor(SLATE)
     c.setFont(SANS, 10)
-    c.drawString(MARGIN + 20, box_y - 34,
+    c.drawString(MARGIN + 20, box_top_y - 36,
                  "EVT, DVT, and PVT gates each have defined deliverables and sign-off. No T&M. No scope-creep invoices.")
-    c.drawString(MARGIN + 20, box_y - 48,
+    c.drawString(MARGIN + 20, box_top_y - 50,
                  "Weekly status sync on Fridays with photos, videos, and next-week plan.")
 
 
