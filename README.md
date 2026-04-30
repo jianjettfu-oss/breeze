@@ -19,8 +19,7 @@ The site is four calculators and a few content pages, not a product install targ
 Each tool emails a PDF report when you submit an email. No login, no funnel.
 
 ### Companion resources
-- **Open toolkit** (data, checklists, frameworks): [`jianjettfu-oss/ai-hardware-toolkit`](https://github.com/jianjettfu-oss/ai-hardware-toolkit)
-- **Custom GPT** (conversational advisor built from the same data): *AI Hardware Manufacturing Advisor* on the OpenAI GPT Store
+- **Open toolkit** (data, checklists, frameworks): [`jianjettfu-oss/ai-hardware-toolkit`](https://github.com/jianjettfu-oss/ai-hardware-toolkit) — MIT-licensed source-of-truth behind every interactive tool on this site. Includes a Custom-GPT-ready knowledge bundle in `llm-toolkit/custom-gpt/` (`config.json`, `instructions.md`, `knowledge.md`) — fork it and stand up your own GPT in 5 minutes.
 - **Outreach kit** (PDF, A4, 14pp): [`public/breeze-outreach-kit.pdf`](./public/breeze-outreach-kit.pdf)
 - **Deck** (16:9, 14pp): [`public/breeze-deck.pdf`](./public/breeze-deck.pdf)
 
