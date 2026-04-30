@@ -1,0 +1,31 @@
+# Breeze
+
+> Shenzhen engineering partner for AI hardware. Concept to production.
+
+Breeze is a Shenzhen-based engineering services firm helping AI hardware founders move from concept to production. We provide BOM cost estimation, NRE budgeting, design-for-manufacturing review, and certification navigation (FCC, CE, UKCA, RCM, CCC). Open data behind every tool — audit our numbers before you trust them.
+
+## Tools
+
+- [BOM Cost Estimator](https://breezehw.com/tools/bom-estimator): 1K-volume component pricing for ESP32-S3, Rockchip RV1103/RK3562/RK3588S, MediaTek Genio, plus typical sensor/power/memory stacks.
+- [NRE Simulator](https://breezehw.com/tools/nre-simulator): Non-recurring engineering cost estimate for first production run — molds, certifications, samples, factory setup.
+- [DFM Checklist](https://breezehw.com/tools/dfm-checklist): Design-for-manufacturing review surfacing thermal, antenna, layout, and certification blockers.
+- [Cert Navigator](https://breezehw.com/tools/cert-navigator): FCC / CE / UKCA / RCM / CCC matrix — what applies, typical cost, typical timeline.
+
+## Open data
+
+- [AI Hardware Toolkit on GitHub](https://github.com/jianjettfu-oss/ai-hardware-toolkit): the data and checklists behind every Breeze tool. MIT licensed.
+
+## Resources
+
+- [Breeze Outreach Kit (PDF)](https://breezehw.com/breeze-outreach-kit.pdf)
+- [Breeze Deck (PDF)](https://breezehw.com/breeze-deck.pdf)
+
+## Team
+
+- Jett Fu — founder of AirPop (respiratory wearables, global distribution); 10+ years consumer hardware in Shenzhen.
+- Arting — incubator and outbound; embedded AI deal flow.
+- Sky — engineering delivery; factory relationships, cost negotiation, production ramp.
+
+## Contact
+
+hello@breezehw.com

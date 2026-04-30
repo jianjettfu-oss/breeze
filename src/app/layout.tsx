@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
+import { SiteStructuredData } from "./structured-data";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -41,7 +42,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${inter.variable} ${jetbrainsMono.variable}`}>
-      <body className="antialiased">{children}</body>
+      <body className="antialiased">
+        <SiteStructuredData />
+        {children}
+      </body>
     </html>
   );
 }

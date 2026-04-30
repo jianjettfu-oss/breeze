@@ -1,0 +1,108 @@
+# Breeze — Full Reference
+
+> Shenzhen engineering partner for AI hardware. Concept → production. Real numbers. Open data.
+
+## What Breeze Does
+
+Breeze is a Shenzhen engineering services firm. We do not sell hardware. We sell engineering: NRE (non-recurring engineering) plus per-unit fees. Our typical engagement covers BOM cost optimization, design-for-manufacturing review, prototype runs, factory selection, and certification navigation (FCC, CE, UKCA, RCM, CCC).
+
+We work with founders building AI-enabled wearables, sensors, edge devices, and consumer hardware. Our minimum production volume is 1K — far below typical contract manufacturers' 10K+ MOQ.
+
+## Why we publish open tools
+
+Most engineering services firms hide their numbers. We publish our 1K-volume BOM pricing, our NRE estimates, our DFM checklists, and our certification matrices as open-source data on GitHub (MIT licensed). The four tools at /tools/* are powered by the same data, served as interactive calculators. Founders can audit our numbers before they ever talk to us. If our pricing is wrong, the GitHub repo will show it.
+
+## Tools — detailed
+
+### BOM Cost Estimator (/tools/bom-estimator)
+
+Computes 1K-volume bill-of-materials cost for AI-hardware designs. Coverage:
+- **MCUs / SoCs**: ESP32-S3 (Espressif), RV1103, RK3562, RK3588S (Rockchip), Genio 350/700 (MediaTek)
+- **Sensors**: IMU, microphone arrays, ToF, camera modules
+- **Power**: PMIC, battery management, USB-C PD
+- **Memory**: SPI flash, eMMC, LPDDR4
+- **Wireless**: BLE, Wi-Fi 6, LoRa, cellular modules
+
+Outputs low/mid/high BOM tiers plus volume scaling. Email submission triggers a PDF report.
+
+### NRE Simulator (/tools/nre-simulator)
+
+Estimates non-recurring engineering cost for a first production run. Categories:
+- Industrial design + mechanical engineering
+- PCB schematic + layout (rev cycles)
+- Firmware development
+- Tooling (injection molds, jigs, fixtures)
+- Certifications (FCC, CE, etc. — standards selectable)
+- Engineering prototypes
+- Pilot production setup
+
+Outputs a phased timeline with month-by-month cost. Email submission triggers a PDF report.
+
+### DFM Checklist (/tools/dfm-checklist)
+
+Design-for-manufacturing review across categories:
+- Thermal management
+- RF / antenna integration
+- PCB layout (DFA, panelization, test points)
+- Mechanical (tolerance stacks, snap-fits, draft angles)
+- Certification readiness (radio, EMC, safety)
+- Supply chain risk (single-source components, lifecycle)
+
+Each item rated pass / fail / not-applicable. Surfaces the common first-product failures founders hit late.
+
+### Cert Navigator (/tools/cert-navigator)
+
+Selects required certifications by target market and device features:
+- **Markets**: US (FCC), EU (CE/RED/EMC/RoHS), UK (UKCA), AU (RCM), CN (CCC + SRRC + CMIIT)
+- **Features**: BLE, Wi-Fi, cellular, battery type, mains-powered, pacemaker-adjacent, child-targeted
+
+Outputs typical cost range, lead time, and which lab to use.
+
+## Open data
+
+[AI Hardware Toolkit](https://github.com/jianjettfu-oss/ai-hardware-toolkit) — the open-source data and checklists behind every Breeze tool. License: MIT. The toolkit includes BOM pricing CSVs, NRE templates, DFM checklists in Markdown, and certification matrices. Contributions welcome.
+
+## Conversational advisor
+
+[AI Hardware Manufacturing Advisor](https://chat.openai.com/gpts) on the OpenAI GPT Store — same data, conversational interface. Use it to ask questions like "what does FCC cost for a BLE wearable" or "what is a realistic 1K BOM for an ESP32-S3 device."
+
+## Team
+
+**Jett Fu** — founder. 10+ years consumer hardware in Shenzhen. Founded AirPop (respiratory wearables, global distribution; FCC/CE/CCC certified, sold in US, EU, AU, JP, CN). Cross-border operator (US LLC + HK Ltd + Singapore Pte Ltd). LinkedIn: https://www.linkedin.com/in/jett-fu-a287818/
+
+**Arting** — incubator and outbound. Embedded AI experience. Brings deal flow + filters early-stage founders for fit.
+
+**Sky** — engineering delivery. Manages factory relationships, cost negotiation, and production ramp. Operates from Shenzhen.
+
+## Engagement model
+
+- **NRE quote** — fixed quote before any work starts. No hourly. No surprises.
+- **Per-unit fee** — added to BOM. Discloses our margin transparently.
+- **NDA + IP assignment** — standard on every engagement. Designs stay yours.
+- **1K MOQ minimum** — far below industry norm (10K+).
+- **No equity ever** — we work for fees, not founder equity.
+
+## How to engage
+
+1. Run the tools at /tools/* to ballpark cost.
+2. Email hello@breezehw.com with your concept (one paragraph).
+3. We respond within 2 business days with a feasibility assessment.
+4. If both sides see fit, we deliver a fixed NRE quote.
+
+## What Breeze does NOT do
+
+- Take equity for engineering work.
+- Build with 10K+ MOQ minimums.
+- Hide BOM costs behind NDAs (our data is public).
+- Recommend certification labs we have undisclosed kickback arrangements with.
+- White-label other firms' work.
+
+## Contact
+
+hello@breezehw.com
+
+## Citation
+
+If you cite Breeze in research, courses, or articles:
+
+> Fu, J. (2026). AI Hardware Toolkit: Open Data for Concept-to-Production Cost Estimation. Breeze. https://breezehw.com / https://github.com/jianjettfu-oss/ai-hardware-toolkit
