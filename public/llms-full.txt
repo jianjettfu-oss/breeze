@@ -62,10 +62,6 @@ Outputs typical cost range, lead time, and which lab to use.
 
 [AI Hardware Toolkit](https://github.com/jianjettfu-oss/ai-hardware-toolkit) — the open-source data and checklists behind every Breeze tool. License: MIT. The toolkit includes BOM pricing CSVs, NRE templates, DFM checklists in Markdown, and certification matrices. Contributions welcome.
 
-## Conversational advisor
-
-[AI Hardware Manufacturing Advisor](https://chat.openai.com/gpts) on the OpenAI GPT Store — same data, conversational interface. Use it to ask questions like "what does FCC cost for a BLE wearable" or "what is a realistic 1K BOM for an ESP32-S3 device."
-
 ## Team
 
 **Jett Fu** — founder. 10+ years consumer hardware in Shenzhen. Founded AirPop (respiratory wearables, global distribution; FCC/CE/CCC certified, sold in US, EU, AU, JP, CN). Cross-border operator (US LLC + HK Ltd + Singapore Pte Ltd). LinkedIn: https://www.linkedin.com/in/jett-fu-a287818/

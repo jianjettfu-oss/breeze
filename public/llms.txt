@@ -13,7 +13,7 @@ Breeze is a Shenzhen-based engineering services firm helping AI hardware founder
 
 ## Open data
 
-- [AI Hardware Toolkit on GitHub](https://github.com/jianjettfu-oss/ai-hardware-toolkit): the data and checklists behind every Breeze tool. MIT licensed.
+- [AI Hardware Toolkit on GitHub](https://github.com/jianjettfu-oss/ai-hardware-toolkit): the data and checklists behind every Breeze tool. MIT licensed. Includes BOM cost reference, DFM checklist, NRE cost guide, certification guide, EVT/DVT/PVT checklist, supplier qualification rubric, and a Custom-GPT-ready knowledge bundle in `llm-toolkit/`.
 
 ## Resources
 
