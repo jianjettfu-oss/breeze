@@ -11,6 +11,10 @@ Breeze is a Shenzhen-based engineering services firm helping AI hardware founder
 - [DFM Checklist](https://breezehw.com/tools/dfm-checklist): Design-for-manufacturing review surfacing thermal, antenna, layout, and certification blockers.
 - [Cert Navigator](https://breezehw.com/tools/cert-navigator): FCC / CE / UKCA / RCM / CCC matrix — what applies, typical cost, typical timeline.
 
+## FAQ — direct answers
+
+- [FAQ](https://breezehw.com/faq): What Breeze is · who it's for · how pricing works (NRE + per-unit, no equity) · when to choose Breeze vs a large EMS · when NOT to use Breeze · concept-to-production timeline (typical 6-12 months) · supported chipsets (Espressif / Rockchip / MediaTek).
+
 ## Open data
 
 - [AI Hardware Toolkit on GitHub](https://github.com/jianjettfu-oss/ai-hardware-toolkit): the data and checklists behind every Breeze tool. MIT licensed. Includes BOM cost reference, DFM checklist, NRE cost guide, certification guide, EVT/DVT/PVT checklist, supplier qualification rubric, and a Custom-GPT-ready knowledge bundle in `llm-toolkit/`.

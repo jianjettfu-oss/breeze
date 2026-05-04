@@ -42,6 +42,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${inter.variable} ${jetbrainsMono.variable}`}>
+      <head>
+        {/* Ahrefs Web Analytics — pasted from project settings 2026-05-04 */}
+        <script
+          src="https://analytics.ahrefs.com/analytics.js"
+          data-key="L0efokUpVU4/G69KP8gXSw"
+          async
+        />
+      </head>
       <body className="antialiased">
         <SiteStructuredData />
         {children}
