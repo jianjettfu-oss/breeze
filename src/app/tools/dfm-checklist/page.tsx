@@ -136,7 +136,7 @@ export default function DfmChecklist() {
             DFM Checklist for AI Hardware
           </h1>
           <p className="mt-3 text-lg text-[#64748B] max-w-2xl">
-            30 design-for-manufacturability checks specific to AI devices.
+            29 design-for-manufacturability checks specific to AI devices.
             Catch problems before they cost you a mold revision.
           </p>
         </div>

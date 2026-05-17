@@ -346,12 +346,13 @@ export default function Home() {
               </span>
             </div>
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight tracking-tight">
-              Your Engineering Partner{" "}
-              <span className="text-breeze-teal">for AI Hardware</span>
+              Know if your AI hardware can be{" "}
+              <span className="text-breeze-teal">built</span> before you talk
+              to a factory.
             </h1>
             <p className="mt-6 text-lg md:text-xl text-gray-300 max-w-2xl leading-relaxed">
-              From concept to production — BOM optimization, DFM, prototyping,
-              and manufacturing. China supply chain expertise, global delivery.
+              Get a BOM range, NRE estimate, DFM blockers, certification path,
+              and first-run plan in 10 minutes.
             </p>
             <div className="mt-10 flex flex-col sm:flex-row gap-4">
               <a
