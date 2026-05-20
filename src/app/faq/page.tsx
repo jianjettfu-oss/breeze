@@ -51,6 +51,22 @@ const QAS: QA[] = [
     q: "What's open about Breeze that other partners don't share?",
     a: "Our engineering data is open-sourced on GitHub: ai-hardware-toolkit (MIT license) — BOM cost references, DFM checklist, NRE cost guide, certification matrix, EVT/DVT/PVT checklist, supplier qualification rubric. Every Breeze tool on this site runs on that public data. You can audit our numbers before you trust us — that's the point.",
   },
+  {
+    q: "What's a realistic BOM cost for a $99 AI hardware product?",
+    a: "For a sub-$100 retail product, target BOM is roughly USD 15-25 (15-25% of MSRP) once you factor distributor margin (typically 50% off retail), retailer margin (~50% gross), and your own ~30% operating margin. That's tight for AI hardware — you're picking ESP32-S3 ($1.50-2.50) or Rockchip RV1103 ($2-3) class silicon, on-package flash, a simple sensor stack, plastic enclosure, no display or a small mono OLED, and a 200-400mAh battery. Custom NPU silicon, color displays, or cellular modems break the budget. The unspoken constraint: most $99 AI hardware lives or dies on whether you accept Amazon FBA economics (which compress the margin model) or build direct distribution.",
+  },
+  {
+    q: "What's the difference between EVT, DVT, and PVT?",
+    a: "Three engineering validation stages on the path to mass production. EVT (Engineering Validation Test): 10-30 units, hand-assembled, first full integration of all subsystems — proves the design works at all. DVT (Design Validation Test): 30-100 units, near-final tooling, used for certification submission and design freeze. Tests robustness, yield, and reliability. PVT (Production Validation Test): 100-500 units, full production line, validates the factory can actually build at quality and yield. After PVT pass, you ramp to MP (mass production). Typical cadence for a moderate-complexity AI device: EVT week 8-12, DVT week 16-22, PVT week 24-30, with MP starting around week 30-36.",
+  },
+  {
+    q: "How do 2026 US tariffs affect China-made AI hardware?",
+    a: "As of mid-2026, China-origin consumer electronics face Section 301 tariffs that have been progressively raised since 2024 — most consumer AI hardware HTS codes now sit in the 15-25% range, with smartwatch/wearable categories on the higher end. The de minimis exemption (under USD 800 per shipment) was tightened in 2025, closing the prior direct-to-consumer Chinese shipping loophole. Practical implications: (1) build tariff into your landed-cost model from day one, not as an afterthought; (2) consider Mexico or Vietnam final-step assembly to qualify under USMCA or other origin rules — but only at volumes that absorb the supply-chain complexity; (3) verify HTS classification with a US customs broker before quoting retail. We're a Shenzhen partner — we'll tell you when reshoring final assembly genuinely helps versus when it just adds cost.",
+  },
+  {
+    q: "Can I manufacture in Shenzhen without a China entity?",
+    a: "Yes — most of our founder clients don't have a China entity. Standard arrangement: the manufacturing partner acts as importer/exporter of record on the China side; you transact in USD via Hong Kong or Singapore; goods ship FOB Shenzhen or DDP to your destination. You'll need a foreign entity (US LLC, HK Ltd, SG Pte Ltd are the common choices) to hold supplier contracts and IP. For SRRC/CCC certification, the local Chinese applicant is handled by the manufacturing partner. The friction points are (a) IP protection — get NNN agreements with all suppliers, (b) currency exposure if RMB moves materially, (c) export-control review if your AI capability falls under EAR (most consumer wearables don't, but verify). No China entity needed for >95% of consumer AI hardware projects.",
+  },
 ];
 
 const FAQ_JSONLD = {

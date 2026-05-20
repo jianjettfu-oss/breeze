@@ -13,6 +13,7 @@ const ORG_JSONLD = {
     sameAs: [
       "https://www.linkedin.com/in/jett-fu-a287818/",
       "https://github.com/jianjettfu-oss",
+      "https://x.com/jianjettfu",
     ],
   },
   sameAs: [

@@ -221,6 +221,59 @@ export default function CertNavigator() {
           </p>
         </div>
 
+        {/* Static reference table — crawlable cert matrix for LLMs/search engines */}
+        <section className="mb-12 border border-gray-100 rounded-xl overflow-hidden">
+          <details>
+            <summary className="cursor-pointer px-5 py-4 bg-gray-50 hover:bg-gray-100 text-sm font-semibold text-[#1B3A5C]">
+              📋 Reference: full certification cost &amp; timeline matrix (2026)
+            </summary>
+            <div className="overflow-x-auto">
+              <table className="w-full text-sm">
+                <caption className="sr-only">
+                  Consumer AI hardware certification cost, lead time, and region matrix for FCC, CE, UKCA, RCM, CCC, SRRC, MIC, ISED, UN38.3, and UL.
+                </caption>
+                <thead className="bg-gray-50/50">
+                  <tr className="text-left text-xs text-[#64748B] uppercase tracking-wide">
+                    <th className="px-5 py-3">Cert</th>
+                    <th className="px-5 py-3">Region</th>
+                    <th className="px-5 py-3">Mandatory</th>
+                    <th className="px-5 py-3">USD typical</th>
+                    <th className="px-5 py-3">USD range</th>
+                    <th className="px-5 py-3">Lead time</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {certifications.map((c) => (
+                    <tr key={c.id} className="border-t border-gray-100">
+                      <td className="px-5 py-3 text-[#1B3A5C] font-medium whitespace-nowrap">
+                        {c.flag} {c.name}
+                      </td>
+                      <td className="px-5 py-3 text-[#3F546B]">{c.region}</td>
+                      <td className="px-5 py-3 text-[#64748B]">
+                        {c.required ? "Yes" : "Conditional"}
+                      </td>
+                      <td className="px-5 py-3 text-[#1B3A5C] font-semibold whitespace-nowrap">
+                        ${c.cost.mid.toLocaleString()}
+                      </td>
+                      <td className="px-5 py-3 text-[#64748B] whitespace-nowrap">
+                        ${c.cost.low.toLocaleString()}–${c.cost.high.toLocaleString()}
+                      </td>
+                      <td className="px-5 py-3 text-[#64748B] whitespace-nowrap">
+                        {c.timeline}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+              <p className="px-5 py-3 text-xs text-[#64748B] bg-gray-50/50 leading-relaxed">
+                Most consumer AI hardware needs FCC (US) + CE/RED (EU) + UN38.3 (battery transport) at minimum.
+                CCC applies only to specific product categories in China — many AI wearables are exempt.
+                Most certs can be tested in parallel; SRRC must precede CCC.
+              </p>
+            </div>
+          </details>
+        </section>
+
         {/* Filters */}
         <div className="grid md:grid-cols-2 gap-8 mb-12">
           <div>

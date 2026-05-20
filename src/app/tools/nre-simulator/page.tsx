@@ -138,6 +138,53 @@ export default function NreSimulator() {
           </p>
         </div>
 
+        {/* Static reference table — crawlable cost matrix for LLMs/search engines */}
+        <section className="mb-12 border border-gray-100 rounded-xl overflow-hidden">
+          <details>
+            <summary className="cursor-pointer px-5 py-4 bg-gray-50 hover:bg-gray-100 text-sm font-semibold text-[#1B3A5C]">
+              📋 Reference: full NRE cost &amp; timeline matrix (Shenzhen, 2026)
+            </summary>
+            <div className="overflow-x-auto">
+              <table className="w-full text-sm">
+                <caption className="sr-only">
+                  Breeze NRE cost ranges by engineering category and complexity tier, Shenzhen 2026 USD pricing.
+                </caption>
+                <thead className="bg-gray-50/50">
+                  <tr className="text-left text-xs text-[#64748B] uppercase tracking-wide">
+                    <th className="px-5 py-3">Category</th>
+                    <th className="px-5 py-3">Tier</th>
+                    <th className="px-5 py-3">USD low</th>
+                    <th className="px-5 py-3">USD typical</th>
+                    <th className="px-5 py-3">USD high</th>
+                    <th className="px-5 py-3">Lead time</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {nreCategories.flatMap((cat) =>
+                    cat.options.map((opt) => (
+                      <tr key={`${cat.id}-${opt.id}`} className="border-t border-gray-100">
+                        <td className="px-5 py-3 text-[#1B3A5C] font-medium whitespace-nowrap">
+                          {cat.icon} {cat.label}
+                        </td>
+                        <td className="px-5 py-3 text-[#3F546B]">{opt.label}</td>
+                        <td className="px-5 py-3 text-[#64748B] whitespace-nowrap">${opt.low.toLocaleString()}</td>
+                        <td className="px-5 py-3 text-[#1B3A5C] font-semibold whitespace-nowrap">${opt.mid.toLocaleString()}</td>
+                        <td className="px-5 py-3 text-[#64748B] whitespace-nowrap">${opt.high.toLocaleString()}</td>
+                        <td className="px-5 py-3 text-[#64748B] whitespace-nowrap">{timelineEstimates[cat.id]?.weeks ?? "—"}w</td>
+                      </tr>
+                    ))
+                  )}
+                </tbody>
+              </table>
+              <p className="px-5 py-3 text-xs text-[#64748B] bg-gray-50/50 leading-relaxed">
+                Engineering NRE phases run in parallel; prototyping and certification add sequentially.
+                Total first-engagement NRE typically USD $15K–$60K depending on complexity.
+                Pricing reflects Shenzhen engineering service rates as of 2026.
+              </p>
+            </div>
+          </details>
+        </section>
+
         <div className="grid lg:grid-cols-3 gap-10">
           {/* Left: category selector */}
           <div className="lg:col-span-2 space-y-10">

@@ -20,14 +20,9 @@ function Badge({ severity }: { severity: Severity }) {
 
 export default function DfmChecklist() {
   const [checked, setChecked] = useState<Record<string, "pass" | "fail" | "na">>({});
-  const [expanded, setExpanded] = useState<Record<string, boolean>>({});
 
   const toggle = (id: string, value: "pass" | "fail" | "na") => {
     setChecked((prev) => ({ ...prev, [id]: prev[id] === value ? undefined! : value }));
-  };
-
-  const toggleExpand = (id: string) => {
-    setExpanded((prev) => ({ ...prev, [id]: !prev[id] }));
   };
 
   const allItems = useMemo(
@@ -145,7 +140,7 @@ export default function DfmChecklist() {
           {/* Left: checklist */}
           <div className="lg:col-span-2 space-y-10">
             {checkCategories.map((cat) => (
-              <div key={cat.id}>
+              <section key={cat.id} id={cat.id}>
                 <h3 className="text-sm font-semibold text-[#1B3A5C] uppercase tracking-wide mb-4">
                   {cat.icon} {cat.label}
                   <span className="ml-2 text-xs font-normal text-[#64748B] normal-case">
@@ -155,7 +150,6 @@ export default function DfmChecklist() {
                 <div className="space-y-3">
                   {cat.items.map((item) => {
                     const state = checked[item.id];
-                    const isExpanded = expanded[item.id];
                     return (
                       <div
                         key={item.id}
@@ -213,38 +207,36 @@ export default function DfmChecklist() {
                               </button>
                             </div>
                           </div>
-                          <button
-                            onClick={() => toggleExpand(item.id)}
-                            className="text-xs text-[#2DD4A8] font-medium mt-2 hover:underline"
-                          >
-                            {isExpanded ? "Hide details ↑" : "Why this matters ↓"}
-                          </button>
+                          {/* Native <details>: content stays in DOM for crawlers; user toggles visually. */}
+                          <details className="mt-2">
+                            <summary className="text-xs text-[#2DD4A8] font-medium cursor-pointer hover:underline list-none">
+                              Why this matters ↓
+                            </summary>
+                            <div className="space-y-2 border-t border-gray-100 pt-3 mt-3">
+                              <div>
+                                <p className="text-xs font-semibold text-[#1B3A5C] mb-0.5">
+                                  Why it matters
+                                </p>
+                                <p className="text-xs text-[#64748B] leading-relaxed">
+                                  {item.why}
+                                </p>
+                              </div>
+                              <div>
+                                <p className="text-xs font-semibold text-[#1B3A5C] mb-0.5">
+                                  How to fix
+                                </p>
+                                <p className="text-xs text-[#64748B] leading-relaxed">
+                                  {item.fix}
+                                </p>
+                              </div>
+                            </div>
+                          </details>
                         </div>
-                        {isExpanded && (
-                          <div className="px-4 pb-4 space-y-2 border-t border-gray-100 pt-3">
-                            <div>
-                              <p className="text-xs font-semibold text-[#1B3A5C] mb-0.5">
-                                Why it matters
-                              </p>
-                              <p className="text-xs text-[#64748B] leading-relaxed">
-                                {item.why}
-                              </p>
-                            </div>
-                            <div>
-                              <p className="text-xs font-semibold text-[#1B3A5C] mb-0.5">
-                                How to fix
-                              </p>
-                              <p className="text-xs text-[#64748B] leading-relaxed">
-                                {item.fix}
-                              </p>
-                            </div>
-                          </div>
-                        )}
                       </div>
                     );
                   })}
                 </div>
-              </div>
+              </section>
             ))}
           </div>
 
