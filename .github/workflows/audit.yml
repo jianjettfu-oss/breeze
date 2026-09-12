@@ -1,0 +1,146 @@
+name: Security audit
+
+# Why this file exists (2026-09-12, DM S370): until today this PUBLIC repo — the
+# source of breezehw.com — had NO CI at all. Not a weak gate: no
+# .github/workflows directory. That is how a critical Next.js advisory (App
+# Router middleware/proxy bypass) sat here unnoticed while `next` stayed pinned
+# at 16.2.4, and it is why DM's ci-health read this repo as green: it grades
+# repos that are red, and nothing that never runs can be red.
+#
+# Scope is deliberately just the dependency gate, matching what was approved.
+# Still absent and tracked separately: no lint or build check runs on push here
+# (Vercel builds the site, but its result is not a gate in this repo), and there
+# is no test suite. Dependabot alerts were enabled on 2026-09-12 and are the
+# complementary half — they notice a new advisory; this gate refuses to go green
+# while one is present.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  schedule:
+    # Weekly Monday 09:35 UTC. This repo gets pushed rarely, so a push-only gate
+    # would leave months between checks — the observation window has to be
+    # faster than the thing being observed, and advisories arrive on their own
+    # schedule, not ours. Offset from the other repos so they do not contend.
+    - cron: '35 9 * * 1'
+
+jobs:
+  # -------------------------------------------------------------------
+  # Security audit — fails on high or critical advisories.
+  # Ported from digital-me's ci.yml on 2026-09-12 (DM S370), byte-identical to
+  # the copy in global-solo apart from that repo's app/ working-directory note —
+  # derived from it by script, not retyped, so the three cannot drift apart.
+  # Deviations from digital-me's original: the allowlist is read through
+  # $GITHUB_WORKSPACE, and the job also runs on the weekly schedule above.
+  # -------------------------------------------------------------------
+  security:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      # The gate must distinguish "no vulnerabilities" from "could not ask".
+      # `npm audit --audit-level=high` cannot: a registry-side outage exits
+      # non-zero with the same shape as a real finding, and if the endpoint ever
+      # degrades to a 200 with an empty advisory set the same command reads GREEN
+      # and the gate goes blind with no signal at all. So parse the report
+      # ourselves, retry a transient failure 3×, and fail RED when the report is
+      # unusable — a run that checked nothing must not be indistinguishable from
+      # a clean one. (digital-me measured both halves of this: 36 red runs on a
+      # byte-identical lockfile from an endpoint outage, and one green run that
+      # verified nothing.)
+      - name: Audit for high/critical vulnerabilities
+        run: |
+          for attempt in 1 2 3; do
+            npm audit --json > audit.json 2> audit.err || true
+            if node -e 'const r=JSON.parse(require("fs").readFileSync("audit.json","utf8")); process.exit(r.metadata && r.metadata.vulnerabilities ? 0 : 1)' 2>/dev/null; then
+              [ "$attempt" -gt 1 ] && echo "audit succeeded on attempt $attempt"
+              break
+            fi
+            echo "audit attempt $attempt did not return a usable report"
+            [ "$attempt" -lt 3 ] && sleep $((attempt * 10))
+          done
+          node -e '
+            const fs = require("fs"), path = require("path");
+            let report = null;
+            try { report = JSON.parse(fs.readFileSync("audit.json", "utf8")); } catch {}
+            const counts = report && report.metadata && report.metadata.vulnerabilities;
+            if (!counts) {
+              console.log("::error title=Security gate DEGRADED::npm audit unreachable after 3 attempts — dependencies were NOT checked. This is red on purpose: a run that checked nothing must not read green.");
+              console.log("--- npm stderr ---");
+              try { console.log(fs.readFileSync("audit.err", "utf8").slice(0, 2000)); } catch {}
+              process.exit(1);
+            }
+            // Expiring allowlist. Justified for exactly one situation: an advisory
+            // with NO patched release anywhere, where a permanently red gate stops
+            // carrying signal and new advisories hide behind the wallpaper.
+            // Suppression is per-GHSA, loud and time-boxed: an expired entry that
+            // still matches turns the gate red again with a re-review message.
+            // Anything unlisted fails exactly as before. Ships EMPTY here.
+            // Candidate roots, in order: the Actions workspace, then cwd, then its
+            // parent. Identical in all four repos on purpose even though their cwds
+            // differ (global-solo runs with working-directory app/) — a path that
+            // depends on the repo is a path that silently reads the wrong file.
+            const roots = [process.env.GITHUB_WORKSPACE, ".", ".."].filter(Boolean);
+            let allow = [];
+            for (const r of roots) {
+              try { allow = JSON.parse(fs.readFileSync(path.join(r, ".github", "audit-allowlist.json"), "utf8")).entries || []; break; } catch {}
+            }
+            const today = new Date().toISOString().slice(0, 10);
+            const live = new Map(), expired = new Map();
+            for (const e of allow) (e.expires > today ? live : expired).set(e.ghsa, e);
+            const ghsaOf = (via) => (via.url && via.url.match(/GHSA-[a-z0-9-]+/i) || [null])[0];
+            // A vuln entry is suppressed only if EVERY advisory on it is live-allowlisted;
+            // chain entries (via = package-name strings) inherit from the packages they
+            // point at, resolved to fixpoint so a wrapper follows its vulnerable dep.
+            const vulns = report.vulnerabilities || {};
+            const suppressed = new Set(), expiredHits = new Set();
+            let changed = true;
+            while (changed) {
+              changed = false;
+              for (const [name, adv] of Object.entries(vulns)) {
+                if (suppressed.has(name)) continue;
+                const vias = adv.via || [];
+                if (vias.length === 0) continue;
+                const ok = vias.every((v) => {
+                  if (typeof v === "string") return suppressed.has(v);
+                  const g = ghsaOf(v);
+                  if (g && expired.has(g)) { expiredHits.add(g); return false; }
+                  return g && live.has(g);
+                });
+                if (ok) { suppressed.add(name); changed = true; }
+              }
+            }
+            let n = 0;
+            for (const [name, adv] of Object.entries(vulns)) {
+              if (adv.severity !== "high" && adv.severity !== "critical") continue;
+              if (suppressed.has(name)) {
+                const exp = [...(adv.via||[])].map((v)=>typeof v==="object"&&ghsaOf(v)&&live.get(ghsaOf(v))?live.get(ghsaOf(v)).expires:null).filter(Boolean)[0]
+                  || [...live.values()].map((e)=>e.expires).sort()[0]; // chain entries (via=string) inherit the earliest live expiry
+                console.log("SUPPRESSED\t" + name + "\t(allowlisted, expires " + exp + ")");
+                continue;
+              }
+              console.log(adv.severity + "\t" + name);
+              n++;
+            }
+            for (const g of expiredHits) {
+              console.log("::error title=Allowlist entry EXPIRED::" + g + " expired " + expired.get(g).expires + " and the advisory is still present — re-review it (.github/audit-allowlist.json); silence does not renew itself.");
+            }
+            for (const [g, e] of live) {
+              const stillMatches = Object.values(vulns).some((adv) => (adv.via || []).some((v) => typeof v === "object" && ghsaOf(v) === g));
+              if (!stillMatches) console.log("::warning title=Stale allowlist entry::" + g + " no longer matches any advisory — remove it from .github/audit-allowlist.json");
+            }
+            if (n > 0 || expiredHits.size > 0) {
+              if (n > 0) console.log("::error title=Vulnerable dependencies::" + n + " high/critical advisory(ies) — run `npm audit fix`");
+              process.exit(1);
+            }
+            console.log("npm audit clean — 0 high/critical" + (suppressed.size ? " (" + suppressed.size + " suppressed by expiring allowlist — see SUPPRESSED lines)" : ""));
+          '

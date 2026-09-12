@@ -1,0 +1,16 @@
+{
+  "_doc": "Per-GHSA, time-boxed suppression for the `security` job in breeze. Read through $GITHUB_WORKSPACE.",
+  "_when_an_entry_is_justified": "Exactly one situation: the advisory has NO patched release anywhere, so no amount of `npm audit fix`, `overrides`, or a non-breaking bump can clear it. Verify that before adding a row — `fixAvailable: true` in `npm audit --json` means an entry is NOT justified, even when `npm audit fix` fails to reach it (a transitive pinned by an intermediate package is fixable with an `overrides` entry; global-solo did exactly that for brace-expansion@1 on 2026-09-12).",
+  "_when_an_entry_is_NOT_justified": "To get CI green today. A suppression that hides a fixable advisory is wallpaper: it turns the gate into a thing that cannot report the class of problem it exists to report, and the next advisory hides behind it.",
+  "_semantics": "An entry suppresses its GHSA until `expires`. After that date, if the advisory is STILL present the gate turns red with an `Allowlist entry EXPIRED` error — silence does not renew itself. If a live entry no longer matches any advisory the gate emits a `Stale allowlist entry` warning so the row gets deleted rather than accumulating.",
+  "_expiry_guidance": "Short. 30-90 days. An expiry far enough out to be forgotten defeats the mechanism.",
+  "_row_shape": {
+    "ghsa": "GHSA-xxxx-xxxx-xxxx",
+    "package": "name",
+    "expires": "YYYY-MM-DD",
+    "why": "why no patched release exists, and what would change that",
+    "reviewed": "YYYY-MM-DD by whom"
+  },
+  "_history": "Shipped EMPTY 2026-09-12 (DM S370). On that date this tree went from 13 advisories (1 critical / 6 high) to 0 — every one was fixable, so there was nothing legitimate to suppress. If this file is ever non-empty, the gate is carrying debt: read the `why` on each row before trusting a green run.",
+  "entries": []
+}
