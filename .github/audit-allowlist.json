@@ -12,5 +12,13 @@
     "reviewed": "YYYY-MM-DD by whom"
   },
   "_history": "Shipped EMPTY 2026-09-12 (DM S370). On that date this tree went from 13 advisories (1 critical / 6 high) to 0 — every one was fixable, so there was nothing legitimate to suppress. If this file is ever non-empty, the gate is carrying debt: read the `why` on each row before trusting a green run.",
-  "entries": []
+  "entries": [
+    {
+      "ghsa": "GHSA-vfj7-8cjw-p6xm",
+      "package": "braces",
+      "expires": "2026-12-05",
+      "why": "Stack-exhaustion DoS in braces <=3.0.3; 3.0.3 is the latest published version, so no patched release exists and no `overrides` can reach one. Dev-only path: eslint-config-next@16.3.8 > @next/eslint-plugin-next > fast-glob@3.3.1 > micromatch@4.0.8 > braces@3.0.3, fed our own glob patterns at lint time. npm's only offered fix is a two-major DOWNGRADE of eslint-config-next to 14.2.35 (isSemVerMajor), mismatched with next 16.3.8 — rejected. Changes when braces ships a fix, or when @next/eslint-plugin-next drops fast-glob 3.3.1.",
+      "reviewed": "2026-10-06 by DM S525 (Claude) — verified with `npm view braces versions` (tail 3.0.3) and `npm audit --json`"
+    }
+  ]
 }
