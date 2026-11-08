@@ -69,6 +69,7 @@ export const STAGES: Stage[] = [
       { code: "L1", check: "SMT yield", criteria: ">98% first-pass yield" },
       { code: "L4", check: "Functional test pass rate", criteria: ">95% first pass" },
       { code: "Q2", check: "Unit-to-unit consistency", criteria: "Key specs within +/-10% across 20 random units" },
+      { code: "Q4", check: "Outgoing QC sampling", criteria: "AQL 0 for critical, 2.5 for major, 4.0 for minor defects" },
       { code: "FP3", check: "Firmware version locked", criteria: "All units ship with approved firmware version" },
       { code: "FP4", check: "OTA server ready", criteria: "Production OTA endpoint live and tested" },
       { code: "C1", check: "All certifications received", criteria: "FCC, CE, UL, UN38.3 (as applicable) certs in hand" },
