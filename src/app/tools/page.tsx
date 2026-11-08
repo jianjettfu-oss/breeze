@@ -59,7 +59,11 @@ export default function ToolsIndex() {
         </ul>
 
         <p className="mt-12 text-sm text-[#64748B] leading-relaxed">
-          Drew your design with AI tools? Read{" "}
+          Want the numbers worked through for three example devices? Read{" "}
+          <Link href="/ai-hardware-cost" className="text-[#2DD4A8] hover:underline font-medium">
+            what an AI hardware device costs to build
+          </Link>
+          . Drew your design with AI tools? Read{" "}
           <Link href="/ai-design-to-factory" className="text-[#2DD4A8] hover:underline font-medium">
             what to check before it goes to a factory
           </Link>

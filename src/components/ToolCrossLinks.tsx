@@ -35,11 +35,18 @@ export const links: { slug: ToolSlug | "faq"; href: string; title: string; desc:
   },
 ];
 
-export const guide = {
-  href: "/ai-design-to-factory",
-  title: "Guide: AI-made design to factory",
-  desc: "What AI design tools miss, and a checklist before you pay for tooling.",
-};
+export const guides = [
+  {
+    href: "/ai-hardware-cost",
+    title: "Guide: what an AI device costs",
+    desc: "Per-unit cost for three example builds, one-time costs, and the 2026 memory jump.",
+  },
+  {
+    href: "/ai-design-to-factory",
+    title: "Guide: AI-made design to factory",
+    desc: "What AI design tools miss, and a checklist before you pay for tooling.",
+  },
+];
 
 export default function ToolCrossLinks({ current }: { current: ToolSlug }) {
   return (
@@ -47,7 +54,7 @@ export default function ToolCrossLinks({ current }: { current: ToolSlug }) {
       <h2 id="more-tools" className="text-xl font-semibold text-[#1B3A5C] mb-5">
         Free tools and guides
       </h2>
-      <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {links
           .filter((l) => l.slug !== current)
           .map((l) => (
@@ -61,15 +68,17 @@ export default function ToolCrossLinks({ current }: { current: ToolSlug }) {
               </Link>
             </li>
           ))}
-        <li>
-          <Link
-            href={guide.href}
-            className="block h-full rounded-xl border border-gray-100 p-4 hover:border-[#2DD4A8] transition-colors"
-          >
-            <span className="block text-sm font-semibold text-[#1B3A5C]">{guide.title} →</span>
-            <span className="mt-1 block text-xs text-[#64748B] leading-relaxed">{guide.desc}</span>
-          </Link>
-        </li>
+        {guides.map((g) => (
+          <li key={g.href}>
+            <Link
+              href={g.href}
+              className="block h-full rounded-xl border border-gray-100 p-4 hover:border-[#2DD4A8] transition-colors"
+            >
+              <span className="block text-sm font-semibold text-[#1B3A5C]">{g.title} →</span>
+              <span className="mt-1 block text-xs text-[#64748B] leading-relaxed">{g.desc}</span>
+            </Link>
+          </li>
+        ))}
       </ul>
     </section>
   );
