@@ -146,8 +146,12 @@ export default function AiHardwareCost() {
             estimator puts a simple voice pendant at about {usd(voice.unit.mid)} per unit and a camera
             device at about {usd(camera.unit.mid)}, before freight and duty. One-time costs for
             design, tooling, prototypes and certification range from about {usd(NRE_LOW)}, if every
-            line takes its simplest option, to about {usd(NRE_HIGH)}, if every line takes its most
-            complex one. Watch memory in 2026: it is {camera.memoryShare}% of the camera
+            line takes its cheapest single option, to about {usd(NRE_HIGH)}, if every line takes its
+            most expensive one. Your own choices fall in between, and the{" "}
+            <Link href="/tools/nre-simulator" className={a}>
+              NRE Quote Simulator
+            </Link>{" "}
+            adds them up. Watch memory in 2026: it is {camera.memoryShare}% of the camera
             device&apos;s unit cost.
           </p>
         </section>
