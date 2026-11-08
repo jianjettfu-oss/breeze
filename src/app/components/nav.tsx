@@ -32,6 +32,9 @@ export function Nav() {
           <a href="#why" className="hover:text-[#1B3A5C] transition-colors">
             Why Breeze
           </a>
+          <a href="/faq" className="hover:text-[#1B3A5C] transition-colors">
+            FAQ
+          </a>
           <a
             href="#contact"
             className="bg-[#2DD4A8] text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-[#2DD4A8]/90 transition-colors"
@@ -85,6 +88,13 @@ export function Nav() {
             className="block text-sm font-medium text-[#64748B] hover:text-[#1B3A5C]"
           >
             Why Breeze
+          </a>
+          <a
+            href="/faq"
+            onClick={() => setOpen(false)}
+            className="block text-sm font-medium text-[#64748B] hover:text-[#1B3A5C]"
+          >
+            FAQ
           </a>
           <a
             href="#contact"

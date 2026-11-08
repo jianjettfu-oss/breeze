@@ -13,7 +13,7 @@ Breeze is a Shenzhen-based engineering services firm helping AI hardware founder
 
 ## FAQ — direct answers
 
-- [FAQ](https://breezehw.com/faq): What Breeze is · who it's for · how pricing works (NRE + per-unit, no equity) · when to choose Breeze vs a large EMS · when NOT to use Breeze · concept-to-production timeline (typical 6-12 months) · supported chipsets (Espressif / Rockchip / MediaTek).
+- [FAQ](https://breezehw.com/faq): What Breeze is · who it's for · how pricing works (feasibility and sourcing sprint $3-5K, then monthly management fees, third-party costs at cost, cash only, no equity) · when to choose Breeze vs a large EMS · when NOT to use Breeze · concept-to-production timeline (typical 6-12 months) · supported chipsets (Espressif / Rockchip / MediaTek).
 
 ## Open data
 
@@ -27,8 +27,9 @@ Breeze is a Shenzhen-based engineering services firm helping AI hardware founder
 ## Team
 
 - Jett Fu — founder of AirPop (respiratory wearables, global distribution); 10+ years consumer hardware in Shenzhen.
-- Arting — incubator and outbound; embedded AI deal flow.
-- Sky — engineering delivery; factory relationships, cost negotiation, production ramp.
+- Jank Liu — supply chain and quality lead; 30 years across industrial, PCB, connector, smart mask and rail supply chains.
+- Sky — engineering lead; 10+ years in the Shenzhen consumer electronics supply chain, factory relationships, production ramp.
+- Arting Chen — partnerships and deal flow; AI hardware incubator and investor network.
 
 ## Contact
 

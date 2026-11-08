@@ -74,7 +74,7 @@ const painPoints = [
   },
   {
     title: "Unpredictable NRE costs",
-    desc: "You get a clear, fixed NRE quote before any work starts.",
+    desc: "You see the price up front. After scoping, we can quote a fixed total for the project.",
   },
   {
     title: "IP leaks and design theft",
@@ -165,7 +165,7 @@ const differentiators = [
   },
   {
     title: "No Equity",
-    desc: "NRE + per-unit. Pure service. We don't take a piece of your company. Period.",
+    desc: "Cash only: a fixed sprint fee, then a monthly management fee. We don't take a piece of your company.",
   },
   {
     title: "Your IP Stays Yours",
@@ -180,7 +180,7 @@ const differentiators = [
 const stats = [
   { value: "3,000+", label: "Component suppliers in our network" },
   { value: "12 wk", label: "Average concept-to-prototype" },
-  { value: "1K", label: "Minimum pilot run — no 10K gate" },
+  { value: "1K", label: "Production from 1,000 units. Pilots of 50–500 first" },
 ];
 
 const team = [
@@ -234,7 +234,7 @@ const trackRecord = [
 const comparisonRows = [
   { feature: "Scope", breeze: "Whole product", fictiv: "Parts only", hax: "Accelerator + parts", titoma: "Whole product", trading: "Sourcing only" },
   { feature: "Equity taken", breeze: "None", fictiv: "None", hax: "6–10%", titoma: "None", trading: "None" },
-  { feature: "Minimum order", breeze: "1,000 units", fictiv: "1 unit (parts)", hax: "Varies", titoma: "~1,000", trading: "10,000+" },
+  { feature: "Minimum order", breeze: "1,000 units (50–500 pilot first)", fictiv: "1 unit (parts)", hax: "Varies", titoma: "~1,000", trading: "10,000+" },
   { feature: "Location", breeze: "Shenzhen", fictiv: "SF + global", hax: "SF + Shenzhen", titoma: "Taiwan", trading: "Shenzhen / Yiwu" },
   { feature: "AI hardware focus", breeze: "Yes", fictiv: "No", hax: "Some", titoma: "Generalist", trading: "No" },
   { feature: "Price transparency", breeze: "Tools upfront", fictiv: "Instant quote", hax: "Opaque", titoma: "Quote-based", trading: "Opaque" },
@@ -245,70 +245,73 @@ const comparisonRows = [
 
 const pricingTiers = [
   {
-    name: "Scoping",
-    price: "Free",
-    description: "Initial concept review. 30-minute call plus a one-page feasibility note.",
+    name: "Feasibility and sourcing sprint",
+    price: "$3K – $5K",
+    description: "Fixed fee, 2–3 weeks. We check your concept before you commit to a build.",
     items: [
-      "Device feasibility assessment",
-      "Ballpark BOM range",
-      "Certification needs summary",
-      "Timeline estimate",
+      "BOM cost estimate",
+      "Shortlisted factories with NRE, tooling and MOQ quotes",
+      "Certification path (FCC, UL, CE)",
+      "Written risk list and the route we'd take",
     ],
     featured: false,
   },
   {
-    name: "NRE + Pilot",
-    price: "$50K – $150K",
-    description: "Engineering to working prototype plus pilot batch. Fixed-price.",
+    name: "Prototype to pilot",
+    price: "$4K – $8K / month",
+    description: "Monthly fee, usually 3–6 months. Engineering to working prototype and pilot batch, with one project manager accountable.",
     items: [
       "Schematic, PCB, mechanical, firmware architecture",
       "3–5 functional prototypes (EVT / DVT)",
-      "Tooling, jigs, fixtures",
+      "Tooling, jigs, fixtures, owned by you",
       "50–500 unit pilot run",
-      "Full source files delivered",
+      "NNN agreements, full source files, written status every week",
     ],
     featured: true,
   },
   {
-    name: "Production",
-    price: "$15 – $60 / unit",
-    description: "At 5K volume for typical AI wearables. Scales with volume and complexity.",
+    name: "Production management",
+    price: "$3K – $6K / month",
+    description: "Monthly fee per product, ongoing. The same project manager runs your production once the pilot passes.",
     items: [
       "1K – 100K+ unit runs",
-      "Ongoing QC + yield optimization",
-      "Logistics + fulfillment",
-      "Global shipping",
-      "Replenishment planning",
+      "Inspection planning, QC and yield",
+      "Freight, logistics and replenishment planning",
+      "Production outside China if you need it",
     ],
     featured: false,
   },
 ];
 
 const timeline = [
-  { week: "Week 1", phase: "Scoping", desc: "30-minute feasibility call + ballpark cost. Sign NDA." },
-  { week: "Week 2–4", phase: "Engineering Design", desc: "Schematic, PCB layout, mechanical CAD, firmware architecture. Weekly sync." },
-  { week: "Week 5–8", phase: "DFM + Prototyping", desc: "3–5 functional prototypes. DFM checks. EVT gate." },
-  { week: "Week 9–10", phase: "Tooling + Sourcing", desc: "Injection molds, jigs, fixtures. Component sourcing from 3,000+ suppliers. DVT." },
-  { week: "Week 11–12", phase: "Pilot Run", desc: "50–500 units. Test assembly line, QC process, packaging. PVT." },
-  { week: "Week 13+", phase: "Production", desc: "Ongoing scale to 1K, 10K, 100K+. QC, logistics, fulfillment." },
+  { week: "Week 1–3", phase: "Feasibility Sprint", desc: "Sign NDA. BOM estimate, factory shortlist with NRE and MOQ quotes, certification path." },
+  { week: "Week 4–8", phase: "Engineering Design", desc: "Schematic, PCB layout, mechanical CAD, firmware architecture. Weekly sync." },
+  { week: "Week 8–12", phase: "Prototypes (EVT)", desc: "3–5 functional prototypes. DFM checks. EVT gate." },
+  { week: "Week 13–20", phase: "Tooling + DVT", desc: "Injection molds, jigs, fixtures. Components from 3,000+ suppliers. DVT units go to certification." },
+  { week: "Week 20–26", phase: "Pilot Run (PVT)", desc: "50–500 units. Test assembly line, QC process, packaging." },
+  { week: "Month 6–12", phase: "Production", desc: "First production run from 1,000 units, then 10K, 100K+. QC, logistics, fulfillment." },
 ];
 
 const faqs = [
   {
     q: "How do you protect my IP?",
-    a: "NDA + IP assignment is standard on every engagement — signed before any technical discussion. You receive full source files (schematics, PCB files, firmware, mechanical CAD, BOM) at the end of NRE. No hidden clauses, no exclusivity locks.",
+    a: "NDA + IP assignment is standard on every engagement — signed before any technical discussion. You receive full source files (schematics, PCB files, firmware, mechanical CAD, BOM) at the end of engineering. No hidden clauses, no exclusivity locks.",
   },
   {
-    q: "What's a typical project cost?",
-    a: "For most AI wearables and connected devices: NRE ranges from $50K to $150K, per-unit cost $15–$60 at 5K volume. Complexity (sensors, radios, battery chemistry, certifications) drives the range. Try the NRE Simulator for a tailored ballpark in 60 seconds.",
+    q: "What does it cost to take an AI wearable to production?",
+    a: "For most AI wearables and connected devices, total NRE (engineering, tooling, samples, certification) runs $50K–$150K, and per-unit cost is $15–$60 at 5K volume. Complexity (sensors, radios, battery chemistry, certifications) drives the range. Try the NRE Simulator for a tailored ballpark in 60 seconds.",
+  },
+  {
+    q: "What does Breeze charge?",
+    a: "Feasibility and sourcing sprint: $3–5K, fixed, 2–3 weeks. Prototype to pilot: $4–8K per month, usually 3–6 months. Production management: $3–6K per month per product. Cash only. Third-party costs (parts, tooling, samples, test labs, specialist engineering) are passed through at cost. After scoping, we can quote a fixed total for the project.",
   },
   {
     q: "How long from signed contract to first prototype?",
     a: "8–12 weeks for most AI wearables, reaching a functional EVT prototype. Faster paths exist if you have a working PoC — we've turned around a DVT-ready design in under 6 weeks for projects with mature schematics.",
   },
   {
-    q: "What if my pilot is under 1,000 units?",
-    a: "Sub-1K orders require hand-assembly rather than full SMT lines. We can quote, but pricing structure differs — expect $30–$120 per unit at 200–500 volume. For a 100-unit dev run, we usually roll this into NRE.",
+    q: "What if I need fewer than 1,000 units?",
+    a: "Production runs start at 1,000 units. Before that, every project runs a pilot of 50–500 units. Under 100 units, we decide case by case. Small runs are hand-assembled rather than built on a full SMT line, so each unit costs more: expect $30–$120 per unit at 200–500 units. For a 100-unit dev run, the run cost is a third-party cost, passed through at cost.",
   },
   {
     q: "Can you work with my existing contractor or PCB house?",
@@ -320,11 +323,11 @@ const faqs = [
   },
   {
     q: "What certifications do you handle?",
-    a: "We run in-house pre-compliance (FCC Part 15, UN38.3 battery, CE RED pre-scan) and coordinate full testing through accredited labs — SGS, TÜV, ETL. Cert timeline and cost are budgeted into your NRE so there are no Week-11 surprises.",
+    a: "We run in-house pre-compliance (FCC Part 15, UN38.3 battery, CE RED pre-scan) and coordinate full testing through accredited labs — SGS, TÜV, ETL. Cert timeline and cost are budgeted up front, so certification doesn't surprise you at DVT.",
   },
   {
     q: "What are your payment terms?",
-    a: "NRE: 50% at kickoff, 50% on milestones (usually EVT + PVT gates). Per-unit production: standard T/T 30/70. All fixed-price — no T&M, no scope-creep billing. If scope changes, we scope it as a change order, not a surprise invoice.",
+    a: "Cash only. We don't take equity or defer fees. The sprint is paid in full upfront. Prototype-to-pilot and production management are billed monthly, in advance. Supplier costs (tooling, samples, lab fees, production units, freight) are prepaid by you at the supplier's price, with receipts; we don't front supplier money. If we quote a fixed project total after the sprint, a scope change is a change order, not a surprise invoice.",
   },
 ];
 
@@ -604,10 +607,12 @@ export default function Home() {
         <div className="max-w-6xl mx-auto px-6">
           <div className="max-w-2xl mb-14">
             <h2 className="text-3xl md:text-4xl font-bold text-breeze-navy">
-              Typical Project Costs
+              What It Costs
             </h2>
             <p className="mt-4 text-lg text-breeze-slate">
-              Fixed-price at every stage. No T&amp;M. No scope-creep invoices.
+              Cash only. A fixed fee for the sprint, then a monthly fee. Third-party costs
+              are passed through at cost. After scoping, we can quote a fixed
+              total for the project.
             </p>
           </div>
           <div className="grid md:grid-cols-3 gap-6">
@@ -649,15 +654,17 @@ export default function Home() {
             ))}
           </div>
           <p className="mt-8 text-sm text-breeze-slate">
-            Complexity (sensors, radios, battery chemistry, certifications)
-            drives the final number. Try the{" "}
+            Third-party costs (parts, tooling, samples, test labs, specialist
+            engineering) are billed at cost. Complexity (sensors, radios,
+            battery chemistry, certifications) drives what they add up to. Try
+            the{" "}
             <a
               href="/tools/nre-simulator"
               className="text-breeze-teal font-medium hover:underline"
             >
               NRE Simulator
             </a>{" "}
-            for a tailored estimate in 60 seconds.
+            for a ballpark of your product&apos;s development cost in 60 seconds.
           </p>
         </div>
       </section>
@@ -670,7 +677,8 @@ export default function Home() {
               What happens after you sign
             </h2>
             <p className="mt-4 text-lg text-breeze-slate">
-              A predictable 12-week path to pilot. Transparent weekly sync.
+              Working prototype in 8–12 weeks, pilot batch in 3–6 months,
+              production in 6–12 months. Weekly sync throughout.
             </p>
           </div>
           <div className="relative">

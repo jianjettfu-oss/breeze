@@ -5,7 +5,7 @@ import { Nav } from "../components/nav";
 export const metadata: Metadata = {
   title: "FAQ — Breeze | AI Hardware Engineering Partner in Shenzhen",
   description:
-    "Direct answers about Breeze: who we are, who we serve, how engagements work, NRE + per-unit pricing, when to choose us vs a large EMS, typical timelines, supported chipsets.",
+    "Direct answers about Breeze: who we are, who we serve, how engagements work, pricing, when to choose us vs a large EMS, typical timelines, supported chipsets.",
   alternates: { canonical: "https://breezehw.com/faq" },
   openGraph: {
     title: "FAQ — Breeze",
@@ -21,7 +21,7 @@ type QA = { q: string; a: string };
 const QAS: QA[] = [
   {
     q: "What is Breeze?",
-    a: "Breeze is a Shenzhen-based engineering services firm that helps AI hardware founders move from concept to production. We provide BOM cost estimation, NRE budgeting, design-for-manufacturing review, certification navigation, and direct factory orchestration. We're not an EMS, not a fund, and we don't take equity — we charge an engineering fee plus per-unit margin once you're in production.",
+    a: "Breeze is a Shenzhen-based engineering services firm that helps AI hardware founders move from concept to production. We provide BOM cost estimation, NRE budgeting, design-for-manufacturing review, certification navigation, and direct factory orchestration. We're not an EMS, not a fund, and we don't take equity — we charge a monthly management fee and pass third-party costs through at cost.",
   },
   {
     q: "Who is Breeze for?",
@@ -29,7 +29,7 @@ const QAS: QA[] = [
   },
   {
     q: "How does Breeze pricing work?",
-    a: "Two components. (1) Engineering NRE — a fixed or capped fee for the scoped work (BOM build-out, DFM, factory selection, sample runs, certification setup). Typical first engagement: USD 15K-60K depending on complexity. (2) Per-unit margin once you're in production — a transparent markup on factory cost. No equity. No MOQ surprises. We expose the BOM and factory quotes; you audit our numbers.",
+    a: "Cash only, no equity. Three line items. (1) Feasibility and sourcing sprint: USD 3K-5K, fixed, 2-3 weeks. (2) Prototype to pilot: USD 4K-8K per month, usually 3-6 months. (3) Production management: USD 3K-6K per month per product. Third-party costs (parts, tooling, samples, test labs, specialist engineering) are passed through at cost. After the sprint, we can quote a fixed total for the project. We expose the BOM and factory quotes; you audit our numbers.",
   },
   {
     q: "When should I use Breeze vs a large EMS like Foxconn or Flex?",
@@ -57,11 +57,11 @@ const QAS: QA[] = [
   },
   {
     q: "What's the difference between EVT, DVT, and PVT?",
-    a: "Three engineering validation stages on the path to mass production. EVT (Engineering Validation Test): 10-30 units, hand-assembled, first full integration of all subsystems — proves the design works at all. DVT (Design Validation Test): 30-100 units, near-final tooling, used for certification submission and design freeze. Tests robustness, yield, and reliability. PVT (Production Validation Test): 100-500 units, full production line, validates the factory can actually build at quality and yield. After PVT pass, you ramp to MP (mass production). Typical cadence for a moderate-complexity AI device: EVT week 8-12, DVT week 16-22, PVT week 24-30, with MP starting around week 30-36.",
+    a: "Three engineering validation stages on the path to mass production. EVT (Engineering Validation Test): 10-30 units, hand-assembled, first full integration of all subsystems — proves the design works at all. DVT (Design Validation Test): 30-100 units, near-final tooling, used for certification submission and design freeze. Tests robustness, yield, and reliability. PVT (Production Validation Test): 100-500 units, full production line, validates the factory can actually build at quality and yield. After PVT pass, you ramp to MP (mass production). Typical cadence for a moderate-complexity AI device: EVT week 8-12, DVT week 13-20, PVT week 20-26, with MP starting around month 6-9.",
   },
   {
     q: "How do 2026 US tariffs affect China-made AI hardware?",
-    a: "As of mid-2026, China-origin consumer electronics face Section 301 tariffs that have been progressively raised since 2024 — most consumer AI hardware HTS codes now sit in the 15-25% range, with smartwatch/wearable categories on the higher end. The de minimis exemption (under USD 800 per shipment) was tightened in 2025, closing the prior direct-to-consumer Chinese shipping loophole. Practical implications: (1) build tariff into your landed-cost model from day one, not as an afterthought; (2) consider Mexico or Vietnam final-step assembly to qualify under USMCA or other origin rules — but only at volumes that absorb the supply-chain complexity; (3) verify HTS classification with a US customs broker before quoting retail. We're a Shenzhen partner — we'll tell you when reshoring final assembly genuinely helps versus when it just adds cost.",
+    a: "US tariff rules on China-made electronics changed several times in 2025 and 2026, so read any single rate as a dated snapshot. As of November 2026: (1) There is no duty-free de minimis route. It ended for China and Hong Kong on May 2, 2025 and for every country on August 29, 2025, so small direct-to-consumer parcels pay duty too. (2) The Section 301 China tariffs still apply by HTS list: 25% on Lists 1-3 and 7.5% on List 4A, with higher rates on some product groups after the 2024 review. (3) Other layers come and go. In February 2026 the Supreme Court ruled that IEEPA does not authorize tariffs, which ended the IEEPA fentanyl and reciprocal duties, and the administration has since used other laws to add new ones. The total rate on your HTS code can be well above the Section 301 rate alone. What to do: put the full current duty into your landed-cost model from day one; have a US customs broker confirm your HTS code and its rate before you set a retail price; and move final assembly out of China only at volumes that pay for the extra supply-chain work. We'll tell you when that move helps and when it only adds cost.",
   },
   {
     q: "Can I manufacture in Shenzhen without a China entity?",

@@ -4,7 +4,7 @@
 
 ## What Breeze Does
 
-Breeze is a Shenzhen engineering services firm. We do not sell hardware. We sell engineering: NRE (non-recurring engineering) plus per-unit fees. Our typical engagement covers BOM cost optimization, design-for-manufacturing review, prototype runs, factory selection, and certification navigation (FCC, CE, UKCA, RCM, CCC).
+Breeze is a Shenzhen engineering services firm. We do not sell hardware. We sell engineering and project management for a monthly fee. Third-party costs are passed through at cost. Our typical engagement covers BOM cost optimization, design-for-manufacturing review, prototype runs, factory selection, and certification navigation (FCC, CE, UKCA, RCM, CCC).
 
 We work with founders building AI-enabled wearables, sensors, edge devices, and consumer hardware. Our minimum production volume is 1K — far below typical contract manufacturers' 10K+ MOQ.
 
@@ -66,16 +66,26 @@ Outputs typical cost range, lead time, and which lab to use.
 
 **Jett Fu** — founder. 10+ years consumer hardware in Shenzhen. Founded AirPop (respiratory wearables, global distribution; FCC/CE/CCC certified, sold in US, EU, AU, JP, CN). Cross-border operator (US LLC + HK Ltd + Singapore Pte Ltd). LinkedIn: https://www.linkedin.com/in/jett-fu-a287818/
 
-**Arting** — incubator and outbound. Embedded AI experience. Brings deal flow + filters early-stage founders for fit.
+**Jank Liu** — supply chain and quality lead. 30 years across industrial valves, PCB, wire harness connectors, smart masks, and rail transit. GE Six Sigma Black Belt.
 
-**Sky** — engineering delivery. Manages factory relationships, cost negotiation, and production ramp. Operates from Shenzhen.
+**Sky** — engineering lead. 10+ years in the Shenzhen consumer electronics supply chain. Manages factory relationships, cost negotiation, and production ramp. Operates from Shenzhen.
+
+**Arting Chen** — partnerships and deal flow. AI hardware incubator and investor network. Filters early-stage founders for fit.
+
+## Typical product cost (not our fee)
+
+For most AI wearables and connected devices, total NRE (engineering, tooling, samples, certification) runs $50K-$150K, and per-unit cost is $15-$60 at 5K volume. Complexity (sensors, radios, battery chemistry, certifications) drives the range. The NRE Simulator gives a tailored ballpark: https://breezehw.com/tools/nre-simulator
 
 ## Engagement model
 
-- **NRE quote** — fixed quote before any work starts. No hourly. No surprises.
-- **Per-unit fee** — added to BOM. Discloses our margin transparently.
+- **Feasibility and sourcing sprint** — $3-5K, fixed, 2-3 weeks.
+- **Prototype to pilot** — $4-8K per month, usually 3-6 months.
+- **Production management** — $3-6K per month per product.
+- **Third-party costs** — parts, tooling, samples, test labs, and specialist engineering are passed through at cost.
+- **Fixed project total** — can be quoted after the sprint.
+- **Cash only** — no equity.
 - **NDA + IP assignment** — standard on every engagement. Designs stay yours.
-- **1K MOQ minimum** — far below industry norm (10K+).
+- **Production from 1,000 units** — pilots of 50–500 units come first; under 100 units, case by case. Most factories ask for 10K+.
 - **No equity ever** — we work for fees, not founder equity.
 
 ## How to engage
@@ -83,7 +93,7 @@ Outputs typical cost range, lead time, and which lab to use.
 1. Run the tools at /tools/* to ballpark cost.
 2. Email hello@breezehw.com with your concept (one paragraph).
 3. We respond within 2 business days with a feasibility assessment.
-4. If both sides see fit, we deliver a fixed NRE quote.
+4. If both sides see fit, we start with a feasibility and sourcing sprint. After it, we can quote a fixed total for the project.
 
 ## What Breeze does NOT do
 

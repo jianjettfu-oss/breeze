@@ -347,7 +347,8 @@ export default function NreSimulator() {
               <p className="text-[10px] text-gray-500 leading-relaxed">
                 Estimates based on Shenzhen engineering service rates. Actual
                 costs depend on complexity, timeline, and specific requirements.
-                50% NRE typically due at project kick-off.
+                Breeze fees are a monthly management fee; third-party costs are
+                passed through at cost.
               </p>
             </div>
           </div>

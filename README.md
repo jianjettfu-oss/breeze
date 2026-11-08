@@ -26,10 +26,11 @@ Each tool emails a PDF report when you submit an email. No login, no funnel.
 ## Who we are
 
 - **Jett Fu** — 10+ years of consumer hardware in Shenzhen. Founder of AirPop (respiratory wearables, global distribution).
-- **Arting** — incubator and outbound. Embedded AI + deal flow.
-- **Sky** — engineering delivery. Factory relationships, cost negotiation, production ramp.
+- **Jank Liu** — supply chain and quality lead. 30 years across industrial, PCB, connector, smart mask and rail supply chains.
+- **Sky** — engineering lead. Factory relationships, cost negotiation, production ramp.
+- **Arting Chen** — partnerships and deal flow. AI hardware incubator and investor network.
 
-We sell engineering services (NRE + per-unit). The tools and toolkit are open so you can evaluate us on the actual numbers before we ever talk.
+We sell engineering and project management. Feasibility and sourcing sprint $3–5K fixed (2–3 weeks), prototype to pilot $4–8K per month (usually 3–6 months), production management $3–6K per month per product. Cash only. Third-party costs are passed through at cost. The tools and toolkit are open so you can evaluate us on the actual numbers before we ever talk.
 
 ## Stack
 

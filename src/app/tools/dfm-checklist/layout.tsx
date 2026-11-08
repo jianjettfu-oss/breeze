@@ -32,7 +32,7 @@ const HOWTO_JSONLD = {
   "@type": "HowTo",
   name: "Design-for-Manufacturing Review for AI Hardware",
   description:
-    "Structured 29-check DFM review for AI-hardware first products — thermal, antenna/RF, power, mechanical, PCB layout, firmware, and certification readiness. Catches design issues before tooling cost is committed.",
+    "Structured 30-check DFM review for AI-hardware first products — thermal, antenna/RF, power, mechanical, PCB layout, firmware, and certification readiness. Catches design issues before tooling cost is committed.",
   totalTime: "PT2H",
   supply: [
     { "@type": "HowToSupply", name: "Schematic and PCB layout files" },
