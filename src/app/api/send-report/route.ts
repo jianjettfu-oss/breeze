@@ -2,6 +2,10 @@ import { NextResponse } from "next/server";
 import { Resend } from "resend";
 import fs from "fs";
 import path from "path";
+import { clientIp, escapeHtml, isEmail, rateLimit } from "@/lib/request-guard";
+
+const KNOWN_TOOLS = new Set(["bom-estimator", "dfm-checklist", "nre-simulator", "cert-navigator"]);
+const MAX_DATA_CHARS = 20_000;
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -191,18 +195,18 @@ function buildRows(tool: string, data: Record<string, unknown>): string {
     .map((r) => {
       if (r.section) {
         return `                <tr>
-                  <td colspan="2" style="background:#f0f9ff; padding:10px 16px; font-size:11px; font-weight:700; color:#0F2440; text-transform:uppercase; letter-spacing:0.5px; border-bottom:1px solid #e2e8f0;">${r.label}</td>
+                  <td colspan="2" style="background:#f0f9ff; padding:10px 16px; font-size:11px; font-weight:700; color:#0F2440; text-transform:uppercase; letter-spacing:0.5px; border-bottom:1px solid #e2e8f0;">${escapeHtml(r.label)}</td>
                 </tr>`;
       }
       if (r.highlight) {
         return `                <tr>
-                  <td style="padding:14px 16px; font-size:14px; font-weight:700; color:#0F2440; border-bottom:1px solid #e2e8f0; background:#f0fdf9;">${r.label}</td>
-                  <td style="padding:14px 16px; font-size:14px; font-weight:700; color:#2DD4A8; text-align:right; border-bottom:1px solid #e2e8f0; background:#f0fdf9;">${r.value}</td>
+                  <td style="padding:14px 16px; font-size:14px; font-weight:700; color:#0F2440; border-bottom:1px solid #e2e8f0; background:#f0fdf9;">${escapeHtml(r.label)}</td>
+                  <td style="padding:14px 16px; font-size:14px; font-weight:700; color:#2DD4A8; text-align:right; border-bottom:1px solid #e2e8f0; background:#f0fdf9;">${escapeHtml(r.value)}</td>
                 </tr>`;
       }
       return `                <tr>
-                  <td style="padding:10px 16px; font-size:13px; color:#334155; border-bottom:1px solid #e2e8f0;">${r.label}</td>
-                  <td style="padding:10px 16px; font-size:13px; color:#334155; text-align:right; border-bottom:1px solid #e2e8f0;">${r.value}</td>
+                  <td style="padding:10px 16px; font-size:13px; color:#334155; border-bottom:1px solid #e2e8f0;">${escapeHtml(r.label)}</td>
+                  <td style="padding:10px 16px; font-size:13px; color:#334155; text-align:right; border-bottom:1px solid #e2e8f0;">${escapeHtml(r.value)}</td>
                 </tr>`;
     })
     .join("\n");
@@ -237,20 +241,39 @@ function storeLead(email: string, tool: string, data: Record<string, unknown>): 
 
 export async function POST(request: Request) {
   try {
+    if (!rateLimit(`report:${clientIp(request)}`, 10, 60 * 60 * 1000)) {
+      return NextResponse.json(
+        { error: "Too many requests. Please try again later." },
+        { status: 429 }
+      );
+    }
+
     const body: ReportRequest = await request.json();
     const { tool, email, data } = body;
 
-    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    if (!isEmail(email)) {
       return NextResponse.json(
         { error: "Valid email address is required" },
         { status: 400 }
       );
     }
 
-    if (!tool || !data) {
+    if (!tool || !KNOWN_TOOLS.has(tool) || !data || typeof data !== "object") {
       return NextResponse.json(
         { error: "Tool name and data are required" },
         { status: 400 }
+      );
+    }
+
+    if (JSON.stringify(data).length > MAX_DATA_CHARS) {
+      return NextResponse.json({ error: "Report data too large" }, { status: 400 });
+    }
+
+    // One address may receive at most 3 reports an hour, whoever asks.
+    if (!rateLimit(`report-to:${email.toLowerCase()}`, 3, 60 * 60 * 1000)) {
+      return NextResponse.json(
+        { error: "Too many reports sent to this address. Please try again later." },
+        { status: 429 }
       );
     }
 

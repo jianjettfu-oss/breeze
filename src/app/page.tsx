@@ -1,4 +1,5 @@
 import { Nav } from "./components/nav";
+import { ContactForm } from "./components/contact-form";
 
 /* ─── Icon components ─── */
 
@@ -812,95 +813,7 @@ export default function Home() {
               with a preliminary assessment.
             </p>
           </div>
-          <form className="mt-12 max-w-lg mx-auto space-y-5">
-            <div>
-              <label
-                htmlFor="name"
-                className="block text-sm font-medium text-breeze-navy mb-1.5"
-              >
-                Your name
-              </label>
-              <input
-                id="name"
-                type="text"
-                className="w-full border border-gray-200 rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-breeze-teal/40 focus:border-breeze-teal transition-colors"
-                placeholder="Jane Smith"
-              />
-            </div>
-            <div>
-              <label
-                htmlFor="email"
-                className="block text-sm font-medium text-breeze-navy mb-1.5"
-              >
-                Email
-              </label>
-              <input
-                id="email"
-                type="email"
-                className="w-full border border-gray-200 rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-breeze-teal/40 focus:border-breeze-teal transition-colors"
-                placeholder="jane@company.com"
-              />
-            </div>
-            <div>
-              <label
-                htmlFor="product"
-                className="block text-sm font-medium text-breeze-navy mb-1.5"
-              >
-                One-line product description
-              </label>
-              <input
-                id="product"
-                type="text"
-                className="w-full border border-gray-200 rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-breeze-teal/40 focus:border-breeze-teal transition-colors"
-                placeholder="AI-powered wearable for real-time translation"
-              />
-            </div>
-            <div className="grid grid-cols-2 gap-4">
-              <div>
-                <label
-                  htmlFor="volume"
-                  className="block text-sm font-medium text-breeze-navy mb-1.5"
-                >
-                  Estimated volume
-                </label>
-                <select
-                  id="volume"
-                  className="w-full border border-gray-200 rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-breeze-teal/40 focus:border-breeze-teal transition-colors bg-white"
-                >
-                  <option value="">Select</option>
-                  <option value="100">~100 units</option>
-                  <option value="1000">~1,000 units</option>
-                  <option value="10000">~10,000 units</option>
-                  <option value="100000">100,000+</option>
-                </select>
-              </div>
-              <div>
-                <label
-                  htmlFor="stage"
-                  className="block text-sm font-medium text-breeze-navy mb-1.5"
-                >
-                  Current stage
-                </label>
-                <select
-                  id="stage"
-                  className="w-full border border-gray-200 rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-breeze-teal/40 focus:border-breeze-teal transition-colors bg-white"
-                >
-                  <option value="">Select</option>
-                  <option value="idea">Idea</option>
-                  <option value="design">Design</option>
-                  <option value="prototype">Prototype</option>
-                  <option value="production">Production</option>
-                </select>
-              </div>
-            </div>
-            <button
-              type="submit"
-              className="w-full bg-breeze-teal text-white px-6 py-3.5 rounded-lg font-semibold hover:bg-breeze-teal/90 transition-colors flex items-center justify-center gap-2"
-            >
-              Get in Touch
-              <ArrowRightIcon className="w-4 h-4" />
-            </button>
-          </form>
+          <ContactForm />
           <p className="mt-8 text-center text-sm text-breeze-slate">
             Or email us directly at{" "}
             <a
