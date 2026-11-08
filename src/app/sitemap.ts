@@ -34,6 +34,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "monthly",
       priority: 0.85,
     },
+    {
+      url: `${base}/tools`,
+      lastModified: safeMtime("src/app/tools/page.tsx", now),
+      changeFrequency: "monthly",
+      priority: 0.8,
+    },
     ...tools.map((t) => ({
       url: `${base}/tools/${t.slug}`,
       lastModified: safeMtime(t.sourcePath, now),

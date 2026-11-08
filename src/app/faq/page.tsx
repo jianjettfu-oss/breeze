@@ -21,7 +21,7 @@ type QA = { q: string; a: string };
 const QAS: QA[] = [
   {
     q: "What is Breeze?",
-    a: "Breeze is a Shenzhen-based engineering services firm that helps AI hardware founders move from concept to production. We provide BOM cost estimation, NRE budgeting, design-for-manufacturing review, certification navigation, and direct factory orchestration. We're not an EMS, not a fund, and we don't take equity — we charge a monthly management fee and pass third-party costs through at cost.",
+    a: "Breeze is a Shenzhen-based engineering services firm that helps AI hardware founders move from concept to production. We provide BOM cost estimation, NRE budgeting, design-for-manufacturing review, certification navigation, and direct factory orchestration. We're not an EMS, not a fund, and we don't take equity. We charge a fixed fee for the feasibility sprint, then a monthly management fee, and pass third-party costs through at cost.",
   },
   {
     q: "Who is Breeze for?",
@@ -138,6 +138,18 @@ export default function FAQPage() {
               className="px-4 py-2 rounded-lg border border-gray-200 text-[#1B3A5C] font-medium hover:border-[#2DD4A8] transition-colors"
             >
               NRE Simulator →
+            </Link>
+            <Link
+              href="/tools/dfm-checklist"
+              className="px-4 py-2 rounded-lg border border-gray-200 text-[#1B3A5C] font-medium hover:border-[#2DD4A8] transition-colors"
+            >
+              DFM Checklist →
+            </Link>
+            <Link
+              href="/tools/cert-navigator"
+              className="px-4 py-2 rounded-lg border border-gray-200 text-[#1B3A5C] font-medium hover:border-[#2DD4A8] transition-colors"
+            >
+              Certification Navigator →
             </Link>
             <a
               href="/breeze-deck.pdf"

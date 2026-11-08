@@ -4,6 +4,7 @@ import { useState, useMemo, useCallback } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import EmailCapture from "@/components/EmailCapture";
+import ToolCrossLinks from "@/components/ToolCrossLinks";
 import { checkCategories, severityConfig, type Severity } from "./data";
 
 function Badge({ severity }: { severity: Severity }) {
@@ -122,7 +123,7 @@ export default function DfmChecklist() {
         {/* Header */}
         <div className="mb-10">
           <Link
-            href="/#tools"
+            href="/tools"
             className="text-sm text-[#64748B] hover:text-[#1B3A5C] mb-4 inline-block"
           >
             ← Back to Tools
@@ -373,6 +374,7 @@ export default function DfmChecklist() {
             </div>
           </div>
         </div>
+        <ToolCrossLinks current="dfm-checklist" />
       </div>
     </div>
   );

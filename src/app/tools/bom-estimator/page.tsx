@@ -4,6 +4,7 @@ import { useState, useMemo, useCallback } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import EmailCapture from "@/components/EmailCapture";
+import ToolCrossLinks from "@/components/ToolCrossLinks";
 import {
   categories,
   fixedCosts,
@@ -136,7 +137,7 @@ export default function BomEstimator() {
         {/* Header */}
         <div className="mb-10">
           <Link
-            href="/#tools"
+            href="/tools"
             className="text-sm text-[#64748B] hover:text-[#1B3A5C] mb-4 inline-block"
           >
             ← Back to Tools
@@ -390,6 +391,7 @@ export default function BomEstimator() {
             </div>
           </div>
         </div>
+        <ToolCrossLinks current="bom-estimator" />
       </div>
     </div>
   );

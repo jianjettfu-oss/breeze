@@ -1,0 +1,75 @@
+import type { Metadata } from "next";
+import Link from "next/link";
+import { Nav } from "../components/nav";
+import { links } from "@/components/ToolCrossLinks";
+
+export const metadata: Metadata = {
+  title: "Free AI Hardware Tools — BOM, NRE, DFM, Certification | Breeze",
+  description:
+    "Four free tools for AI hardware founders: BOM cost per unit, one-time NRE cost, a DFM checklist, and the certifications your product needs by market.",
+  alternates: { canonical: "https://breezehw.com/tools" },
+  openGraph: {
+    title: "Free AI Hardware Tools — Breeze",
+    description:
+      "BOM cost, NRE cost, DFM checklist and certification paths for AI hardware, with the data open on GitHub.",
+    url: "https://breezehw.com/tools",
+    type: "website",
+  },
+};
+
+export default function ToolsIndex() {
+  const tools = links.filter((l) => l.slug !== "faq");
+
+  return (
+    <>
+      <Nav />
+      <main className="max-w-4xl mx-auto px-6 py-12">
+        <header className="mb-10">
+          <p className="text-xs uppercase tracking-wider text-[#2DD4A8] font-semibold mb-2">
+            Tools
+          </p>
+          <h1 className="text-3xl sm:text-4xl font-bold text-[#1B3A5C] leading-tight">
+            Free tools for AI hardware founders
+          </h1>
+          <p className="mt-4 text-base text-[#64748B] leading-relaxed">
+            Four free tools, no sign-up. The reference data behind them (component prices,
+            engineering rates, certification costs and timelines) is open on{" "}
+            <a
+              href="https://github.com/jianjettfu-oss/ai-hardware-toolkit"
+              className="text-[#2DD4A8] hover:underline font-medium"
+            >
+              GitHub
+            </a>
+            , so you can check them before you rely on them.
+          </p>
+        </header>
+
+        <ul className="grid gap-5 sm:grid-cols-2">
+          {tools.map((t) => (
+            <li key={t.slug}>
+              <Link
+                href={t.href}
+                className="block h-full rounded-xl border border-gray-100 p-6 hover:border-[#2DD4A8] transition-colors"
+              >
+                <h2 className="text-lg font-semibold text-[#1B3A5C]">{t.title} →</h2>
+                <p className="mt-2 text-sm text-[#64748B] leading-relaxed">{t.desc}</p>
+              </Link>
+            </li>
+          ))}
+        </ul>
+
+        <p className="mt-12 text-sm text-[#64748B] leading-relaxed">
+          Questions about fees, timelines or minimum runs? See the{" "}
+          <Link href="/faq" className="text-[#2DD4A8] hover:underline font-medium">
+            FAQ
+          </Link>
+          , or{" "}
+          <Link href="/#contact" className="text-[#2DD4A8] hover:underline font-medium">
+            tell us what you&apos;re building
+          </Link>
+          .
+        </p>
+      </main>
+    </>
+  );
+}
