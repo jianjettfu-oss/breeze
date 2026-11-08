@@ -64,7 +64,7 @@ Outputs typical cost range, lead time, and which lab to use.
 
 ## Open data
 
-[AI Hardware Toolkit](https://github.com/jianjettfu-oss/ai-hardware-toolkit) — the open-source data and checklists behind every Breeze tool. License: MIT. The toolkit includes BOM pricing CSVs, NRE templates, DFM checklists in Markdown, and certification matrices. Contributions welcome.
+[AI Hardware Toolkit](https://github.com/jianjettfu-oss/ai-hardware-toolkit) — the open-source data and checklists behind every Breeze tool. License: MIT. The toolkit includes BOM pricing CSVs, NRE templates, DFM checklists in Markdown, certification matrices (including EU cybersecurity, Cyber Resilience Act and battery rules), and an AI-made-design handoff checklist. For AI agents it ships six Agent Skills as a Claude Code plugin (`/plugin marketplace add jianjettfu-oss/ai-hardware-toolkit`), Cursor rules, an MCP server and a Custom GPT knowledge file, all generated from the same topic files. Contributions welcome.
 
 ## Team
 
