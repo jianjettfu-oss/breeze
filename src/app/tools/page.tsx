@@ -59,7 +59,11 @@ export default function ToolsIndex() {
         </ul>
 
         <p className="mt-12 text-sm text-[#64748B] leading-relaxed">
-          Questions about fees, timelines or minimum runs? See the{" "}
+          Drew your design with AI tools? Read{" "}
+          <Link href="/ai-design-to-factory" className="text-[#2DD4A8] hover:underline font-medium">
+            what to check before it goes to a factory
+          </Link>
+          . Questions about fees, timelines or minimum runs? See the{" "}
           <Link href="/faq" className="text-[#2DD4A8] hover:underline font-medium">
             FAQ
           </Link>

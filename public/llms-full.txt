@@ -58,6 +58,10 @@ Selects required certifications by target market and device features:
 
 Outputs typical cost range, lead time, and which lab to use.
 
+## Guides
+
+- [What to check before an AI-made hardware design goes to a factory](https://breezehw.com/ai-design-to-factory): where AI CAD, schematic, layout and firmware tools work and where they break (November 2026, each number sourced), four published failures, a three-layer checklist, and the handoff package a factory asks for.
+
 ## Open data
 
 [AI Hardware Toolkit](https://github.com/jianjettfu-oss/ai-hardware-toolkit) — the open-source data and checklists behind every Breeze tool. License: MIT. The toolkit includes BOM pricing CSVs, NRE templates, DFM checklists in Markdown, and certification matrices. Contributions welcome.

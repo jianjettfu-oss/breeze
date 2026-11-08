@@ -151,6 +151,12 @@ export default function FAQPage() {
             >
               Certification Navigator →
             </Link>
+            <Link
+              href="/ai-design-to-factory"
+              className="px-4 py-2 rounded-lg border border-gray-200 text-[#1B3A5C] font-medium hover:border-[#2DD4A8] transition-colors"
+            >
+              AI design → factory guide →
+            </Link>
             <a
               href="/breeze-deck.pdf"
               className="px-4 py-2 rounded-lg border border-gray-200 text-[#1B3A5C] font-medium hover:border-[#2DD4A8] transition-colors"

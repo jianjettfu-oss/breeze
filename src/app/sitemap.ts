@@ -35,6 +35,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.85,
     },
     {
+      url: `${base}/ai-design-to-factory`,
+      lastModified: safeMtime("src/app/ai-design-to-factory/page.tsx", now),
+      changeFrequency: "monthly",
+      priority: 0.85,
+    },
+    {
       url: `${base}/tools`,
       lastModified: safeMtime("src/app/tools/page.tsx", now),
       changeFrequency: "monthly",
