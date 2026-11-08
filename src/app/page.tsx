@@ -138,7 +138,7 @@ const tools = [
   {
     icon: "✓",
     title: "DFM Checklist",
-    desc: "30-point check for AI hardware design pitfalls.",
+    desc: "29-point check for AI hardware design pitfalls.",
     cta: "Start check",
     href: "/tools/dfm-checklist",
   },

@@ -134,7 +134,7 @@ FREE_TOOLS = [
      "Input your specs, get a manufacturing cost ballpark in 60 seconds. Covers SoC, memory, sensors, battery, PCB, enclosure, and assembly.",
      "breezehw.com/tools/bom-estimator"),
     ("DFM Checklist",
-     "30-point design-for-manufacturability check covering thermal, mechanical, electrical, and certification pitfalls specific to AI hardware.",
+     "29-point design-for-manufacturability check covering thermal, mechanical, electrical, and certification pitfalls specific to AI hardware.",
      "breezehw.com/tools/dfm-checklist"),
     ("NRE Quote Simulator",
      "Estimate your total development cost: engineering hours, tooling, prototyping, certification, and project management.",

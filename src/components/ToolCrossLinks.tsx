@@ -19,7 +19,7 @@ export const links: { slug: ToolSlug | "faq"; href: string; title: string; desc:
     slug: "dfm-checklist",
     href: "/tools/dfm-checklist",
     title: "DFM Checklist",
-    desc: "30 checks to run before your files go to a factory.",
+    desc: "29 checks to run before your files go to a factory.",
   },
   {
     slug: "cert-navigator",
