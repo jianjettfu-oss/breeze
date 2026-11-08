@@ -212,7 +212,7 @@ PRICING_TIERS = [
      False),
     ("Prototype to pilot", "$4K – $8K / month",
      "Monthly fee, usually 3–6 months. Engineering to working prototype and pilot batch, with one project manager accountable.",
-     ["Schematic, PCB, mechanical, firmware architecture",
+     ["Schematic, PCB, mechanical, firmware: run by us, engineering hours at cost",
       "3–5 functional prototypes (EVT / DVT)",
       "Tooling, jigs, fixtures, owned by you",
       "50–500 unit pilot run",
