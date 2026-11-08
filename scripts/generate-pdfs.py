@@ -62,7 +62,7 @@ PAIN_POINTS = [
     ("Factories won't take your 1K MOQ",
      "Most factories want 10K+ units. We start at 1,000."),
     ("Unpredictable NRE costs",
-     "You get a clear, fixed NRE quote before any work starts."),
+     "A written feasibility sprint gives you NRE, tooling and MOQ quotes before you commit to a build."),
     ("IP leaks and design theft",
      "NDA + IP assignment standard on every engagement. Your designs stay yours."),
     ("Language and timezone barriers",
@@ -148,7 +148,7 @@ DIFFERENTIATORS = [
     ("Whole Product, Not Just Parts",
      "We build the full device -- electronics, enclosure, firmware, packaging. One team, one responsibility, one timeline."),
     ("No Equity, No Surprises",
-     "NRE + per-unit pricing. Pure service model. We don't take a piece of your company. Period."),
+     "Cash only: a fixed sprint fee, then a monthly management fee. We don't take a piece of your company."),
     ("Your IP Stays Yours",
      "NDA + IP assignment is standard on every engagement. You receive full source files, schematics, and manufacturing data."),
     ("AI Hardware Native",
@@ -158,7 +158,7 @@ DIFFERENTIATORS = [
 STATS = [
     ("3,000+", "Component suppliers"),
     ("12 weeks", "Concept to prototype"),
-    ("1,000", "Min pilot run"),
+    ("1,000", "Min production run"),
 ]
 
 AVATAR_DIR = os.path.join(BASE_DIR, "assets", "avatars")
@@ -203,35 +203,37 @@ COMPARISON_ROWS = [
 ]
 
 PRICING_TIERS = [
-    ("Scoping", "Free",
-     "Initial concept review. 30-minute call plus a one-page feasibility note.",
-     ["Device feasibility assessment", "Ballpark BOM range", "Certification needs summary", "Timeline estimate"],
+    ("Feasibility and sourcing sprint", "$3K – $5K",
+     "Fixed fee, 2–3 weeks. We check your concept before you commit to a build.",
+     ["BOM cost estimate",
+      "Shortlisted factories with NRE, tooling and MOQ quotes",
+      "Certification path (FCC, UL, CE)",
+      "Written risk list and the route we'd take"],
      False),
-    ("NRE + Pilot", "$50K – $150K",
-     "Engineering to working prototype plus pilot batch. Fixed-price.",
+    ("Prototype to pilot", "$4K – $8K / month",
+     "Monthly fee, usually 3–6 months. Engineering to working prototype and pilot batch, with one project manager accountable.",
      ["Schematic, PCB, mechanical, firmware architecture",
-      "3-5 functional prototypes (EVT / DVT)",
-      "Tooling, jigs, fixtures",
-      "50-500 unit pilot run",
-      "Full source files delivered"],
+      "3–5 functional prototypes (EVT / DVT)",
+      "Tooling, jigs, fixtures, owned by you",
+      "50–500 unit pilot run",
+      "NNN agreements, full source files, written status every week"],
      True),
-    ("Production", "$15 – $60 / unit",
-     "At 5K volume for typical AI wearables. Scales with volume and complexity.",
+    ("Production management", "$3K – $6K / month",
+     "Monthly fee per product, ongoing. The same project manager runs your production once the pilot passes.",
      ["1K – 100K+ unit runs",
-      "Ongoing QC + yield optimization",
-      "Logistics + fulfillment",
-      "Global shipping",
-      "Replenishment planning"],
+      "Inspection planning, QC and yield",
+      "Freight, logistics and replenishment planning",
+      "Production outside China if you need it"],
      False),
 ]
 
 TIMELINE = [
-    ("Week 1", "Scoping", "30-min feasibility call + ballpark cost. Sign NDA."),
-    ("Week 2-4", "Engineering Design", "Schematic, PCB layout, mechanical CAD, firmware architecture. Weekly sync."),
-    ("Week 5-8", "DFM + Prototyping", "3-5 functional prototypes. DFM checks. EVT gate."),
-    ("Week 9-10", "Tooling + Sourcing", "Injection molds, jigs, fixtures. Component sourcing. DVT."),
-    ("Week 11-12", "Pilot Run", "50-500 units. Test assembly line, QC, packaging. PVT."),
-    ("Week 13+", "Production", "Scale to 1K, 10K, 100K+. QC, logistics, fulfillment."),
+    ("Week 1–3", "Feasibility Sprint", "Sign NDA. BOM estimate, factory shortlist with NRE and MOQ quotes, certification path."),
+    ("Week 4–8", "Engineering Design", "Schematic, PCB layout, mechanical CAD, firmware architecture. Weekly sync."),
+    ("Week 8–12", "Prototypes (EVT)", "3–5 functional prototypes. DFM checks. EVT gate."),
+    ("Week 13–20", "Tooling + DVT", "Injection molds, jigs, fixtures. Components from 3,000+ suppliers. DVT units go to certification."),
+    ("Week 20–26", "Pilot Run (PVT)", "50–500 units. Test assembly line, QC process, packaging."),
+    ("Month 6–12", "Production", "First production run from 1,000 units, then 10K, 100K+. QC, logistics, fulfillment."),
 ]
 
 
@@ -550,9 +552,13 @@ def draw_timeline_page(c, W, H, MARGIN):
     c.setFont(SANS_BOLD, 26 if is_portrait else 32)
     c.drawString(MARGIN, y - 22, "What happens after you sign")
     c.setFillColor(SLATE)
-    c.setFont(SANS, 11 if is_portrait else 13)
+    sub_txt = "Working prototype in 8–12 weeks, pilot batch in 3–6 months, production in 6–12 months. Weekly sync throughout."
+    sub_fs = 11 if is_portrait else 13
+    while pdfmetrics.stringWidth(sub_txt, SANS, sub_fs) > CW and sub_fs > 8:
+        sub_fs -= 0.5
+    c.setFont(SANS, sub_fs)
     c.drawString(MARGIN, y - 42,
-                 "A predictable 12-week path to pilot. Transparent weekly sync.")
+                 "Working prototype in 8–12 weeks, pilot batch in 3–6 months, production in 6–12 months. Weekly sync throughout.")
 
     # Vertical rail layout
     n = len(TIMELINE)
@@ -610,11 +616,11 @@ def draw_timeline_page(c, W, H, MARGIN):
     c.roundRect(MARGIN, box_top_y - box_h, CW, box_h, 6, fill=1, stroke=0)
     c.setFillColor(NAVY)
     c.setFont(SANS_BOLD, 13)
-    c.drawString(MARGIN + 20, box_top_y - 20, "Fixed-price at every gate.")
+    c.drawString(MARGIN + 20, box_top_y - 20, "Defined deliverables at every gate.")
     c.setFillColor(SLATE)
     c.setFont(SANS, 10)
     c.drawString(MARGIN + 20, box_top_y - 36,
-                 "EVT, DVT, and PVT gates each have defined deliverables and sign-off. No T&M. No scope-creep invoices.")
+                 "EVT, DVT, and PVT gates each have defined deliverables and sign-off. Written status every week.")
     c.drawString(MARGIN + 20, box_top_y - 50,
                  "Weekly status sync on Fridays with photos, videos, and next-week plan.")
 
@@ -627,11 +633,11 @@ def draw_pricing_page(c, W, H, MARGIN):
 
     c.setFillColor(NAVY)
     c.setFont(SANS_BOLD, 26 if is_portrait else 32)
-    c.drawString(MARGIN, y - 22, "Typical Project Costs")
+    c.drawString(MARGIN, y - 22, "What It Costs")
     c.setFillColor(SLATE)
     c.setFont(SANS, 11 if is_portrait else 13)
     c.drawString(MARGIN, y - 42,
-                 "Fixed-price at every stage. No T&M. No scope-creep invoices.")
+                 "Cash only. A fixed fee for the sprint, then a monthly fee.")
 
     y -= 60
 
@@ -663,13 +669,17 @@ def draw_pricing_page(c, W, H, MARGIN):
             inner_y -= 24
 
         c.setFillColor(NAVY)
-        c.setFont(SANS_BOLD, 16)
-        c.drawString(cx + 16, inner_y - 12, name)
-        inner_y -= 38
+        c.setFont(SANS_BOLD, 13)
+        name_lines = wrap_text(c, name, SANS_BOLD, 13, card_w - 32)
+        ny = inner_y - 12
+        for nl in name_lines[:2]:
+            c.drawString(cx + 16, ny, nl)
+            ny -= 15
+        inner_y -= 44
 
         c.setFillColor(NAVY)
         # Shrink font if price is long
-        price_font_size = 22 if len(price) <= 8 else 18
+        price_font_size = 22 if len(price) <= 8 else 14
         c.setFont(SANS_BOLD, price_font_size)
         c.drawString(cx + 16, inner_y, price)
         inner_y -= 22
@@ -677,7 +687,7 @@ def draw_pricing_page(c, W, H, MARGIN):
         c.setFillColor(SLATE)
         c.setFont(SANS, 9)
         desc_lines = wrap_text(c, desc, SANS, 9, card_w - 32)
-        for line in desc_lines[:4]:
+        for line in desc_lines[:7]:
             c.drawString(cx + 16, inner_y, line)
             inner_y -= 12
 
@@ -700,9 +710,14 @@ def draw_pricing_page(c, W, H, MARGIN):
 
     c.setFillColor(SLATE)
     c.setFont(SANS, 9)
-    footer = "Complexity (sensors, radios, battery chemistry, certifications) drives the final number. Try the NRE Simulator at breezehw.com/tools/nre-simulator for a tailored estimate in 60 seconds."
-    fl = wrap_text(c, footer, SANS, 9, CW)
-    for line in fl:
+    c.setFillColor(NAVY)
+    c.setFont(SANS_BOLD, 9)
+    c.drawString(MARGIN, y, "Typical product cost, not our fee: NRE $50K–$150K, $15–$60 per unit at 5K volume.")
+    y -= 14
+    c.setFillColor(SLATE)
+    c.setFont(SANS, 9)
+    footer = "Third-party costs (parts, tooling, samples, test labs, specialist engineering) are passed through at cost. Cash only, no equity. After scoping, we can quote a fixed total for the project."
+    for line in wrap_text(c, footer, SANS, 9, CW):
         c.drawString(MARGIN, y, line)
         y -= 11
 
@@ -1342,8 +1357,8 @@ def generate_portrait_kit():
     next_steps = [
         ("1", "Try Our Free Tools", "Get a BOM estimate and DFM checklist at breezehw.com/tools. No signup required."),
         ("2", "Book a Scoping Call", "30 minutes. Share your concept, we assess feasibility and provide a ballpark cost range."),
-        ("3", "Receive Your NRE Proposal", "Detailed engineering plan with fixed pricing, timeline, and deliverables. No surprises."),
-        ("4", "Start Building", "We assign your dedicated engineering team and begin the 12-week path to prototype."),
+        ("3", "Receive Your Proposal", "Scope, timeline and fees in writing: a fixed sprint fee, then a monthly fee."),
+        ("4", "Start Building", "We start with the 2–3 week feasibility and sourcing sprint, then one accountable project manager runs your build."),
     ]
 
     for idx, (num, title, desc) in enumerate(next_steps):
@@ -1402,7 +1417,7 @@ def generate_portrait_kit():
     c.drawRightString(MARGIN + CW - 20, y - 30, "Your Engineering Partner for AI Hardware")
     c.setFillColor(Color(1, 1, 1, 0.5))
     c.setFont(SANS, 10)
-    c.drawRightString(MARGIN + CW - 20, y - 48, "NRE + per-unit  |  No equity  |  Full IP transfer")
+    c.drawRightString(MARGIN + CW - 20, y - 48, "Fixed sprint + monthly fee  |  No equity  |  Full IP transfer")
 
     c.save()
     print(f"Portrait kit saved: {OUT_KIT}")
@@ -1888,7 +1903,7 @@ def generate_landscape_deck():
     next_steps = [
         ("1", "Try Our Free Tools", "breezehw.com/tools -- no signup"),
         ("2", "Book a Scoping Call", "30 min -- feasibility + cost range"),
-        ("3", "Get Your NRE Proposal", "Fixed pricing, clear timeline"),
+        ("3", "Get Your Proposal", "Fixed sprint, then monthly fee"),
     ]
 
     step_w = 240
