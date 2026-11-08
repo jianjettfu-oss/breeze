@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Nav } from "../components/nav";
-import { STAGES, TOTAL_WEEKS } from "../evt-dvt-pvt/data";
+import { SHIP_MONTHS, STAGES, TOTAL_WEEKS } from "../evt-dvt-pvt/data";
 
 const [EVT, DVT, PVT] = STAGES;
 
@@ -60,7 +60,7 @@ const QAS: QA[] = [
   },
   {
     q: "What's the difference between EVT, DVT, and PVT?",
-    a: `Three validation stages on the path to mass production. EVT (Engineering Validation Test): ${EVT.units} units, mostly hand-built, ${EVT.weeks} weeks. It proves the core technology works: the electronics, the AI model running on the chip, the form factor. DVT (Design Validation Test): ${DVT.units} units on production-intent tooling, ${DVT.weeks} weeks. It tests reliability, usability and regulatory pre-compliance, and ends with a design freeze, formal certification booked and the steel production mold ordered. PVT (Production Validation Test): ${PVT.units} units on the full production line, ${PVT.weeks} weeks. It proves the factory can build at quality and yield. After PVT you ramp to mass production. That is ${TOTAL_WEEKS[0]}-${TOTAL_WEEKS[1]} weeks if nothing fails; budget 6 months from EVT start to first shipment, and 9 months for a first product. The checks for each stage are in our EVT/DVT/PVT guide (breezehw.com/evt-dvt-pvt).`,
+    a: `Three validation stages on the path to mass production. EVT (Engineering Validation Test): ${EVT.units} units, mostly hand-built, ${EVT.weeks} weeks. It proves the core technology works: the electronics, the AI model running on the chip, the form factor. DVT (Design Validation Test): ${DVT.units} units on production-intent tooling, ${DVT.weeks} weeks. It tests reliability, usability and regulatory pre-compliance, and ends with a design freeze, formal certification booked and the steel production mold ordered. PVT (Production Validation Test): ${PVT.units} units on the full production line, ${PVT.weeks} weeks. It proves the factory can build at quality and yield. After PVT you ramp to mass production. That is ${TOTAL_WEEKS[0]}-${TOTAL_WEEKS[1]} weeks if nothing fails; budget ${SHIP_MONTHS[0]} months from EVT start to first shipment, and ${SHIP_MONTHS[1]} months for a first product. The checks for each stage are in our EVT/DVT/PVT guide (breezehw.com/evt-dvt-pvt).`,
   },
   {
     q: "How do 2026 US tariffs affect China-made AI hardware?",

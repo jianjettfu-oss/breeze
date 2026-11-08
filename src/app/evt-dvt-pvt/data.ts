@@ -80,6 +80,13 @@ export const STAGES: Stage[] = [
 export const TIMELINE_NOTE =
   "Each stage can run longer if problems are found. Budget 6 months from EVT start to first shipment -- 9 months is more realistic for a first product.";
 
+/** [budget, realistic first product] months from EVT start to first shipment, read from TIMELINE_NOTE. */
+export const SHIP_MONTHS: [number, number] = (() => {
+  const m = TIMELINE_NOTE.match(/Budget (\d+) months[^\d]*(\d+) months/);
+  if (!m) throw new Error("evt-dvt-pvt: TIMELINE_NOTE no longer states the month budget");
+  return [Number(m[1]), Number(m[2])];
+})();
+
 const span = (s: string) => s.split("-").map(Number) as [number, number];
 
 /** Sum of the stage week ranges, e.g. [14, 22]. */
