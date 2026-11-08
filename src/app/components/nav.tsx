@@ -23,24 +23,24 @@ export function Nav() {
 
         {/* Desktop nav */}
         <div className="hidden sm:flex items-center gap-8 text-sm font-medium text-[#64748B]">
-          <a href="#process" className="hover:text-[#1B3A5C] transition-colors">
+          <Link href="/#process" className="hover:text-[#1B3A5C] transition-colors">
             Process
-          </a>
-          <a href="#tools" className="hover:text-[#1B3A5C] transition-colors">
+          </Link>
+          <Link href="/tools" className="hover:text-[#1B3A5C] transition-colors">
             Tools
-          </a>
-          <a href="#why" className="hover:text-[#1B3A5C] transition-colors">
+          </Link>
+          <Link href="/#why" className="hover:text-[#1B3A5C] transition-colors">
             Why Breeze
-          </a>
-          <a href="/faq" className="hover:text-[#1B3A5C] transition-colors">
+          </Link>
+          <Link href="/faq" className="hover:text-[#1B3A5C] transition-colors">
             FAQ
-          </a>
-          <a
-            href="#contact"
+          </Link>
+          <Link
+            href="/#contact"
             className="bg-[#2DD4A8] text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-[#2DD4A8]/90 transition-colors"
           >
             Get in Touch
-          </a>
+          </Link>
         </div>
 
         {/* Mobile hamburger */}
@@ -68,41 +68,41 @@ export function Nav() {
       {/* Mobile menu */}
       {open && (
         <div className="sm:hidden border-t border-gray-100 bg-white px-6 py-4 space-y-3">
-          <a
-            href="#process"
+          <Link
+            href="/#process"
             onClick={() => setOpen(false)}
             className="block text-sm font-medium text-[#64748B] hover:text-[#1B3A5C]"
           >
             Process
-          </a>
-          <a
-            href="#tools"
+          </Link>
+          <Link
+            href="/tools"
             onClick={() => setOpen(false)}
             className="block text-sm font-medium text-[#64748B] hover:text-[#1B3A5C]"
           >
             Tools
-          </a>
-          <a
-            href="#why"
+          </Link>
+          <Link
+            href="/#why"
             onClick={() => setOpen(false)}
             className="block text-sm font-medium text-[#64748B] hover:text-[#1B3A5C]"
           >
             Why Breeze
-          </a>
-          <a
+          </Link>
+          <Link
             href="/faq"
             onClick={() => setOpen(false)}
             className="block text-sm font-medium text-[#64748B] hover:text-[#1B3A5C]"
           >
             FAQ
-          </a>
-          <a
-            href="#contact"
+          </Link>
+          <Link
+            href="/#contact"
             onClick={() => setOpen(false)}
             className="block bg-[#2DD4A8] text-white px-4 py-2.5 rounded-lg text-sm font-semibold text-center hover:bg-[#2DD4A8]/90 transition-colors"
           >
             Get in Touch
-          </a>
+          </Link>
         </div>
       )}
     </nav>
