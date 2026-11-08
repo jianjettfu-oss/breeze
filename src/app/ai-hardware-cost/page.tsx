@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Nav } from "../components/nav";
-import { categories, fixedCosts, volumeMultipliers, type Tier } from "../tools/bom-estimator/data";
+import { categories, volumeMultipliers } from "../tools/bom-estimator/data";
+import { BUILDS, FIXED, part, range, usd } from "./builds";
 import { nreCategories, timelineEstimates } from "../tools/nre-simulator/data";
 import { certifications } from "../tools/cert-navigator/data";
 
@@ -24,62 +25,6 @@ export const metadata: Metadata = {
   openGraph: { title: TITLE, description: DESCRIPTION, url: PAGE_URL, type: "article" },
 };
 
-const ZERO: Tier = { low: 0, mid: 0, high: 0 };
-const add = (a: Tier, b: Tier): Tier => ({ low: a.low + b.low, mid: a.mid + b.mid, high: a.high + b.high });
-
-function part(categoryId: string, optionId: string) {
-  const cat = categories.find((c) => c.id === categoryId);
-  const opt = cat?.options.find((o) => o.id === optionId);
-  if (!cat || !opt) throw new Error(`ai-hardware-cost: unknown BOM option ${categoryId}/${optionId}`);
-  return { category: cat.label, label: opt.label, cost: opt.cost };
-}
-
-const FIXED: Tier = fixedCosts.reduce((t, f) => add(t, f.cost), ZERO);
-
-const BUILDS = [
-  {
-    name: "Voice pendant",
-    use: "Records speech and sends it to the cloud. MCU class.",
-    parts: [
-      part("soc", "esp32s3"),
-      part("memory", "mem_mcu"),
-      part("battery", "bat_small"),
-      part("connectivity", "conn_builtin"),
-      part("sensors", "sens_mic"),
-    ],
-  },
-  {
-    name: "Camera device",
-    use: "Runs vision models on the device. Linux SoC with an NPU.",
-    parts: [
-      part("soc", "rk3562"),
-      part("memory", "mem_mid"),
-      part("battery", "bat_medium"),
-      part("connectivity", "conn_wifi"),
-      part("sensors", "sens_cam5"),
-      part("sensors", "sens_mic"),
-    ],
-  },
-  {
-    name: "Screen + local AI",
-    use: "Small screen, camera and a local language model.",
-    parts: [
-      part("soc", "rk3588s"),
-      part("memory", "mem_high"),
-      part("display", "lcd"),
-      part("battery", "bat_large"),
-      part("connectivity", "conn_wifi"),
-      part("sensors", "sens_mic"),
-      part("sensors", "sens_cam2"),
-    ],
-  },
-].map((b) => {
-  const parts = b.parts.reduce((t, p) => add(t, p.cost), ZERO);
-  const memory = b.parts.filter((p) => p.category.startsWith("Memory")).reduce((t, p) => add(t, p.cost), ZERO);
-  const unit = add(parts, FIXED);
-  return { ...b, unit, memoryShare: Math.round((memory.mid / unit.mid) * 100) };
-});
-
 const NRE_ROWS = nreCategories.map((c) => ({
   label: c.label,
   low: Math.min(...c.options.map((o) => o.low)),
@@ -92,9 +37,6 @@ const NRE_HIGH = NRE_ROWS.reduce((s, r) => s + r.high, 0);
 const CERTS = ["fcc", "ce", "un383"]
   .map((id) => certifications.find((c) => c.id === id))
   .filter((c): c is NonNullable<typeof c> => Boolean(c));
-
-const usd = (n: number) => (n >= 100 ? `$${Math.round(n).toLocaleString("en-US")}` : `$${n.toFixed(2)}`);
-const range = (t: Tier) => `${usd(t.low)}–${usd(t.high)}`;
 
 const [voice, camera, display] = BUILDS;
 const MEM_MID = part("memory", "mem_mid").cost;

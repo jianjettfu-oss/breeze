@@ -712,7 +712,7 @@ def draw_pricing_page(c, W, H, MARGIN):
     c.setFont(SANS, 9)
     c.setFillColor(NAVY)
     c.setFont(SANS_BOLD, 9)
-    c.drawString(MARGIN, y, "Typical product cost, not our fee: NRE $50K–$150K, $15–$60 per unit at 5K volume.")
+    c.drawString(MARGIN, y, "Typical product cost, not our fee: NRE $50K–$150K, about $20–$110 per unit at 5K volume.")
     y -= 14
     c.setFillColor(SLATE)
     c.setFont(SANS, 9)

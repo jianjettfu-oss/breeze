@@ -1,5 +1,9 @@
 import { Nav } from "./components/nav";
 import { ContactForm } from "./components/contact-form";
+import { BUILDS, atVolume } from "./ai-hardware-cost/builds";
+
+// Per-unit examples at 5K units, from the same builds as the cost guide.
+const [VOICE_5K, CAMERA_5K, SCREEN_5K] = BUILDS.map((b) => `$${Math.round(atVolume(b.unit, "5000").mid)}`);
 
 /* ─── Icon components ─── */
 
@@ -299,7 +303,7 @@ const faqs = [
   },
   {
     q: "What does it cost to take an AI wearable to production?",
-    a: "For most AI wearables and connected devices, total NRE (engineering, tooling, samples, certification) runs $50K–$150K, and per-unit cost is $15–$60 at 5K volume. Complexity (sensors, radios, battery chemistry, certifications) drives the range. Try the NRE Simulator for a tailored ballpark in 60 seconds.",
+    a: `For most AI wearables and connected devices, total NRE (engineering, tooling, samples, certification) runs $50K–$150K. Per-unit cost depends mostly on the chip and the memory: at 5K units our November 2026 estimates run from about ${VOICE_5K} for an MCU-class voice pendant to about ${CAMERA_5K} for a camera device on a Linux SoC and ${SCREEN_5K} with a screen and a local model. Sensors, radios, battery chemistry and certifications move it further. The cost guide (breezehw.com/ai-hardware-cost) shows the parts behind each figure, and the NRE Simulator gives a tailored ballpark in 60 seconds.`,
   },
   {
     q: "What does Breeze charge?",

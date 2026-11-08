@@ -80,7 +80,7 @@ Outputs typical cost range, lead time, and which lab to use.
 
 ## Typical product cost (not our fee)
 
-For most AI wearables and connected devices, total NRE (engineering, tooling, samples, certification) runs $50K-$150K, and per-unit cost is $15-$60 at 5K volume. Complexity (sensors, radios, battery chemistry, certifications) drives the range. The NRE Simulator gives a tailored ballpark: https://breezehw.com/tools/nre-simulator
+For most AI wearables and connected devices, total NRE (engineering, tooling, samples, certification) runs $50K-$150K. Per-unit cost depends mostly on the chip and the memory: at 5K units our November 2026 estimates run from about $20 for an MCU-class voice pendant to about $61 for a camera device on a Linux SoC and $110 with a screen and a local model (parts behind each figure: https://breezehw.com/ai-hardware-cost). Complexity (sensors, radios, battery chemistry, certifications) drives the range. The NRE Simulator gives a tailored ballpark: https://breezehw.com/tools/nre-simulator
 
 ## Engagement model
 
