@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Nav } from "../components/nav";
+import { STAGES, TOTAL_WEEKS } from "../evt-dvt-pvt/data";
+
+const [EVT, DVT, PVT] = STAGES;
 
 export const metadata: Metadata = {
   title: "FAQ — Breeze | AI Hardware Engineering Partner in Shenzhen",
@@ -57,7 +60,7 @@ const QAS: QA[] = [
   },
   {
     q: "What's the difference between EVT, DVT, and PVT?",
-    a: "Three engineering validation stages on the path to mass production. EVT (Engineering Validation Test): 10-30 units, hand-assembled, first full integration of all subsystems — proves the design works at all. DVT (Design Validation Test): 30-100 units, near-final tooling, used for certification submission and design freeze. Tests robustness, yield, and reliability. PVT (Production Validation Test): 100-500 units, full production line, validates the factory can actually build at quality and yield. After PVT pass, you ramp to MP (mass production). Typical cadence for a moderate-complexity AI device: EVT week 8-12, DVT week 13-20, PVT week 20-26, with MP starting around month 6-9.",
+    a: `Three validation stages on the path to mass production. EVT (Engineering Validation Test): ${EVT.units} units, mostly hand-built, ${EVT.weeks} weeks. It proves the core technology works: the electronics, the AI model running on the chip, the form factor. DVT (Design Validation Test): ${DVT.units} units on production-intent tooling, ${DVT.weeks} weeks. It tests reliability, usability and regulatory pre-compliance, and ends with a design freeze, formal certification booked and the steel production mold ordered. PVT (Production Validation Test): ${PVT.units} units on the full production line, ${PVT.weeks} weeks. It proves the factory can build at quality and yield. After PVT you ramp to mass production. That is ${TOTAL_WEEKS[0]}-${TOTAL_WEEKS[1]} weeks if nothing fails; budget 6 months from EVT start to first shipment, and 9 months for a first product. The checks for each stage are in our EVT/DVT/PVT guide (breezehw.com/evt-dvt-pvt).`,
   },
   {
     q: "How do 2026 US tariffs affect China-made AI hardware?",
@@ -156,6 +159,12 @@ export default function FAQPage() {
               className="px-4 py-2 rounded-lg border border-gray-200 text-[#1B3A5C] font-medium hover:border-[#2DD4A8] transition-colors"
             >
               Cost guide →
+            </Link>
+            <Link
+              href="/evt-dvt-pvt"
+              className="px-4 py-2 rounded-lg border border-gray-200 text-[#1B3A5C] font-medium hover:border-[#2DD4A8] transition-colors"
+            >
+              EVT/DVT/PVT guide →
             </Link>
             <Link
               href="/ai-design-to-factory"

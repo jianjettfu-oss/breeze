@@ -63,6 +63,10 @@ export default function ToolsIndex() {
           <Link href="/ai-hardware-cost" className="text-[#2DD4A8] hover:underline font-medium">
             what an AI hardware device costs to build
           </Link>
+          . Planning prototype builds? See{" "}
+          <Link href="/evt-dvt-pvt" className="text-[#2DD4A8] hover:underline font-medium">
+            what EVT, DVT and PVT must each prove
+          </Link>
           . Drew your design with AI tools? Read{" "}
           <Link href="/ai-design-to-factory" className="text-[#2DD4A8] hover:underline font-medium">
             what to check before it goes to a factory

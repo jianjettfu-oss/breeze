@@ -61,6 +61,7 @@ Outputs typical cost range, lead time, and which lab to use.
 ## Guides
 
 - [How much does it cost to build an AI hardware device? (2026)](https://breezehw.com/ai-hardware-cost): per-unit cost at 1,000 units for three example builds (voice pendant, camera device, screen + local AI), what volume does to price, one-time engineering, tooling and certification ranges, and why memory is now the line to watch. Computed from the same data as the BOM and NRE tools.
+- [EVT, DVT and PVT for AI hardware: what each stage must prove](https://breezehw.com/evt-dvt-pvt): units and weeks per stage, the checks that matter most for AI devices (on-device model accuracy, sustained-inference thermals, OTA recovery, production yield), and the stop conditions for each stage. Checked against the open toolkit checklist.
 - [What to check before an AI-made hardware design goes to a factory](https://breezehw.com/ai-design-to-factory): where AI CAD, schematic, layout and firmware tools work and where they break (November 2026, each number sourced), four published failures, a three-layer checklist, and the handoff package a factory asks for.
 
 ## Open data

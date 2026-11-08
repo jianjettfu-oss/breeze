@@ -42,6 +42,11 @@ export const guides = [
     desc: "Per-unit cost for three example builds, one-time costs, and the 2026 memory jump.",
   },
   {
+    href: "/evt-dvt-pvt",
+    title: "Guide: EVT, DVT and PVT",
+    desc: "What each stage must prove, units and weeks, and when to stop instead of moving on.",
+  },
+  {
     href: "/ai-design-to-factory",
     title: "Guide: AI-made design to factory",
     desc: "What AI design tools miss, and a checklist before you pay for tooling.",

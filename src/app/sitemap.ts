@@ -41,6 +41,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.85,
     },
     {
+      url: `${base}/evt-dvt-pvt`,
+      lastModified: safeMtime("src/app/evt-dvt-pvt/page.tsx", now),
+      changeFrequency: "monthly",
+      priority: 0.85,
+    },
+    {
       url: `${base}/ai-design-to-factory`,
       lastModified: safeMtime("src/app/ai-design-to-factory/page.tsx", now),
       changeFrequency: "monthly",
