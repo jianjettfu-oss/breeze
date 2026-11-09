@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "check:brand": "node brand/brand-check.mjs --selftest && node brand/brand-check.mjs --no-design --root src --root scripts --root public && next build && node brand/site-class-audit.mjs ."
   },
   "dependencies": {
     "next": "16.4.3",
