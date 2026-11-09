@@ -38,7 +38,6 @@ const ORG_JSONLD = {
   areaServed: "Worldwide",
   address: {
     "@type": "PostalAddress",
-    addressLocality: "Shenzhen",
     addressCountry: "CN",
   },
   email: "hello@breezehw.com",

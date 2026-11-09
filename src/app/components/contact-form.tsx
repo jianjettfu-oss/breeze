@@ -38,7 +38,7 @@ export function ContactForm() {
     return (
       <div className="mt-12 max-w-lg mx-auto rounded-lg border border-hw/40 bg-hw/5 px-6 py-8 text-center" role="status">
         <p className="text-lg font-semibold text-ink">Thanks. We have your project.</p>
-        <p className="mt-2 text-sm text-sub">We&apos;ll reply within 24 hours with a preliminary assessment.</p>
+        <p className="mt-2 text-sm text-sub">We&apos;ll reply within 2 business days with a preliminary assessment.</p>
       </div>
     );
   }

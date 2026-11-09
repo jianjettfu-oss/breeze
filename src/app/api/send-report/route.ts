@@ -82,7 +82,7 @@ ${rows}
                 <tr>
                   <td style="padding:24px;">
                     <p style="margin:0 0 8px; font-size:16px; font-weight:600; color:#1B2528;">Want a precise quote?</p>
-                    <p style="margin:0; font-size:14px; color:#5C6E70;">Simply reply to this email with your project details and we'll prepare a detailed proposal within 24 hours.</p>
+                    <p style="margin:0; font-size:14px; color:#5C6E70;">Simply reply to this email with your project details and we'll prepare a detailed proposal within 2 business days.</p>
                   </td>
                 </tr>
               </table>

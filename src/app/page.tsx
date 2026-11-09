@@ -327,7 +327,7 @@ const faqs = [
   },
   {
     q: "What certifications do you handle?",
-    a: "We run in-house pre-compliance (FCC Part 15, UN38.3 battery, CE RED pre-scan) and coordinate full testing through accredited labs — SGS, TÜV, ETL. Cert timeline and cost are budgeted up front, so certification doesn't surprise you at DVT.",
+    a: "We run FCC Part 15 and CE RED pre-scans with partner labs. Formal testing, including UN38.3 for batteries, goes to accredited labs: SGS, TÜV, ETL. Cert timeline and cost are budgeted up front, so certification doesn't surprise you at DVT.",
   },
   {
     q: "What are your payment terms?",
@@ -821,7 +821,7 @@ export default function Home() {
               Ready to build?
             </h2>
             <p className="mt-4 text-lg text-sub">
-              Tell us about your project. We&apos;ll respond within 24 hours
+              Tell us about your project. We&apos;ll respond within 2 business days
               with a preliminary assessment.
             </p>
           </div>
