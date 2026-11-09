@@ -44,8 +44,8 @@ export default function EmailCapture({ tool, buildData }: EmailCaptureProps) {
   if (status === "success") {
     return (
       <div className="bg-hw/10 border border-hw/30 rounded-lg p-4 text-center">
-        <p className="text-ink font-semibold text-sm">Report sent!</p>
-        <p className="text-sub text-xs mt-1">
+        <p className="text-white font-semibold text-sm">Report sent!</p>
+        <p className="text-sub-dark text-xs mt-1">
           Check your inbox at {email}
         </p>
       </div>
@@ -64,7 +64,7 @@ export default function EmailCapture({ tool, buildData }: EmailCaptureProps) {
             if (status === "error") setStatus("idle");
           }}
           required
-          className="flex-1 bg-white/10 border border-white/20 text-white placeholder:text-sub rounded-lg px-3.5 py-2.5 text-sm focus:outline-none focus:border-hw focus:ring-1 focus:ring-hw transition-colors"
+          className="flex-1 bg-white/10 border border-white/20 text-white placeholder:text-sub-dark rounded-lg px-3.5 py-2.5 text-sm focus:outline-none focus:border-hw focus:ring-1 focus:ring-hw transition-colors"
         />
         <button
           type="submit"
@@ -75,7 +75,7 @@ export default function EmailCapture({ tool, buildData }: EmailCaptureProps) {
         </button>
       </div>
       {status === "error" && (
-        <p className="text-danger text-xs">{errorMsg}</p>
+        <p className="text-danger-dark text-xs">{errorMsg}</p>
       )}
     </form>
   );

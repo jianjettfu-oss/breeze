@@ -181,7 +181,7 @@ export default function DfmChecklist() {
                                 className={`w-9 h-9 rounded-lg text-sm font-semibold transition-colors ${
                                   state === "pass"
                                     ? "bg-hw text-ink"
-                                    : "bg-hairline text-sub hover:bg-hairline"
+                                    : "bg-panel text-sub hover:bg-hairline"
                                 }`}
                                 title="Pass"
                               >
@@ -192,7 +192,7 @@ export default function DfmChecklist() {
                                 className={`w-9 h-9 rounded-lg text-sm font-semibold transition-colors ${
                                   state === "fail"
                                     ? "bg-danger text-white"
-                                    : "bg-hairline text-sub hover:bg-hairline"
+                                    : "bg-panel text-sub hover:bg-hairline"
                                 }`}
                                 title="Fail"
                               >
@@ -203,7 +203,7 @@ export default function DfmChecklist() {
                                 className={`w-9 h-9 rounded-lg text-xs font-semibold transition-colors ${
                                   state === "na"
                                     ? "bg-sub text-white"
-                                    : "bg-hairline text-sub hover:bg-hairline"
+                                    : "bg-panel text-sub hover:bg-hairline"
                                 }`}
                                 title="Not applicable"
                               >

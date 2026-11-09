@@ -168,7 +168,7 @@ export default function BomEstimator() {
                     className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
                       volume === key
                         ? "bg-ink text-white"
-                        : "bg-hairline text-sub hover:bg-hairline"
+                        : "bg-panel text-sub hover:bg-hairline"
                     }`}
                   >
                     {label}
@@ -207,7 +207,7 @@ export default function BomEstimator() {
                           className={`text-left p-4 rounded-xl border transition-all ${
                             active
                               ? "border-hw bg-hw/10 shadow-sm"
-                              : "border-hairline hover:border-hairline"
+                              : "border-hairline hover:border-label/50"
                           }`}
                         >
                           <div className="flex items-start justify-between gap-2">

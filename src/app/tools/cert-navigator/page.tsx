@@ -290,7 +290,7 @@ export default function CertNavigator() {
                   className={`px-4 py-2.5 rounded-lg text-sm font-medium transition-colors ${
                     selectedFeatures.includes(feat.id)
                       ? "bg-ink text-white"
-                      : "bg-hairline text-sub hover:bg-hairline"
+                      : "bg-panel text-sub hover:bg-hairline"
                   }`}
                 >
                   {feat.icon} {feat.label}
@@ -310,7 +310,7 @@ export default function CertNavigator() {
                   className={`px-4 py-2.5 rounded-lg text-sm font-medium transition-colors ${
                     selectedMarkets.includes(mkt.id)
                       ? "bg-ink text-white"
-                      : "bg-hairline text-sub hover:bg-hairline"
+                      : "bg-panel text-sub hover:bg-hairline"
                   }`}
                 >
                   {mkt.flag} {mkt.label}

@@ -217,7 +217,7 @@ export default function NreSimulator() {
                           className={`w-full text-left p-4 rounded-xl border transition-all ${
                             active
                               ? "border-hw bg-hw/10 shadow-sm"
-                              : "border-hairline hover:border-hairline"
+                              : "border-hairline hover:border-label/50"
                           }`}
                         >
                           <div className="flex items-start justify-between gap-4">

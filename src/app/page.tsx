@@ -504,7 +504,7 @@ export default function Home() {
                 href="https://github.com/jianjettfu-oss/ai-hardware-toolkit"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center justify-center gap-2 bg-ink text-white px-6 py-3.5 rounded-lg text-base font-semibold hover:bg-bodytransition-colors"
+                className="inline-flex items-center justify-center gap-2 bg-ink text-white px-6 py-3.5 rounded-lg text-base font-semibold hover:bg-body transition-colors"
               >
                 View on GitHub
                 <ArrowRightIcon className="w-4 h-4" />
