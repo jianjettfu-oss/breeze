@@ -57,9 +57,9 @@ const ARTICLE_JSONLD = {
   },
 };
 
-const h2 = "text-2xl font-semibold text-[#1B3A5C] mt-14 mb-4";
-const p = "text-[15px] text-[#3F546B] leading-relaxed mb-4";
-const a = "text-[#2DD4A8] hover:underline font-medium";
+const h2 = "text-2xl font-semibold text-ink mt-14 mb-4";
+const p = "text-[15px] text-body leading-relaxed mb-4";
+const a = "text-ink underline decoration-hw decoration-2 underline-offset-4 font-medium";
 const th = "py-2 pr-3 font-semibold";
 const td = "py-2 pr-3";
 
@@ -73,17 +73,17 @@ export default function AiHardwareCost() {
       <Nav />
       <main className="max-w-3xl mx-auto px-6 py-12">
         <header className="mb-8">
-          <p className="text-xs uppercase tracking-wider text-[#2DD4A8] font-semibold mb-2">
+          <p className="text-xs uppercase tracking-wider text-ink font-semibold mb-2">
             Cost guide · November 2026
           </p>
-          <h1 className="text-3xl sm:text-4xl font-bold text-[#1B3A5C] leading-tight">
+          <h1 className="text-3xl sm:text-4xl font-semibold text-ink leading-tight">
             How much does it cost to build an AI hardware device?
           </h1>
         </header>
 
-        <section className="rounded-xl bg-gray-50 border border-gray-100 p-5 mb-8">
-          <h2 className="text-sm font-semibold text-[#1B3A5C] mb-2">Short answer</h2>
-          <p className="text-[15px] text-[#3F546B] leading-relaxed">
+        <section className="rounded-xl bg-panel border border-hairline p-5 mb-8">
+          <h2 className="text-sm font-semibold text-ink mb-2">Short answer</h2>
+          <p className="text-[15px] text-body leading-relaxed">
             You pay twice: once per unit, and once before the first unit ships. At 1,000 units our
             estimator puts a simple voice pendant at about {usd(voice.unit.mid)} per unit and a camera
             device at about {usd(camera.unit.mid)}, before freight and duty. One-time costs for
@@ -122,7 +122,7 @@ export default function AiHardwareCost() {
         <div className="overflow-x-auto -mx-6 px-6 mb-4">
           <table className="w-full text-sm border-collapse min-w-[640px]">
             <thead>
-              <tr className="text-left text-[#1B3A5C] border-b border-gray-200">
+              <tr className="text-left text-ink border-b border-hairline">
                 <th className={th}>Device</th>
                 <th className={th}>Main parts</th>
                 <th className={th}>Per unit at 1,000</th>
@@ -131,15 +131,15 @@ export default function AiHardwareCost() {
             </thead>
             <tbody>
               {BUILDS.map((b) => (
-                <tr key={b.name} className="align-top border-b border-gray-100 text-[#3F546B]">
-                  <td className={`${td} font-medium text-[#1B3A5C]`}>
+                <tr key={b.name} className="align-top border-b border-hairline text-body">
+                  <td className={`${td} font-medium text-ink`}>
                     {b.name}
-                    <div className="font-normal text-xs text-[#64748B] mt-1">{b.use}</div>
+                    <div className="font-normal text-xs text-sub mt-1">{b.use}</div>
                   </td>
                   <td className={td}>{b.parts.map((x) => x.label).join(" · ")}</td>
                   <td className={`${td} whitespace-nowrap`}>
-                    <span className="font-medium text-[#1B3A5C]">{usd(b.unit.mid)}</span>
-                    <div className="text-xs text-[#64748B]">{range(b.unit)}</div>
+                    <span className="font-medium text-ink">{usd(b.unit.mid)}</span>
+                    <div className="text-xs text-sub">{range(b.unit)}</div>
                   </td>
                   <td className="py-2">{b.memoryShare}%</td>
                 </tr>
@@ -169,7 +169,7 @@ export default function AiHardwareCost() {
         <div className="overflow-x-auto -mx-6 px-6 mb-4">
           <table className="w-full text-sm border-collapse min-w-[520px]">
             <thead>
-              <tr className="text-left text-[#1B3A5C] border-b border-gray-200">
+              <tr className="text-left text-ink border-b border-hairline">
                 <th className={th}>Memory</th>
                 <th className={th}>Per unit at 1,000</th>
                 <th className="py-2 font-semibold">Typical use</th>
@@ -179,10 +179,10 @@ export default function AiHardwareCost() {
               {categories
                 .find((c) => c.id === "memory")
                 ?.options.map((o) => (
-                  <tr key={o.id} className="align-top border-b border-gray-100 text-[#3F546B]">
-                    <td className={`${td} font-medium text-[#1B3A5C] whitespace-nowrap`}>{o.label}</td>
+                  <tr key={o.id} className="align-top border-b border-hairline text-body">
+                    <td className={`${td} font-medium text-ink whitespace-nowrap`}>{o.label}</td>
                     <td className={`${td} whitespace-nowrap`}>
-                      {usd(o.cost.mid)} <span className="text-xs text-[#64748B]">({range(o.cost)})</span>
+                      {usd(o.cost.mid)} <span className="text-xs text-sub">({range(o.cost)})</span>
                     </td>
                     <td className="py-2">{o.description.split(".")[0]}.</td>
                   </tr>
@@ -209,7 +209,7 @@ export default function AiHardwareCost() {
         <div className="overflow-x-auto -mx-6 px-6 mb-4">
           <table className="w-full text-sm border-collapse min-w-[420px]">
             <thead>
-              <tr className="text-left text-[#1B3A5C] border-b border-gray-200">
+              <tr className="text-left text-ink border-b border-hairline">
                 <th className={th}>Volume</th>
                 <th className={th}>Factor</th>
                 <th className="py-2 font-semibold">Voice pendant, middle estimate</th>
@@ -217,8 +217,8 @@ export default function AiHardwareCost() {
             </thead>
             <tbody>
               {Object.entries(volumeMultipliers).map(([k, v]) => (
-                <tr key={k} className="border-b border-gray-100 text-[#3F546B]">
-                  <td className={`${td} font-medium text-[#1B3A5C]`}>{v.label}</td>
+                <tr key={k} className="border-b border-hairline text-body">
+                  <td className={`${td} font-medium text-ink`}>{v.label}</td>
                   <td className={td}>×{v.factor}</td>
                   <td className="py-2">{usd(voice.unit.mid * v.factor)}</td>
                 </tr>
@@ -240,7 +240,7 @@ export default function AiHardwareCost() {
         <div className="overflow-x-auto -mx-6 px-6 mb-4">
           <table className="w-full text-sm border-collapse min-w-[480px]">
             <thead>
-              <tr className="text-left text-[#1B3A5C] border-b border-gray-200">
+              <tr className="text-left text-ink border-b border-hairline">
                 <th className={th}>Line</th>
                 <th className={th}>Range</th>
                 <th className="py-2 font-semibold">Typical duration</th>
@@ -248,8 +248,8 @@ export default function AiHardwareCost() {
             </thead>
             <tbody>
               {NRE_ROWS.map((r) => (
-                <tr key={r.label} className="border-b border-gray-100 text-[#3F546B]">
-                  <td className={`${td} font-medium text-[#1B3A5C]`}>{r.label}</td>
+                <tr key={r.label} className="border-b border-hairline text-body">
+                  <td className={`${td} font-medium text-ink`}>{r.label}</td>
                   <td className={`${td} whitespace-nowrap`}>
                     {usd(r.low)}–{usd(r.high)}
                   </td>
@@ -264,7 +264,7 @@ export default function AiHardwareCost() {
         <div className="overflow-x-auto -mx-6 px-6 mb-4">
           <table className="w-full text-sm border-collapse min-w-[480px]">
             <thead>
-              <tr className="text-left text-[#1B3A5C] border-b border-gray-200">
+              <tr className="text-left text-ink border-b border-hairline">
                 <th className={th}>Certification</th>
                 <th className={th}>Cost</th>
                 <th className="py-2 font-semibold">Time</th>
@@ -272,9 +272,9 @@ export default function AiHardwareCost() {
             </thead>
             <tbody>
               {CERTS.map((c) => (
-                <tr key={c.id} className="border-b border-gray-100 text-[#3F546B]">
-                  <td className={`${td} font-medium text-[#1B3A5C]`}>
-                    {c.name} <span className="font-normal text-xs text-[#64748B]">({c.region})</span>
+                <tr key={c.id} className="border-b border-hairline text-body">
+                  <td className={`${td} font-medium text-ink`}>
+                    {c.name} <span className="font-normal text-xs text-sub">({c.region})</span>
                   </td>
                   <td className={`${td} whitespace-nowrap`}>
                     {usd(c.cost.low)}–{usd(c.cost.high)}
@@ -305,8 +305,8 @@ export default function AiHardwareCost() {
           lists them as of November 2026. Put the full duty into your cost model from the start.
         </p>
 
-        <footer className="mt-12 pt-8 border-t border-gray-100">
-          <p className="text-sm text-[#64748B] leading-relaxed">
+        <footer className="mt-12 pt-8 border-t border-hairline">
+          <p className="text-sm text-sub leading-relaxed">
             Breeze runs prototype-to-production projects for AI hardware teams from Shenzhen. We
             charge a fixed fee for the feasibility sprint, then a monthly management fee, and pass
             third-party costs through at cost. If you want these numbers for your own device,{" "}
@@ -315,7 +315,7 @@ export default function AiHardwareCost() {
             </Link>
             .
           </p>
-          <p className="mt-4 text-xs text-[#94A3B8]">
+          <p className="mt-4 text-xs text-sub">
             Published {PUBLISHED} by Breeze. Computed from the tool data on the date of the last site
             build.
           </p>

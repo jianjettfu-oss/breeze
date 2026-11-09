@@ -271,7 +271,7 @@ export const checkCategories: CheckCategory[] = [
 ];
 
 export const severityConfig: Record<Severity, { label: string; color: string; weight: number }> = {
-  critical: { label: "Critical", color: "#EF4444", weight: 3 },
-  major: { label: "Major", color: "#F59E0B", weight: 2 },
-  minor: { label: "Minor", color: "#64748B", weight: 1 },
+  critical: { label: "Critical", color: "#B42318", weight: 3 },
+  major: { label: "Major", color: "#B54708", weight: 2 },
+  minor: { label: "Minor", color: "#5C6E70", weight: 1 },
 };

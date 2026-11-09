@@ -35,10 +35,10 @@ const ARTICLE_JSONLD = {
 const CHECKLIST_URL =
   "https://github.com/jianjettfu-oss/ai-hardware-toolkit/blob/main/evt-dvt-pvt-checklist/validation-stages.md";
 
-const h2 = "text-2xl font-semibold text-[#1B3A5C] mt-14 mb-4";
-const h3 = "text-lg font-semibold text-[#1B3A5C] mt-8 mb-2";
-const p = "text-[15px] text-[#3F546B] leading-relaxed mb-4";
-const a = "text-[#2DD4A8] hover:underline font-medium";
+const h2 = "text-2xl font-semibold text-ink mt-14 mb-4";
+const h3 = "text-lg font-semibold text-ink mt-8 mb-2";
+const p = "text-[15px] text-body leading-relaxed mb-4";
+const a = "text-ink underline decoration-hw decoration-2 underline-offset-4 font-medium";
 const th = "py-2 pr-3 font-semibold";
 const td = "py-2 pr-3";
 
@@ -60,17 +60,17 @@ export default function EvtDvtPvt() {
       <Nav />
       <main className="max-w-3xl mx-auto px-6 py-12">
         <header className="mb-8">
-          <p className="text-xs uppercase tracking-wider text-[#2DD4A8] font-semibold mb-2">
+          <p className="text-xs uppercase tracking-wider text-ink font-semibold mb-2">
             Validation guide · November 2026
           </p>
-          <h1 className="text-3xl sm:text-4xl font-bold text-[#1B3A5C] leading-tight">
+          <h1 className="text-3xl sm:text-4xl font-semibold text-ink leading-tight">
             EVT, DVT and PVT for AI hardware: what each stage must prove
           </h1>
         </header>
 
-        <section className="rounded-xl bg-gray-50 border border-gray-100 p-5 mb-8">
-          <h2 className="text-sm font-semibold text-[#1B3A5C] mb-2">Short answer</h2>
-          <p className="text-[15px] text-[#3F546B] leading-relaxed">
+        <section className="rounded-xl bg-panel border border-hairline p-5 mb-8">
+          <h2 className="text-sm font-semibold text-ink mb-2">Short answer</h2>
+          <p className="text-[15px] text-body leading-relaxed">
             EVT proves the technology works. DVT proves the design survives real use and is ready
             for certification. PVT proves the factory can build it the same way every time. In our
             checklist that is {range(evt.units)} units over {range(evt.weeks)} weeks,{" "}
@@ -95,7 +95,7 @@ export default function EvtDvtPvt() {
         <div className="overflow-x-auto -mx-6 px-6 mb-4">
           <table className="w-full text-sm border-collapse min-w-[600px]">
             <thead>
-              <tr className="text-left text-[#1B3A5C] border-b border-gray-200">
+              <tr className="text-left text-ink border-b border-hairline">
                 <th className={th}>Stage</th>
                 <th className={th}>Units</th>
                 <th className={th}>Weeks</th>
@@ -105,10 +105,10 @@ export default function EvtDvtPvt() {
             </thead>
             <tbody>
               {STAGES.map((s) => (
-                <tr key={s.name} className="align-top border-b border-gray-100 text-[#3F546B]">
-                  <td className={`${td} font-medium text-[#1B3A5C]`}>
+                <tr key={s.name} className="align-top border-b border-hairline text-body">
+                  <td className={`${td} font-medium text-ink`}>
                     {s.name}
-                    <div className="font-normal text-xs text-[#64748B] mt-1">{s.full}</div>
+                    <div className="font-normal text-xs text-sub mt-1">{s.full}</div>
                   </td>
                   <td className={`${td} whitespace-nowrap`}>{range(s.units)}</td>
                   <td className={`${td} whitespace-nowrap`}>{range(s.weeks)}</td>
@@ -139,7 +139,7 @@ export default function EvtDvtPvt() {
             <div className="overflow-x-auto -mx-6 px-6 mb-4">
               <table className="w-full text-sm border-collapse min-w-[520px]">
                 <thead>
-                  <tr className="text-left text-[#1B3A5C] border-b border-gray-200">
+                  <tr className="text-left text-ink border-b border-hairline">
                     <th className={th}>#</th>
                     <th className={th}>Check</th>
                     <th className="py-2 font-semibold">Pass criteria</th>
@@ -147,18 +147,18 @@ export default function EvtDvtPvt() {
                 </thead>
                 <tbody>
                   {s.checks.map((c) => (
-                    <tr key={c.code} className="align-top border-b border-gray-100 text-[#3F546B]">
-                      <td className={`${td} text-xs text-[#64748B]`}>{c.code}</td>
-                      <td className={`${td} font-medium text-[#1B3A5C]`}>{c.check}</td>
+                    <tr key={c.code} className="align-top border-b border-hairline text-body">
+                      <td className={`${td} text-xs text-sub`}>{c.code}</td>
+                      <td className={`${td} font-medium text-ink`}>{c.check}</td>
                       <td className="py-2">{pretty(c.criteria)}</td>
                     </tr>
                   ))}
                 </tbody>
               </table>
             </div>
-            <div className="rounded-lg border-l-4 border-[#F59E0B] bg-amber-50 px-4 py-3 mb-4">
-              <p className="text-sm text-[#3F546B] leading-relaxed">
-                <span className="font-semibold text-[#1B3A5C]">{STOP_LABEL[s.name]}</span>
+            <div className="rounded-lg border-l-4 border-caution bg-caution/5 px-4 py-3 mb-4">
+              <p className="text-sm text-body leading-relaxed">
+                <span className="font-semibold text-ink">{STOP_LABEL[s.name]}</span>
                 {pretty(s.stopIf)}
               </p>
             </div>
@@ -226,8 +226,8 @@ export default function EvtDvtPvt() {
           .
         </p>
 
-        <footer className="mt-12 pt-8 border-t border-gray-100">
-          <p className="text-sm text-[#64748B] leading-relaxed">
+        <footer className="mt-12 pt-8 border-t border-hairline">
+          <p className="text-sm text-sub leading-relaxed">
             Breeze runs prototype-to-production projects for AI hardware teams from Shenzhen,
             including the EVT, DVT and PVT builds. We charge a fixed fee for the feasibility sprint,
             then a monthly management fee, and pass third-party costs through at cost. If you are
@@ -237,7 +237,7 @@ export default function EvtDvtPvt() {
             </Link>
             .
           </p>
-          <p className="mt-4 text-xs text-[#94A3B8]">
+          <p className="mt-4 text-xs text-sub">
             Published {PUBLISHED} by Breeze. Stage figures and check criteria come from the open
             toolkit checklist and are checked against it.
           </p>

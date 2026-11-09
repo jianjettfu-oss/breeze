@@ -32,9 +32,9 @@ const ARTICLE_JSONLD = {
   },
 };
 
-const h2 = "text-2xl font-semibold text-[#1B3A5C] mt-14 mb-4";
-const p = "text-[15px] text-[#3F546B] leading-relaxed mb-4";
-const a = "text-[#2DD4A8] hover:underline font-medium";
+const h2 = "text-2xl font-semibold text-ink mt-14 mb-4";
+const p = "text-[15px] text-body leading-relaxed mb-4";
+const a = "text-ink underline decoration-hw decoration-2 underline-offset-4 font-medium";
 
 function Cite({ s }: { s: Source }) {
   return (
@@ -54,17 +54,17 @@ export default function AiDesignToFactory() {
       <Nav />
       <main className="max-w-3xl mx-auto px-6 py-12">
         <header className="mb-8">
-          <p className="text-xs uppercase tracking-wider text-[#2DD4A8] font-semibold mb-2">
+          <p className="text-xs uppercase tracking-wider text-ink font-semibold mb-2">
             Guide · November 2026
           </p>
-          <h1 className="text-3xl sm:text-4xl font-bold text-[#1B3A5C] leading-tight">
+          <h1 className="text-3xl sm:text-4xl font-semibold text-ink leading-tight">
             What to check before an AI-made hardware design goes to a factory
           </h1>
         </header>
 
-        <section className="rounded-xl bg-gray-50 border border-gray-100 p-5 mb-8">
-          <h2 className="text-sm font-semibold text-[#1B3A5C] mb-2">Short answer</h2>
-          <p className="text-[15px] text-[#3F546B] leading-relaxed">
+        <section className="rounded-xl bg-panel border border-hairline p-5 mb-8">
+          <h2 className="text-sm font-semibold text-ink mb-2">Short answer</h2>
+          <p className="text-[15px] text-body leading-relaxed">
             AI tools can now draw CAD models, schematics, board layouts and firmware that open cleanly
             and pass automated checks. They are still weak where only the physical world has the
             answer: heat inside the enclosure, how parts fit, whether a mold can be built, whether
@@ -90,7 +90,7 @@ export default function AiDesignToFactory() {
         <div className="overflow-x-auto -mx-6 px-6 mb-4">
           <table className="w-full text-sm border-collapse min-w-[640px]">
             <thead>
-              <tr className="text-left text-[#1B3A5C] border-b border-gray-200">
+              <tr className="text-left text-ink border-b border-hairline">
                 <th className="py-2 pr-3 font-semibold">Step</th>
                 <th className="py-2 pr-3 font-semibold">Works for</th>
                 <th className="py-2 pr-3 font-semibold">Breaks on</th>
@@ -99,8 +99,8 @@ export default function AiDesignToFactory() {
             </thead>
             <tbody>
               {WHERE_AI_IS.map((r) => (
-                <tr key={r.step} className="align-top border-b border-gray-100 text-[#3F546B]">
-                  <td className="py-2 pr-3 font-medium text-[#1B3A5C]">{r.step}</td>
+                <tr key={r.step} className="align-top border-b border-hairline text-body">
+                  <td className="py-2 pr-3 font-medium text-ink">{r.step}</td>
                   <td className="py-2 pr-3">{r.works}</td>
                   <td className="py-2 pr-3">{r.breaks}</td>
                   <td className="py-2">
@@ -119,7 +119,7 @@ export default function AiDesignToFactory() {
 
         <h2 className={h2}>Four published failures worth knowing</h2>
 
-        <h3 className="text-lg font-semibold text-[#1B3A5C] mt-6 mb-2">
+        <h3 className="text-lg font-semibold text-ink mt-6 mb-2">
           A short that passed ERC
         </h3>
         <p className={p}>
@@ -131,7 +131,7 @@ export default function AiDesignToFactory() {
           built or powered. Source: <Cite s={SOURCES.jlcpcb} />.
         </p>
 
-        <h3 className="text-lg font-semibold text-[#1B3A5C] mt-6 mb-2">
+        <h3 className="text-lg font-semibold text-ink mt-6 mb-2">
           A gear that came back simplified
         </h3>
         <p className={p}>
@@ -141,7 +141,7 @@ export default function AiDesignToFactory() {
           a stake in the answer. Source: <Cite s={SOURCES.xometry} />.
         </p>
 
-        <h3 className="text-lg font-semibold text-[#1B3A5C] mt-6 mb-2">
+        <h3 className="text-lg font-semibold text-ink mt-6 mb-2">
           A knob with no clean result
         </h3>
         <p className={p}>
@@ -150,7 +150,7 @@ export default function AiDesignToFactory() {
           mode. Source: <Cite s={SOURCES.engineering} />.
         </p>
 
-        <h3 className="text-lg font-semibold text-[#1B3A5C] mt-6 mb-2">
+        <h3 className="text-lg font-semibold text-ink mt-6 mb-2">
           CAD that runs, in the wrong shape
         </h3>
         <p className={p}>
@@ -181,14 +181,14 @@ export default function AiDesignToFactory() {
 
         {LAYERS.map((layer) => (
           <section key={layer.id} className="mb-10" aria-labelledby={`layer-${layer.id}`}>
-            <h3 id={`layer-${layer.id}`} className="text-xl font-semibold text-[#1B3A5C] mt-8 mb-1">
+            <h3 id={`layer-${layer.id}`} className="text-xl font-semibold text-ink mt-8 mb-1">
               {layer.title}
             </h3>
-            <p className="text-sm text-[#64748B] mb-4">{layer.when}</p>
+            <p className="text-sm text-sub mb-4">{layer.when}</p>
             {layer.groups.map((g, gi) => (
               <div key={g.name ?? gi} className="mb-5">
                 {g.name && (
-                  <p className="text-xs uppercase tracking-wider text-[#64748B] font-semibold mb-2">
+                  <p className="text-xs uppercase tracking-wider text-sub font-semibold mb-2">
                     {g.name}
                   </p>
                 )}
@@ -197,10 +197,10 @@ export default function AiDesignToFactory() {
                     <li key={it.title} className="flex gap-3">
                       <span
                         aria-hidden="true"
-                        className="mt-1 h-4 w-4 shrink-0 rounded border border-gray-300"
+                        className="mt-1 h-4 w-4 shrink-0 rounded border border-hairline"
                       />
-                      <span className="text-[15px] text-[#3F546B] leading-relaxed">
-                        <span className="font-medium text-[#1B3A5C]">{it.title}</span>
+                      <span className="text-[15px] text-body leading-relaxed">
+                        <span className="font-medium text-ink">{it.title}</span>
                         {it.detail && <> {it.detail}</>}
                         {it.source && (
                           <>
@@ -222,9 +222,9 @@ export default function AiDesignToFactory() {
           <table className="w-full text-sm border-collapse">
             <tbody>
               {HANDOFF.map((r) => (
-                <tr key={r.item} className="align-top border-b border-gray-100">
-                  <td className="py-2 pr-4 font-medium text-[#1B3A5C] whitespace-nowrap">{r.item}</td>
-                  <td className="py-2 text-[#3F546B]">{r.send}</td>
+                <tr key={r.item} className="align-top border-b border-hairline">
+                  <td className="py-2 pr-4 font-medium text-ink whitespace-nowrap">{r.item}</td>
+                  <td className="py-2 text-body">{r.send}</td>
                 </tr>
               ))}
             </tbody>
@@ -232,7 +232,7 @@ export default function AiDesignToFactory() {
         </div>
 
         <h2 className={h2}>Free tools for each layer</h2>
-        <ul className="list-disc pl-5 space-y-2 text-[15px] text-[#3F546B] mb-4">
+        <ul className="list-disc pl-5 space-y-2 text-[15px] text-body mb-4">
           <li>
             <Link href="/tools/dfm-checklist" className={a}>
               DFM Checklist
@@ -270,8 +270,8 @@ export default function AiDesignToFactory() {
           . Corrections and new failure cases are welcome there as pull requests.
         </p>
 
-        <footer className="mt-12 pt-8 border-t border-gray-100">
-          <p className="text-sm text-[#64748B] leading-relaxed">
+        <footer className="mt-12 pt-8 border-t border-hairline">
+          <p className="text-sm text-sub leading-relaxed">
             Breeze runs prototype-to-production projects for AI hardware teams from Shenzhen, and
             design-for-manufacturing review is part of that work. If you have files drawn with AI
             and want to know what to fix before you pay for tooling,{" "}
@@ -280,7 +280,7 @@ export default function AiDesignToFactory() {
             </Link>
             .
           </p>
-          <p className="mt-4 text-xs text-[#94A3B8]">
+          <p className="mt-4 text-xs text-sub">
             Published {PUBLISHED} by Breeze. Numbers checked against their sources on {PUBLISHED}.
           </p>
         </footer>

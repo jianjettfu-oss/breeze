@@ -113,20 +113,21 @@ export default function BomEstimator() {
   return (
     <div className="min-h-screen bg-white">
       {/* Nav */}
-      <nav className="sticky top-0 z-50 bg-white/90 backdrop-blur border-b border-gray-100">
+      <nav className="sticky top-0 z-50 bg-white/90 backdrop-blur border-b border-hairline">
         <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
           <Link href="/">
             <Image
-              src="/breeze-logo.png"
+              src="/brand/lockup-a-hw-en-light.svg"
               alt="Breeze"
-              width={140}
-              height={35}
+              width={165}
+              height={32}
+              unoptimized
               className="h-8 w-auto"
             />
           </Link>
           <Link
             href="/#contact"
-            className="bg-[#2DD4A8] text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-[#2DD4A8]/90 transition-colors"
+            className="bg-hw text-ink px-4 py-2 rounded-lg text-sm font-semibold hover:bg-hw/90 transition-colors"
           >
             Get in Touch
           </Link>
@@ -138,14 +139,14 @@ export default function BomEstimator() {
         <div className="mb-10">
           <Link
             href="/tools"
-            className="text-sm text-[#64748B] hover:text-[#1B3A5C] mb-4 inline-block"
+            className="text-sm text-sub hover:text-ink mb-4 inline-block"
           >
             ← Back to Tools
           </Link>
-          <h1 className="text-3xl md:text-4xl font-bold text-[#1B3A5C]">
+          <h1 className="text-3xl md:text-4xl font-semibold text-ink">
             BOM Cost Estimator
           </h1>
-          <p className="mt-3 text-lg text-[#64748B] max-w-2xl">
+          <p className="mt-3 text-lg text-sub max-w-2xl">
             Select your components. Get a Shenzhen manufacturing ballpark in 60
             seconds. All prices at wholesale volume — not retail.
           </p>
@@ -156,7 +157,7 @@ export default function BomEstimator() {
           <div className="lg:col-span-2 space-y-8">
             {/* Volume selector */}
             <div>
-              <h3 className="text-sm font-semibold text-[#1B3A5C] uppercase tracking-wide mb-3">
+              <h3 className="text-sm font-semibold text-ink uppercase tracking-wide mb-3">
                 Production Volume
               </h3>
               <div className="flex flex-wrap gap-2">
@@ -166,8 +167,8 @@ export default function BomEstimator() {
                     onClick={() => setVolume(key)}
                     className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
                       volume === key
-                        ? "bg-[#1B3A5C] text-white"
-                        : "bg-gray-100 text-[#64748B] hover:bg-gray-200"
+                        ? "bg-ink text-white"
+                        : "bg-hairline text-sub hover:bg-hairline"
                     }`}
                   >
                     {label}
@@ -183,15 +184,15 @@ export default function BomEstimator() {
 
               return (
                 <div key={cat.id}>
-                  <h3 className="text-sm font-semibold text-[#1B3A5C] uppercase tracking-wide mb-3">
+                  <h3 className="text-sm font-semibold text-ink uppercase tracking-wide mb-3">
                     {cat.icon} {cat.label}
                     {cat.optional && (
-                      <span className="ml-2 text-xs font-normal text-[#64748B] normal-case">
+                      <span className="ml-2 text-xs font-normal text-sub normal-case">
                         (optional{isMulti ? ", multi-select" : ""})
                       </span>
                     )}
                     {isMulti && (
-                      <span className="ml-2 text-xs font-normal text-[#64748B] normal-case">
+                      <span className="ml-2 text-xs font-normal text-sub normal-case">
                         (multi-select)
                       </span>
                     )}
@@ -205,26 +206,26 @@ export default function BomEstimator() {
                           onClick={() => toggle(cat.id, opt.id, isMulti)}
                           className={`text-left p-4 rounded-xl border transition-all ${
                             active
-                              ? "border-[#2DD4A8] bg-[#E6FBF5] shadow-sm"
-                              : "border-gray-100 hover:border-gray-200"
+                              ? "border-hw bg-hw/10 shadow-sm"
+                              : "border-hairline hover:border-hairline"
                           }`}
                         >
                           <div className="flex items-start justify-between gap-2">
                             <div>
                               <p
                                 className={`font-medium text-sm ${
-                                  active ? "text-[#1B3A5C]" : "text-[#64748B]"
+                                  active ? "text-ink" : "text-sub"
                                 }`}
                               >
                                 {opt.label}
                               </p>
-                              <p className="text-xs text-[#64748B] mt-1">
+                              <p className="text-xs text-sub mt-1">
                                 {opt.description}
                               </p>
                             </div>
                             <span
                               className={`text-sm font-semibold whitespace-nowrap ${
-                                active ? "text-[#2DD4A8]" : "text-[#64748B]"
+                                active ? "text-ink" : "text-sub"
                               }`}
                             >
                               {opt.cost.mid === 0
@@ -243,10 +244,10 @@ export default function BomEstimator() {
 
           {/* Right: cost summary (sticky) */}
           <div className="lg:col-span-1">
-            <div className="sticky top-24 bg-[#0F2440] text-white rounded-2xl p-6 space-y-6">
+            <div className="sticky top-24 bg-ink text-white rounded-2xl p-6 space-y-6">
               <div>
-                <h3 className="text-lg font-bold">Estimated BOM Cost</h3>
-                <p className="text-xs text-gray-400 mt-1">
+                <h3 className="text-lg font-semibold">Estimated BOM Cost</h3>
+                <p className="text-xs text-sub-dark mt-1">
                   Per unit at {volumeMultipliers[volume]?.label} · Shenzhen
                   pricing
                 </p>
@@ -254,7 +255,7 @@ export default function BomEstimator() {
 
               {!hasSelections ? (
                 <div className="py-8 text-center">
-                  <p className="text-gray-400 text-sm">
+                  <p className="text-sub-dark text-sm">
                     Select components to see your estimate
                   </p>
                 </div>
@@ -262,7 +263,7 @@ export default function BomEstimator() {
                 <>
                   {/* Selected components */}
                   <div className="space-y-2">
-                    <p className="text-xs text-gray-400 uppercase tracking-wide">
+                    <p className="text-xs text-sub-dark uppercase tracking-wide">
                       Your components
                     </p>
                     {breakdown.map((item) => (
@@ -270,7 +271,7 @@ export default function BomEstimator() {
                         key={item.label}
                         className="flex justify-between text-sm"
                       >
-                        <span className="text-gray-300">{item.label}</span>
+                        <span className="text-sub-dark">{item.label}</span>
                         <span className="font-medium">
                           {fmt(item.cost.mid)}
                         </span>
@@ -280,7 +281,7 @@ export default function BomEstimator() {
 
                   {/* Fixed costs */}
                   <div className="space-y-2 pt-4 border-t border-white/10">
-                    <p className="text-xs text-gray-400 uppercase tracking-wide">
+                    <p className="text-xs text-sub-dark uppercase tracking-wide">
                       Fixed costs (always included)
                     </p>
                     {fixedCosts.map((item) => (
@@ -288,8 +289,8 @@ export default function BomEstimator() {
                         key={item.label}
                         className="flex justify-between text-sm"
                       >
-                        <span className="text-gray-400">{item.label}</span>
-                        <span className="text-gray-300">
+                        <span className="text-sub-dark">{item.label}</span>
+                        <span className="text-sub-dark">
                           {fmt(item.cost.mid)}
                         </span>
                       </div>
@@ -300,15 +301,15 @@ export default function BomEstimator() {
                   {volume !== "1000" && (
                     <div className="pt-4 border-t border-white/10">
                       <div className="flex justify-between text-sm">
-                        <span className="text-gray-400">
+                        <span className="text-sub-dark">
                           Volume adjustment (
                           {volumeMultipliers[volume]?.label})
                         </span>
                         <span
                           className={
                             volumeMultipliers[volume]?.factor < 1
-                              ? "text-[#10B981]"
-                              : "text-[#F59E0B]"
+                              ? "text-white"
+                              : "text-caution-dark"
                           }
                         >
                           {volumeMultipliers[volume]?.factor < 1 ? "" : "+"}
@@ -325,14 +326,14 @@ export default function BomEstimator() {
                   <div className="pt-4 border-t border-white/10">
                     <div className="flex justify-between items-end">
                       <div>
-                        <p className="text-xs text-gray-400">
+                        <p className="text-xs text-sub-dark">
                           Per unit total
                         </p>
-                        <p className="text-3xl font-bold text-[#2DD4A8]">
+                        <p className="text-3xl font-semibold text-white">
                           {fmt(totalCost.mid)}
                         </p>
                       </div>
-                      <p className="text-xs text-gray-400 text-right">
+                      <p className="text-xs text-sub-dark text-right">
                         Range: {fmt(totalCost.low)} – {fmt(totalCost.high)}
                       </p>
                     </div>
@@ -340,7 +341,7 @@ export default function BomEstimator() {
 
                   {/* Retail price suggestion */}
                   <div className="bg-white/5 rounded-lg p-4">
-                    <p className="text-xs text-gray-400 mb-2">
+                    <p className="text-xs text-sub-dark mb-2">
                       Suggested retail price (4–6× BOM)
                     </p>
                     <p className="text-lg font-semibold">
@@ -350,7 +351,7 @@ export default function BomEstimator() {
 
                   {/* NRE one-time costs */}
                   <div className="space-y-2 pt-4 border-t border-white/10">
-                    <p className="text-xs text-gray-400 uppercase tracking-wide">
+                    <p className="text-xs text-sub-dark uppercase tracking-wide">
                       One-time NRE costs
                     </p>
                     {Object.values(nreCosts).map((nre) => (
@@ -358,14 +359,14 @@ export default function BomEstimator() {
                         key={nre.label}
                         className="flex justify-between text-sm"
                       >
-                        <span className="text-gray-400">{nre.label}</span>
-                        <span className="text-gray-300">
+                        <span className="text-sub-dark">{nre.label}</span>
+                        <span className="text-sub-dark">
                           {fmtK(nre.mid)}
                         </span>
                       </div>
                     ))}
                     <div className="flex justify-between text-sm font-medium pt-2">
-                      <span className="text-gray-300">Total NRE</span>
+                      <span className="text-sub-dark">Total NRE</span>
                       <span>
                         {fmtK(
                           Object.values(nreCosts).reduce(
@@ -382,7 +383,7 @@ export default function BomEstimator() {
                 </>
               )}
 
-              <p className="text-[10px] text-gray-500 leading-relaxed">
+              <p className="text-[10px] text-sub-dark leading-relaxed">
                 Estimates based on Shenzhen wholesale pricing (LCSC, JLC PCB).
                 Actual costs vary by component availability, custom
                 requirements, and market conditions. Contact us for a precise

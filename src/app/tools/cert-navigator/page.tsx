@@ -19,77 +19,77 @@ function fmtK(n: number): string {
 function CertCard({ cert }: { cert: CertInfo }) {
   const [open, setOpen] = useState(false);
   return (
-    <div className="border border-gray-100 rounded-xl hover:border-[#2DD4A8]/30 transition-all">
+    <div className="border border-hairline rounded-xl hover:border-hw/30 transition-all">
       <div className="p-5">
         <div className="flex items-start justify-between gap-4">
           <div className="flex-1">
             <div className="flex items-center gap-2 mb-1">
               <span className="text-lg">{cert.flag}</span>
-              <h3 className="text-base font-semibold text-[#1B3A5C]">
+              <h3 className="text-base font-semibold text-ink">
                 {cert.name}
               </h3>
               {cert.required && (
-                <span className="text-[10px] font-semibold uppercase tracking-wide px-1.5 py-0.5 rounded bg-red-50 text-red-500">
+                <span className="text-[10px] font-semibold uppercase tracking-wide px-1.5 py-0.5 rounded bg-danger/5 text-danger">
                   Required
                 </span>
               )}
             </div>
-            <p className="text-xs text-[#64748B] mb-2">{cert.fullName}</p>
-            <p className="text-sm text-[#64748B] leading-relaxed">
+            <p className="text-xs text-sub mb-2">{cert.fullName}</p>
+            <p className="text-sm text-sub leading-relaxed">
               {cert.description}
             </p>
           </div>
           <div className="text-right shrink-0">
-            <p className="text-lg font-bold text-[#1B3A5C]">
+            <p className="text-lg font-semibold text-ink">
               {fmtK(cert.cost.mid)}
             </p>
-            <p className="text-[10px] text-[#64748B]">
+            <p className="text-[10px] text-sub">
               {fmtK(cert.cost.low)}–{fmtK(cert.cost.high)}
             </p>
-            <p className="text-xs text-[#64748B] mt-1">{cert.timeline}</p>
+            <p className="text-xs text-sub mt-1">{cert.timeline}</p>
           </div>
         </div>
         <button
           onClick={() => setOpen(!open)}
-          className="text-xs text-[#2DD4A8] font-medium mt-3 hover:underline"
+          className="text-xs text-ink font-medium mt-3 underline decoration-hw decoration-2 underline-offset-4"
         >
           {open ? "Hide details ↑" : "View requirements & tips ↓"}
         </button>
       </div>
 
       {open && (
-        <div className="px-5 pb-5 space-y-4 border-t border-gray-100 pt-4">
+        <div className="px-5 pb-5 space-y-4 border-t border-hairline pt-4">
           <div>
-            <p className="text-xs font-semibold text-[#1B3A5C] mb-2">
+            <p className="text-xs font-semibold text-ink mb-2">
               Key Requirements
             </p>
             <ul className="space-y-1">
               {cert.keyRequirements.map((req, i) => (
-                <li key={i} className="text-xs text-[#64748B] flex gap-2">
-                  <span className="text-[#64748B] shrink-0">•</span>
+                <li key={i} className="text-xs text-sub flex gap-2">
+                  <span className="text-sub shrink-0">•</span>
                   {req}
                 </li>
               ))}
             </ul>
           </div>
           <div>
-            <p className="text-xs font-semibold text-[#1B3A5C] mb-2">
+            <p className="text-xs font-semibold text-ink mb-2">
               Tips from Shenzhen
             </p>
             <ul className="space-y-1">
               {cert.tips.map((tip, i) => (
-                <li key={i} className="text-xs text-[#2DD4A8] flex gap-2">
+                <li key={i} className="text-xs text-ink flex gap-2">
                   <span className="shrink-0">💡</span>
-                  <span className="text-[#64748B]">{tip}</span>
+                  <span className="text-sub">{tip}</span>
                 </li>
               ))}
             </ul>
           </div>
           <div>
-            <p className="text-xs font-semibold text-[#1B3A5C] mb-1">
+            <p className="text-xs font-semibold text-ink mb-1">
               Recommended Labs
             </p>
-            <p className="text-xs text-[#64748B]">
+            <p className="text-xs text-sub">
               {cert.labExamples.join(" · ")}
             </p>
           </div>
@@ -183,20 +183,21 @@ export default function CertNavigator() {
   return (
     <div className="min-h-screen bg-white">
       {/* Nav */}
-      <nav className="sticky top-0 z-50 bg-white/90 backdrop-blur border-b border-gray-100">
+      <nav className="sticky top-0 z-50 bg-white/90 backdrop-blur border-b border-hairline">
         <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
           <Link href="/">
             <Image
-              src="/breeze-logo.png"
+              src="/brand/lockup-a-hw-en-light.svg"
               alt="Breeze"
-              width={140}
-              height={35}
+              width={165}
+              height={32}
+              unoptimized
               className="h-8 w-auto"
             />
           </Link>
           <Link
             href="/#contact"
-            className="bg-[#2DD4A8] text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-[#2DD4A8]/90 transition-colors"
+            className="bg-hw text-ink px-4 py-2 rounded-lg text-sm font-semibold hover:bg-hw/90 transition-colors"
           >
             Get in Touch
           </Link>
@@ -208,14 +209,14 @@ export default function CertNavigator() {
         <div className="mb-10">
           <Link
             href="/tools"
-            className="text-sm text-[#64748B] hover:text-[#1B3A5C] mb-4 inline-block"
+            className="text-sm text-sub hover:text-ink mb-4 inline-block"
           >
             ← Back to Tools
           </Link>
-          <h1 className="text-3xl md:text-4xl font-bold text-[#1B3A5C]">
+          <h1 className="text-3xl md:text-4xl font-semibold text-ink">
             Certification Navigator
           </h1>
-          <p className="mt-3 text-lg text-[#64748B] max-w-2xl">
+          <p className="mt-3 text-lg text-sub max-w-2xl">
             Tell us what your device does and where you want to sell it. We&apos;ll
             show you exactly which certifications you need, how long they take,
             and what they cost.
@@ -223,9 +224,9 @@ export default function CertNavigator() {
         </div>
 
         {/* Static reference table — crawlable cert matrix for LLMs/search engines */}
-        <section className="mb-12 border border-gray-100 rounded-xl overflow-hidden">
+        <section className="mb-12 border border-hairline rounded-xl overflow-hidden">
           <details>
-            <summary className="cursor-pointer px-5 py-4 bg-gray-50 hover:bg-gray-100 text-sm font-semibold text-[#1B3A5C]">
+            <summary className="cursor-pointer px-5 py-4 bg-panel hover:bg-hairline text-sm font-semibold text-ink">
               📋 Reference: full certification cost &amp; timeline matrix (2026)
             </summary>
             <div className="overflow-x-auto">
@@ -233,8 +234,8 @@ export default function CertNavigator() {
                 <caption className="sr-only">
                   Consumer AI hardware certification cost, lead time, and region matrix for FCC, CE, UKCA, RCM, CCC, SRRC, MIC, ISED, UN38.3, and UL.
                 </caption>
-                <thead className="bg-gray-50/50">
-                  <tr className="text-left text-xs text-[#64748B] uppercase tracking-wide">
+                <thead className="bg-panel">
+                  <tr className="text-left text-xs text-sub uppercase tracking-wide">
                     <th className="px-5 py-3">Cert</th>
                     <th className="px-5 py-3">Region</th>
                     <th className="px-5 py-3">Mandatory</th>
@@ -245,28 +246,28 @@ export default function CertNavigator() {
                 </thead>
                 <tbody>
                   {certifications.map((c) => (
-                    <tr key={c.id} className="border-t border-gray-100">
-                      <td className="px-5 py-3 text-[#1B3A5C] font-medium whitespace-nowrap">
+                    <tr key={c.id} className="border-t border-hairline">
+                      <td className="px-5 py-3 text-ink font-medium whitespace-nowrap">
                         {c.flag} {c.name}
                       </td>
-                      <td className="px-5 py-3 text-[#3F546B]">{c.region}</td>
-                      <td className="px-5 py-3 text-[#64748B]">
+                      <td className="px-5 py-3 text-body">{c.region}</td>
+                      <td className="px-5 py-3 text-sub">
                         {c.required ? "Yes" : "Conditional"}
                       </td>
-                      <td className="px-5 py-3 text-[#1B3A5C] font-semibold whitespace-nowrap">
+                      <td className="px-5 py-3 text-ink font-semibold whitespace-nowrap">
                         ${c.cost.mid.toLocaleString()}
                       </td>
-                      <td className="px-5 py-3 text-[#64748B] whitespace-nowrap">
+                      <td className="px-5 py-3 text-sub whitespace-nowrap">
                         ${c.cost.low.toLocaleString()}–${c.cost.high.toLocaleString()}
                       </td>
-                      <td className="px-5 py-3 text-[#64748B] whitespace-nowrap">
+                      <td className="px-5 py-3 text-sub whitespace-nowrap">
                         {c.timeline}
                       </td>
                     </tr>
                   ))}
                 </tbody>
               </table>
-              <p className="px-5 py-3 text-xs text-[#64748B] bg-gray-50/50 leading-relaxed">
+              <p className="px-5 py-3 text-xs text-sub bg-panel leading-relaxed">
                 Most consumer AI hardware needs FCC (US) + CE/RED (EU) + UN38.3 (battery transport) at minimum.
                 CCC applies only to specific product categories in China — many AI wearables are exempt.
                 Most certs can be tested in parallel; SRRC must precede CCC.
@@ -278,7 +279,7 @@ export default function CertNavigator() {
         {/* Filters */}
         <div className="grid md:grid-cols-2 gap-8 mb-12">
           <div>
-            <h3 className="text-sm font-semibold text-[#1B3A5C] uppercase tracking-wide mb-3">
+            <h3 className="text-sm font-semibold text-ink uppercase tracking-wide mb-3">
               Your device has...
             </h3>
             <div className="flex flex-wrap gap-2">
@@ -288,8 +289,8 @@ export default function CertNavigator() {
                   onClick={() => toggleFeature(feat.id)}
                   className={`px-4 py-2.5 rounded-lg text-sm font-medium transition-colors ${
                     selectedFeatures.includes(feat.id)
-                      ? "bg-[#1B3A5C] text-white"
-                      : "bg-gray-100 text-[#64748B] hover:bg-gray-200"
+                      ? "bg-ink text-white"
+                      : "bg-hairline text-sub hover:bg-hairline"
                   }`}
                 >
                   {feat.icon} {feat.label}
@@ -298,7 +299,7 @@ export default function CertNavigator() {
             </div>
           </div>
           <div>
-            <h3 className="text-sm font-semibold text-[#1B3A5C] uppercase tracking-wide mb-3">
+            <h3 className="text-sm font-semibold text-ink uppercase tracking-wide mb-3">
               Target markets
             </h3>
             <div className="flex flex-wrap gap-2">
@@ -308,8 +309,8 @@ export default function CertNavigator() {
                   onClick={() => toggleMarket(mkt.id)}
                   className={`px-4 py-2.5 rounded-lg text-sm font-medium transition-colors ${
                     selectedMarkets.includes(mkt.id)
-                      ? "bg-[#1B3A5C] text-white"
-                      : "bg-gray-100 text-[#64748B] hover:bg-gray-200"
+                      ? "bg-ink text-white"
+                      : "bg-hairline text-sub hover:bg-hairline"
                   }`}
                 >
                   {mkt.flag} {mkt.label}
@@ -322,14 +323,14 @@ export default function CertNavigator() {
         {/* Results */}
         {!hasInput ? (
           <div className="text-center py-16">
-            <p className="text-[#64748B]">
+            <p className="text-sub">
               Select your device features and target markets above to see
               required certifications.
             </p>
           </div>
         ) : filteredCerts.length === 0 ? (
           <div className="text-center py-16">
-            <p className="text-[#64748B]">
+            <p className="text-sub">
               No certifications match your selection. Try adding more features
               or markets.
             </p>
@@ -337,31 +338,31 @@ export default function CertNavigator() {
         ) : (
           <>
             {/* Summary bar */}
-            <div className="bg-[#0F2440] text-white rounded-2xl p-6 mb-8">
+            <div className="bg-ink text-white rounded-2xl p-6 mb-8">
               <div className="grid sm:grid-cols-3 gap-6">
                 <div>
-                  <p className="text-xs text-gray-400 mb-1">
+                  <p className="text-xs text-sub-dark mb-1">
                     Certifications needed
                   </p>
-                  <p className="text-2xl font-bold">{filteredCerts.length}</p>
+                  <p className="text-2xl font-semibold">{filteredCerts.length}</p>
                 </div>
                 <div>
-                  <p className="text-xs text-gray-400 mb-1">
+                  <p className="text-xs text-sub-dark mb-1">
                     Estimated total cost
                   </p>
-                  <p className="text-2xl font-bold text-[#2DD4A8]">
+                  <p className="text-2xl font-semibold text-white">
                     {fmtK(totalCost.mid)}
                   </p>
-                  <p className="text-xs text-gray-400">
+                  <p className="text-xs text-sub-dark">
                     Range: {fmtK(totalCost.low)} – {fmtK(totalCost.high)}
                   </p>
                 </div>
                 <div>
-                  <p className="text-xs text-gray-400 mb-1">
+                  <p className="text-xs text-sub-dark mb-1">
                     Timeline (parallel testing)
                   </p>
-                  <p className="text-2xl font-bold">~{totalTimeline}</p>
-                  <p className="text-xs text-gray-400">
+                  <p className="text-2xl font-semibold">~{totalTimeline}</p>
+                  <p className="text-xs text-sub-dark">
                     Most certs can be tested simultaneously
                   </p>
                 </div>
@@ -377,15 +378,15 @@ export default function CertNavigator() {
 
             {/* Email Capture */}
             <div className="mt-12 max-w-md mx-auto">
-              <div className="bg-[#0F2440] rounded-2xl p-6 space-y-4">
+              <div className="bg-ink rounded-2xl p-6 space-y-4">
                 <div>
-                  <h3 className="text-lg font-bold text-white">Email this roadmap to yourself</h3>
-                  <p className="text-xs text-gray-400 mt-1">
+                  <h3 className="text-lg font-semibold text-white">Email this roadmap to yourself</h3>
+                  <p className="text-xs text-sub-dark mt-1">
                     Get your full certification breakdown with costs and timelines.
                   </p>
                 </div>
                 <EmailCapture tool="cert-navigator" buildData={buildReportData} />
-                <p className="text-[10px] text-gray-500 leading-relaxed">
+                <p className="text-[10px] text-sub-dark leading-relaxed">
                   We handle the full certification process — lab coordination,
                   documentation, and submissions.
                 </p>

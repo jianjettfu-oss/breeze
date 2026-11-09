@@ -1,17 +1,30 @@
 @import "tailwindcss";
 
+/*
+ * Breeze VI tokens (v0.2.0-r4, re-skin 2026-11-09). The owner of every value is
+ * digital-me data/brand/breeze/tokens.json; brand-check.mjs fails this site on any other colour or font.
+ * House rules: the Hardware accent (hw) is never a text colour — text is ink (light ground) or white (ink ground);
+ * the accent covers at most 5–10 % of a surface; the light ground is white.
+ * Small text is sub, never label (label is large or decorative only). danger / caution are tool states only.
+ */
 @theme inline {
-  --color-breeze-teal: #2DD4A8;
-  --color-breeze-navy: #1B3A5C;
-  --color-breeze-deep: #0F2440;
-  --color-breeze-light: #E6FBF5;
-  --color-breeze-slate: #64748B;
-  --color-breeze-offwhite: #F8FAFC;
-  --color-breeze-green: #10B981;
-  --color-breeze-orange: #F59E0B;
+  --color-ink: #1B2528;
+  --color-body: #3A4E50;
+  --color-sub: #5C6E70;
+  --color-sub-dark: #A7B4B5;
+  --color-label: #8A9B9D;
+  --color-label-dark: #7E8C8E;
+  --color-hairline: #E8ECEF;
+  --color-rule-dark: #34413F;
+  --color-panel: color-mix(in srgb, #E8ECEF 40%, #FFFFFF);
+  --color-hw: #2DD4A8;
+  --color-danger: #B42318;
+  --color-danger-dark: #F97066;
+  --color-caution: #B54708;
+  --color-caution-dark: #FDB022;
 
-  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
-  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+  --font-sans: var(--font-plex-sans), "IBM Plex Sans", "Noto Sans SC", sans-serif;
+  --font-mono: var(--font-plex-mono), "IBM Plex Mono", "Noto Sans SC", monospace;
 }
 
 html {
@@ -20,6 +33,15 @@ html {
 
 body {
   font-family: var(--font-sans);
-  color: var(--color-breeze-navy);
-  background: #ffffff;
+  color: var(--color-ink);
+  background: #FFFFFF;
+}
+
+/* An accent word in a headline: the word keeps the text colour; the Hardware accent marks it from below. */
+.accent-mark {
+  text-decoration-line: underline;
+  text-decoration-color: var(--color-hw);
+  text-decoration-thickness: 0.14em;
+  text-underline-offset: 0.16em;
+  text-decoration-skip-ink: none;
 }

@@ -65,14 +65,16 @@ export default function DfmChecklist() {
       score >= 90 ? "A" : score >= 75 ? "B" : score >= 60 ? "C" : score >= 40 ? "D" : "F";
     const gradeColor =
       score >= 90
-        ? "#10B981"
+        ? "#2DD4A8"
         : score >= 75
         ? "#2DD4A8"
         : score >= 60
-        ? "#F59E0B"
-        : "#EF4444";
+        ? "#FDB022"
+        : "#F97066";
+    // The grade ring sits on the ink panel: graphic keeps the accent, the letter is white (hw is never text).
+    const gradeTextColor = score >= 75 ? "#FFFFFF" : gradeColor;
 
-    return { total, passed, failed, skipped, answered, score, grade, gradeColor };
+    return { total, passed, failed, skipped, answered, score, grade, gradeColor, gradeTextColor };
   }, [checked, allItems]);
 
   const criticalFails = useMemo(
@@ -99,20 +101,21 @@ export default function DfmChecklist() {
   return (
     <div className="min-h-screen bg-white">
       {/* Nav */}
-      <nav className="sticky top-0 z-50 bg-white/90 backdrop-blur border-b border-gray-100">
+      <nav className="sticky top-0 z-50 bg-white/90 backdrop-blur border-b border-hairline">
         <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
           <Link href="/">
             <Image
-              src="/breeze-logo.png"
+              src="/brand/lockup-a-hw-en-light.svg"
               alt="Breeze"
-              width={140}
-              height={35}
+              width={165}
+              height={32}
+              unoptimized
               className="h-8 w-auto"
             />
           </Link>
           <Link
             href="/#contact"
-            className="bg-[#2DD4A8] text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-[#2DD4A8]/90 transition-colors"
+            className="bg-hw text-ink px-4 py-2 rounded-lg text-sm font-semibold hover:bg-hw/90 transition-colors"
           >
             Get in Touch
           </Link>
@@ -124,14 +127,14 @@ export default function DfmChecklist() {
         <div className="mb-10">
           <Link
             href="/tools"
-            className="text-sm text-[#64748B] hover:text-[#1B3A5C] mb-4 inline-block"
+            className="text-sm text-sub hover:text-ink mb-4 inline-block"
           >
             ← Back to Tools
           </Link>
-          <h1 className="text-3xl md:text-4xl font-bold text-[#1B3A5C]">
+          <h1 className="text-3xl md:text-4xl font-semibold text-ink">
             DFM Checklist for AI Hardware
           </h1>
-          <p className="mt-3 text-lg text-[#64748B] max-w-2xl">
+          <p className="mt-3 text-lg text-sub max-w-2xl">
             29 design-for-manufacturability checks specific to AI devices.
             Catch problems before they cost you a mold revision.
           </p>
@@ -142,9 +145,9 @@ export default function DfmChecklist() {
           <div className="lg:col-span-2 space-y-10">
             {checkCategories.map((cat) => (
               <section key={cat.id} id={cat.id}>
-                <h3 className="text-sm font-semibold text-[#1B3A5C] uppercase tracking-wide mb-4">
+                <h3 className="text-sm font-semibold text-ink uppercase tracking-wide mb-4">
                   {cat.icon} {cat.label}
-                  <span className="ml-2 text-xs font-normal text-[#64748B] normal-case">
+                  <span className="ml-2 text-xs font-normal text-sub normal-case">
                     ({cat.items.length} checks)
                   </span>
                 </h3>
@@ -156,10 +159,10 @@ export default function DfmChecklist() {
                         key={item.id}
                         className={`border rounded-xl transition-all ${
                           state === "pass"
-                            ? "border-[#10B981]/30 bg-[#10B981]/5"
+                            ? "border-hw/30 bg-hw/5"
                             : state === "fail"
-                            ? "border-red-200 bg-red-50/50"
-                            : "border-gray-100"
+                            ? "border-danger/20 bg-danger/5"
+                            : "border-hairline"
                         }`}
                       >
                         <div className="p-4">
@@ -168,17 +171,17 @@ export default function DfmChecklist() {
                               <div className="flex items-center gap-2 mb-1">
                                 <Badge severity={item.severity} />
                               </div>
-                              <p className="text-sm font-medium text-[#1B3A5C] leading-relaxed">
+                              <p className="text-sm font-medium text-ink leading-relaxed">
                                 {item.question}
                               </p>
                             </div>
                             <div className="flex gap-1.5 shrink-0">
                               <button
                                 onClick={() => toggle(item.id, "pass")}
-                                className={`w-9 h-9 rounded-lg text-sm font-bold transition-colors ${
+                                className={`w-9 h-9 rounded-lg text-sm font-semibold transition-colors ${
                                   state === "pass"
-                                    ? "bg-[#10B981] text-white"
-                                    : "bg-gray-100 text-[#64748B] hover:bg-gray-200"
+                                    ? "bg-hw text-ink"
+                                    : "bg-hairline text-sub hover:bg-hairline"
                                 }`}
                                 title="Pass"
                               >
@@ -186,10 +189,10 @@ export default function DfmChecklist() {
                               </button>
                               <button
                                 onClick={() => toggle(item.id, "fail")}
-                                className={`w-9 h-9 rounded-lg text-sm font-bold transition-colors ${
+                                className={`w-9 h-9 rounded-lg text-sm font-semibold transition-colors ${
                                   state === "fail"
-                                    ? "bg-red-500 text-white"
-                                    : "bg-gray-100 text-[#64748B] hover:bg-gray-200"
+                                    ? "bg-danger text-white"
+                                    : "bg-hairline text-sub hover:bg-hairline"
                                 }`}
                                 title="Fail"
                               >
@@ -199,8 +202,8 @@ export default function DfmChecklist() {
                                 onClick={() => toggle(item.id, "na")}
                                 className={`w-9 h-9 rounded-lg text-xs font-semibold transition-colors ${
                                   state === "na"
-                                    ? "bg-[#64748B] text-white"
-                                    : "bg-gray-100 text-[#64748B] hover:bg-gray-200"
+                                    ? "bg-sub text-white"
+                                    : "bg-hairline text-sub hover:bg-hairline"
                                 }`}
                                 title="Not applicable"
                               >
@@ -210,23 +213,23 @@ export default function DfmChecklist() {
                           </div>
                           {/* Native <details>: content stays in DOM for crawlers; user toggles visually. */}
                           <details className="mt-2">
-                            <summary className="text-xs text-[#2DD4A8] font-medium cursor-pointer hover:underline list-none">
+                            <summary className="text-xs text-ink font-medium cursor-pointer underline decoration-hw decoration-2 underline-offset-4 list-none">
                               Why this matters ↓
                             </summary>
-                            <div className="space-y-2 border-t border-gray-100 pt-3 mt-3">
+                            <div className="space-y-2 border-t border-hairline pt-3 mt-3">
                               <div>
-                                <p className="text-xs font-semibold text-[#1B3A5C] mb-0.5">
+                                <p className="text-xs font-semibold text-ink mb-0.5">
                                   Why it matters
                                 </p>
-                                <p className="text-xs text-[#64748B] leading-relaxed">
+                                <p className="text-xs text-sub leading-relaxed">
                                   {item.why}
                                 </p>
                               </div>
                               <div>
-                                <p className="text-xs font-semibold text-[#1B3A5C] mb-0.5">
+                                <p className="text-xs font-semibold text-ink mb-0.5">
                                   How to fix
                                 </p>
-                                <p className="text-xs text-[#64748B] leading-relaxed">
+                                <p className="text-xs text-sub leading-relaxed">
                                   {item.fix}
                                 </p>
                               </div>
@@ -243,17 +246,17 @@ export default function DfmChecklist() {
 
           {/* Right: score panel (sticky) */}
           <div className="lg:col-span-1">
-            <div className="sticky top-24 bg-[#0F2440] text-white rounded-2xl p-6 space-y-6">
+            <div className="sticky top-24 bg-ink text-white rounded-2xl p-6 space-y-6">
               <div>
-                <h3 className="text-lg font-bold">DFM Readiness Score</h3>
-                <p className="text-xs text-gray-400 mt-1">
+                <h3 className="text-lg font-semibold">DFM Readiness Score</h3>
+                <p className="text-xs text-sub-dark mt-1">
                   {stats.answered} of {allItems.length} checks completed
                 </p>
               </div>
 
               {stats.answered === 0 ? (
                 <div className="py-8 text-center">
-                  <p className="text-gray-400 text-sm">
+                  <p className="text-sub-dark text-sm">
                     Start checking items to see your score
                   </p>
                 </div>
@@ -284,32 +287,32 @@ export default function DfmChecklist() {
                       </svg>
                       <div className="absolute inset-0 flex flex-col items-center justify-center">
                         <span
-                          className="text-2xl font-bold"
-                          style={{ color: stats.gradeColor }}
+                          className="text-2xl font-semibold"
+                          style={{ color: stats.gradeTextColor }}
                         >
                           {stats.grade}
                         </span>
-                        <span className="text-xs text-gray-400">
+                        <span className="text-xs text-sub-dark">
                           {stats.score}%
                         </span>
                       </div>
                     </div>
                     <div className="space-y-1.5 text-sm">
                       <div className="flex items-center gap-2">
-                        <span className="w-3 h-3 rounded-full bg-[#10B981]" />
-                        <span className="text-gray-300">
+                        <span className="w-3 h-3 rounded-full bg-hw" />
+                        <span className="text-sub-dark">
                           {stats.passed} passed
                         </span>
                       </div>
                       <div className="flex items-center gap-2">
-                        <span className="w-3 h-3 rounded-full bg-red-500" />
-                        <span className="text-gray-300">
+                        <span className="w-3 h-3 rounded-full bg-danger-dark" />
+                        <span className="text-sub-dark">
                           {stats.failed} failed
                         </span>
                       </div>
                       <div className="flex items-center gap-2">
-                        <span className="w-3 h-3 rounded-full bg-[#64748B]" />
-                        <span className="text-gray-300">
+                        <span className="w-3 h-3 rounded-full bg-sub" />
+                        <span className="text-sub-dark">
                           {stats.skipped} N/A
                         </span>
                       </div>
@@ -318,8 +321,8 @@ export default function DfmChecklist() {
 
                   {/* Critical failures alert */}
                   {criticalFails.length > 0 && (
-                    <div className="bg-red-500/10 border border-red-500/20 rounded-lg p-4">
-                      <p className="text-xs font-semibold text-red-400 mb-2">
+                    <div className="bg-danger-dark/10 border border-danger-dark/20 rounded-lg p-4">
+                      <p className="text-xs font-semibold text-danger-dark mb-2">
                         ⚠ {criticalFails.length} Critical Issue
                         {criticalFails.length > 1 ? "s" : ""}
                       </p>
@@ -327,7 +330,7 @@ export default function DfmChecklist() {
                         {criticalFails.map((item) => (
                           <li
                             key={item.id}
-                            className="text-xs text-red-300 leading-relaxed"
+                            className="text-xs text-danger-dark leading-relaxed"
                           >
                             • {item.question.slice(0, 60)}...
                           </li>
@@ -337,7 +340,7 @@ export default function DfmChecklist() {
                   )}
 
                   {/* Interpretation */}
-                  <div className="text-sm text-gray-300 leading-relaxed">
+                  <div className="text-sm text-sub-dark leading-relaxed">
                     {stats.score >= 90 ? (
                       <p>
                         Your design is production-ready. Minor optimizations may
@@ -366,7 +369,7 @@ export default function DfmChecklist() {
                 </>
               )}
 
-              <p className="text-[10px] text-gray-500 leading-relaxed">
+              <p className="text-[10px] text-sub-dark leading-relaxed">
                 This checklist covers common AI hardware DFM issues. Your
                 specific design may have additional requirements. Contact us for
                 a comprehensive review.

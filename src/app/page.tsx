@@ -344,28 +344,28 @@ export default function Home() {
       <Nav />
 
       {/* ── Section 1: Hero ── */}
-      <section className="bg-breeze-deep text-white">
+      <section className="bg-ink text-white">
         <div className="max-w-6xl mx-auto px-6 py-24 md:py-32 lg:py-40">
           <div className="max-w-3xl">
             <div className="flex items-center gap-2 mb-6">
-              <WindIcon className="w-5 h-5 text-breeze-teal" />
-              <span className="text-breeze-teal text-sm font-semibold tracking-wide uppercase">
+              <WindIcon className="w-5 h-5 text-hw" />
+              <span className="text-white text-sm font-semibold tracking-wide uppercase">
                 Breeze
               </span>
             </div>
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight tracking-tight">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-semibold leading-tight tracking-tight">
               Know if your AI hardware can be{" "}
-              <span className="text-breeze-teal">built</span> before you talk
+              <span className="accent-mark">built</span> before you talk
               to a factory.
             </h1>
-            <p className="mt-6 text-lg md:text-xl text-gray-300 max-w-2xl leading-relaxed">
+            <p className="mt-6 text-lg md:text-xl text-sub-dark max-w-2xl leading-relaxed">
               Get a BOM range, NRE estimate, DFM blockers, certification path,
               and first-run plan in 10 minutes.
             </p>
             <div className="mt-10 flex flex-col sm:flex-row gap-4">
               <a
                 href="#tools"
-                className="inline-flex items-center justify-center gap-2 bg-breeze-teal text-breeze-deep px-6 py-3.5 rounded-lg text-base font-semibold hover:bg-breeze-teal/90 transition-colors"
+                className="inline-flex items-center justify-center gap-2 bg-hw text-ink px-6 py-3.5 rounded-lg text-base font-semibold hover:bg-hw/90 transition-colors"
               >
                 Estimate Your Product Cost
                 <ArrowRightIcon className="w-4 h-4" />
@@ -377,7 +377,7 @@ export default function Home() {
                 Talk to Our Team
               </a>
             </div>
-            <p className="mt-8 text-sm text-gray-400 font-medium">
+            <p className="mt-8 text-sm text-sub-dark font-medium">
               No equity. No MOQ surprises. Just engineering.
             </p>
           </div>
@@ -388,10 +388,10 @@ export default function Home() {
       <section className="bg-white py-20 md:py-28">
         <div className="max-w-6xl mx-auto px-6">
           <div className="max-w-2xl mb-14">
-            <h2 className="text-3xl md:text-4xl font-bold text-breeze-navy">
+            <h2 className="text-3xl md:text-4xl font-semibold text-ink">
               Building AI hardware is hard.
             </h2>
-            <p className="mt-4 text-lg text-breeze-slate">
+            <p className="mt-4 text-lg text-sub">
               Finding the right manufacturing partner shouldn&apos;t be.
             </p>
           </div>
@@ -399,13 +399,13 @@ export default function Home() {
             {painPoints.map((point) => (
               <div
                 key={point.title}
-                className="border border-gray-100 rounded-xl p-6 hover:border-breeze-teal/30 hover:shadow-sm transition-all"
+                className="border border-hairline rounded-xl p-6 hover:border-hw/30 hover:shadow-sm transition-all"
               >
-                <XIcon className="w-6 h-6 text-red-400 mb-3" />
-                <h3 className="font-semibold text-breeze-navy text-base">
+                <XIcon className="w-6 h-6 text-danger mb-3" />
+                <h3 className="font-semibold text-ink text-base">
                   {point.title}
                 </h3>
-                <p className="mt-2 text-sm text-breeze-slate leading-relaxed">
+                <p className="mt-2 text-sm text-sub leading-relaxed">
                   {point.desc}
                 </p>
               </div>
@@ -415,26 +415,26 @@ export default function Home() {
       </section>
 
       {/* ── Section 3: Process ── */}
-      <section id="process" className="bg-breeze-offwhite py-20 md:py-28">
+      <section id="process" className="bg-panel py-20 md:py-28">
         <div className="max-w-6xl mx-auto px-6">
           <div className="max-w-2xl mb-14">
-            <h2 className="text-3xl md:text-4xl font-bold text-breeze-navy">
+            <h2 className="text-3xl md:text-4xl font-semibold text-ink">
               Concept to Production in 6 Steps
             </h2>
-            <p className="mt-4 text-lg text-breeze-slate">
+            <p className="mt-4 text-lg text-sub">
               A clear, predictable path from your idea to manufactured product.
             </p>
           </div>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {steps.map((step) => (
               <div key={step.num} className="relative">
-                <span className="text-5xl font-bold text-breeze-teal/20">
+                <span className="text-5xl font-semibold text-label">
                   {step.num}
                 </span>
-                <h3 className="mt-2 text-lg font-semibold text-breeze-navy">
+                <h3 className="mt-2 text-lg font-semibold text-ink">
                   {step.title}
                 </h3>
-                <p className="mt-2 text-sm text-breeze-slate leading-relaxed">
+                <p className="mt-2 text-sm text-sub leading-relaxed">
                   {step.desc}
                 </p>
               </div>
@@ -447,10 +447,10 @@ export default function Home() {
       <section id="tools" className="bg-white py-20 md:py-28">
         <div className="max-w-6xl mx-auto px-6">
           <div className="max-w-2xl mb-14">
-            <h2 className="text-3xl md:text-4xl font-bold text-breeze-navy">
+            <h2 className="text-3xl md:text-4xl font-semibold text-ink">
               Free Tools for AI Hardware Founders
             </h2>
-            <p className="mt-4 text-lg text-breeze-slate">
+            <p className="mt-4 text-lg text-sub">
               Plan your product before your first factory visit.
             </p>
           </div>
@@ -459,42 +459,42 @@ export default function Home() {
               <a
                 key={tool.title}
                 href={tool.href}
-                className="group border border-gray-100 rounded-xl p-8 hover:border-breeze-teal/40 hover:shadow-md transition-all block"
+                className="group border border-hairline rounded-xl p-8 hover:border-hw/40 hover:shadow-md transition-all block"
               >
                 <span className="text-3xl">{tool.icon}</span>
-                <h3 className="mt-4 text-xl font-semibold text-breeze-navy">
+                <h3 className="mt-4 text-xl font-semibold text-ink">
                   {tool.title}
                 </h3>
-                <p className="mt-2 text-breeze-slate leading-relaxed">
+                <p className="mt-2 text-sub leading-relaxed">
                   {tool.desc}
                 </p>
-                <span className="inline-flex items-center gap-1.5 mt-5 text-breeze-teal font-semibold text-sm group-hover:gap-2.5 transition-all">
+                <span className="inline-flex items-center gap-1.5 mt-5 text-ink underline decoration-hw decoration-2 underline-offset-4 font-semibold text-sm group-hover:gap-2.5 transition-all">
                   {tool.cta}
                   <ArrowRightIcon className="w-4 h-4" />
                 </span>
               </a>
             ))}
           </div>
-          <p className="mt-8 text-sm text-breeze-slate">
+          <p className="mt-8 text-sm text-sub">
             All tools are free to use. No sign-up required.
           </p>
         </div>
       </section>
 
       {/* ── Section 5: Open-Source Toolkit ── */}
-      <section id="opensource" className="bg-breeze-offwhite py-20 md:py-28">
+      <section id="opensource" className="bg-panel py-20 md:py-28">
         <div className="max-w-5xl mx-auto px-6">
-          <div className="border border-breeze-teal/30 bg-white rounded-2xl p-10 md:p-14">
-            <span className="inline-flex items-center px-3 py-1 rounded-full bg-breeze-teal/10 text-breeze-teal text-xs font-semibold tracking-wide">
+          <div className="border border-hw/30 bg-white rounded-2xl p-10 md:p-14">
+            <span className="inline-flex items-center px-3 py-1 rounded-full bg-hw/10 text-ink text-xs font-semibold tracking-wide">
               OPEN SOURCE
             </span>
-            <h2 className="mt-5 text-3xl md:text-4xl font-bold text-breeze-navy leading-tight">
+            <h2 className="mt-5 text-3xl md:text-4xl font-semibold text-ink leading-tight">
               We&apos;ve built AI devices in Shenzhen for 10+ years.
-              <span className="block text-breeze-teal mt-2">
+              <span className="block accent-mark mt-2">
                 We open-sourced our cost data.
               </span>
             </h2>
-            <p className="mt-6 text-lg text-breeze-slate leading-relaxed max-w-3xl">
+            <p className="mt-6 text-lg text-sub leading-relaxed max-w-3xl">
               BOM cost references, DFM checklists, NRE guidelines, certification
               playbooks — the same data we use every day, free on GitHub. No
               signup, no email gate.
@@ -504,14 +504,14 @@ export default function Home() {
                 href="https://github.com/jianjettfu-oss/ai-hardware-toolkit"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center justify-center gap-2 bg-breeze-deep text-white px-6 py-3.5 rounded-lg text-base font-semibold hover:bg-breeze-navy transition-colors"
+                className="inline-flex items-center justify-center gap-2 bg-ink text-white px-6 py-3.5 rounded-lg text-base font-semibold hover:bg-bodytransition-colors"
               >
                 View on GitHub
                 <ArrowRightIcon className="w-4 h-4" />
               </a>
               <a
                 href="#tools"
-                className="inline-flex items-center justify-center gap-2 border border-breeze-navy/20 text-breeze-navy px-6 py-3.5 rounded-lg text-base font-semibold hover:bg-breeze-navy/5 transition-colors"
+                className="inline-flex items-center justify-center gap-2 border border-ink/20 text-ink px-6 py-3.5 rounded-lg text-base font-semibold hover:bg-ink/5 transition-colors"
               >
                 Try the interactive tools
               </a>
@@ -521,17 +521,17 @@ export default function Home() {
       </section>
 
       {/* ── Section 6: Why Breeze ── */}
-      <section id="why" className="bg-breeze-deep text-white py-20 md:py-28">
+      <section id="why" className="bg-ink text-white py-20 md:py-28">
         <div className="max-w-6xl mx-auto px-6">
-          <h2 className="text-3xl md:text-4xl font-bold mb-14">
+          <h2 className="text-3xl md:text-4xl font-semibold mb-14">
             Why founders choose Breeze
           </h2>
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
             {differentiators.map((diff) => (
               <div key={diff.title}>
-                <CheckIcon className="w-7 h-7 text-breeze-teal mb-3" />
+                <CheckIcon className="w-7 h-7 text-hw mb-3" />
                 <h3 className="text-lg font-semibold">{diff.title}</h3>
-                <p className="mt-2 text-sm text-gray-300 leading-relaxed">
+                <p className="mt-2 text-sm text-sub-dark leading-relaxed">
                   {diff.desc}
                 </p>
               </div>
@@ -540,10 +540,10 @@ export default function Home() {
           <div className="mt-16 grid sm:grid-cols-3 gap-8 pt-12 border-t border-white/10">
             {stats.map((stat) => (
               <div key={stat.label}>
-                <p className="text-3xl md:text-4xl font-bold text-breeze-teal">
+                <p className="text-3xl md:text-4xl font-semibold text-white">
                   {stat.value}
                 </p>
-                <p className="mt-1 text-sm text-gray-400">{stat.label}</p>
+                <p className="mt-1 text-sm text-sub-dark">{stat.label}</p>
               </div>
             ))}
           </div>
@@ -554,50 +554,50 @@ export default function Home() {
       <section id="compare" className="bg-white py-20 md:py-28">
         <div className="max-w-6xl mx-auto px-6">
           <div className="max-w-2xl mb-10">
-            <h2 className="text-3xl md:text-4xl font-bold text-breeze-navy">
+            <h2 className="text-3xl md:text-4xl font-semibold text-ink">
               How we compare
             </h2>
-            <p className="mt-4 text-lg text-breeze-slate">
+            <p className="mt-4 text-lg text-sub">
               Honest differences, not marketing fluff.
             </p>
           </div>
           <div className="overflow-x-auto -mx-6 px-6 md:mx-0 md:px-0">
             <table className="w-full text-sm min-w-[720px]">
               <thead>
-                <tr className="border-b-2 border-breeze-navy">
-                  <th className="text-left py-4 pr-4 text-breeze-slate font-medium">
+                <tr className="border-b-2 border-ink">
+                  <th className="text-left py-4 pr-4 text-sub font-medium">
                     Feature
                   </th>
-                  <th className="text-left py-4 px-4 font-bold text-breeze-navy bg-breeze-teal/10">
+                  <th className="text-left py-4 px-4 font-semibold text-ink bg-hw/10">
                     Breeze
                   </th>
-                  <th className="text-left py-4 px-4 text-breeze-slate font-medium">
+                  <th className="text-left py-4 px-4 text-sub font-medium">
                     Fictiv / Xometry
                   </th>
-                  <th className="text-left py-4 px-4 text-breeze-slate font-medium">
+                  <th className="text-left py-4 px-4 text-sub font-medium">
                     HAX / SOSV
                   </th>
-                  <th className="text-left py-4 px-4 text-breeze-slate font-medium">
+                  <th className="text-left py-4 px-4 text-sub font-medium">
                     Titoma
                   </th>
-                  <th className="text-left py-4 px-4 text-breeze-slate font-medium">
+                  <th className="text-left py-4 px-4 text-sub font-medium">
                     Trading Company
                   </th>
                 </tr>
               </thead>
               <tbody>
                 {comparisonRows.map((row, i) => (
-                  <tr key={i} className="border-b border-gray-100">
-                    <td className="py-3 pr-4 font-medium text-breeze-navy">
+                  <tr key={i} className="border-b border-hairline">
+                    <td className="py-3 pr-4 font-medium text-ink">
                       {row.feature}
                     </td>
-                    <td className="py-3 px-4 bg-breeze-teal/5 font-semibold text-breeze-navy">
+                    <td className="py-3 px-4 bg-hw/5 font-semibold text-ink">
                       {row.breeze}
                     </td>
-                    <td className="py-3 px-4 text-breeze-slate">{row.fictiv}</td>
-                    <td className="py-3 px-4 text-breeze-slate">{row.hax}</td>
-                    <td className="py-3 px-4 text-breeze-slate">{row.titoma}</td>
-                    <td className="py-3 px-4 text-breeze-slate">{row.trading}</td>
+                    <td className="py-3 px-4 text-sub">{row.fictiv}</td>
+                    <td className="py-3 px-4 text-sub">{row.hax}</td>
+                    <td className="py-3 px-4 text-sub">{row.titoma}</td>
+                    <td className="py-3 px-4 text-sub">{row.trading}</td>
                   </tr>
                 ))}
               </tbody>
@@ -607,13 +607,13 @@ export default function Home() {
       </section>
 
       {/* ── Section 8: Pricing Bands ── */}
-      <section id="pricing" className="bg-breeze-offwhite py-20 md:py-28">
+      <section id="pricing" className="bg-panel py-20 md:py-28">
         <div className="max-w-6xl mx-auto px-6">
           <div className="max-w-2xl mb-14">
-            <h2 className="text-3xl md:text-4xl font-bold text-breeze-navy">
+            <h2 className="text-3xl md:text-4xl font-semibold text-ink">
               What It Costs
             </h2>
-            <p className="mt-4 text-lg text-breeze-slate">
+            <p className="mt-4 text-lg text-sub">
               Cash only. A fixed fee for the sprint, then a monthly fee. Third-party costs
               are passed through at cost. After scoping, we can quote a fixed
               total for the project.
@@ -625,31 +625,31 @@ export default function Home() {
                 key={tier.name}
                 className={`rounded-xl p-8 border ${
                   tier.featured
-                    ? "border-breeze-teal bg-white shadow-md"
-                    : "border-gray-200 bg-white"
+                    ? "border-hw bg-white shadow-md"
+                    : "border-hairline bg-white"
                 }`}
               >
                 {tier.featured && (
-                  <span className="inline-block mb-3 px-3 py-1 rounded-full bg-breeze-teal/10 text-breeze-teal text-xs font-semibold tracking-wide">
+                  <span className="inline-block mb-3 px-3 py-1 rounded-full bg-hw/10 text-ink text-xs font-semibold tracking-wide">
                     MOST ENGAGEMENTS
                   </span>
                 )}
-                <h3 className="text-xl font-semibold text-breeze-navy">
+                <h3 className="text-xl font-semibold text-ink">
                   {tier.name}
                 </h3>
-                <p className="mt-2 text-3xl font-bold text-breeze-navy">
+                <p className="mt-2 text-3xl font-semibold text-ink">
                   {tier.price}
                 </p>
-                <p className="mt-3 text-sm text-breeze-slate leading-relaxed">
+                <p className="mt-3 text-sm text-sub leading-relaxed">
                   {tier.description}
                 </p>
                 <ul className="mt-6 space-y-2.5">
                   {tier.items.map((item) => (
                     <li
                       key={item}
-                      className="flex gap-2 text-sm text-breeze-slate"
+                      className="flex gap-2 text-sm text-sub"
                     >
-                      <CheckIcon className="w-5 h-5 text-breeze-teal flex-shrink-0 mt-0.5" />
+                      <CheckIcon className="w-5 h-5 text-hw flex-shrink-0 mt-0.5" />
                       <span>{item}</span>
                     </li>
                   ))}
@@ -657,14 +657,14 @@ export default function Home() {
               </div>
             ))}
           </div>
-          <p className="mt-8 text-sm text-breeze-slate">
+          <p className="mt-8 text-sm text-sub">
             Third-party costs (parts, tooling, samples, test labs, specialist
             engineering) are billed at cost. Complexity (sensors, radios,
             battery chemistry, certifications) drives what they add up to. Try
             the{" "}
             <a
               href="/tools/nre-simulator"
-              className="text-breeze-teal font-medium hover:underline"
+              className="text-ink font-medium underline decoration-hw decoration-2 underline-offset-4"
             >
               NRE Simulator
             </a>{" "}
@@ -677,28 +677,28 @@ export default function Home() {
       <section id="timeline" className="bg-white py-20 md:py-28">
         <div className="max-w-6xl mx-auto px-6">
           <div className="max-w-2xl mb-14">
-            <h2 className="text-3xl md:text-4xl font-bold text-breeze-navy">
+            <h2 className="text-3xl md:text-4xl font-semibold text-ink">
               What happens after you sign
             </h2>
-            <p className="mt-4 text-lg text-breeze-slate">
+            <p className="mt-4 text-lg text-sub">
               Working prototype in 8–12 weeks, pilot batch in 3–6 months,
               production in 6–12 months. Weekly sync throughout.
             </p>
           </div>
           <div className="relative">
-            <div className="hidden md:block absolute top-6 left-4 right-4 h-0.5 bg-breeze-teal/20" />
+            <div className="hidden md:block absolute top-6 left-4 right-4 h-0.5 bg-hw/20" />
             <div className="grid md:grid-cols-6 gap-8 md:gap-4">
               {timeline.map((t, idx) => (
                 <div key={idx} className="relative">
-                  <div className="hidden md:block absolute top-4 left-1/2 -translate-x-1/2 w-4 h-4 rounded-full bg-breeze-teal ring-4 ring-white" />
+                  <div className="hidden md:block absolute top-4 left-1/2 -translate-x-1/2 w-4 h-4 rounded-full bg-hw ring-4 ring-white" />
                   <div className="md:pt-14">
-                    <p className="text-xs font-semibold text-breeze-teal uppercase tracking-wide">
+                    <p className="text-xs font-semibold text-ink uppercase tracking-wide">
                       {t.week}
                     </p>
-                    <h3 className="mt-2 text-base font-semibold text-breeze-navy">
+                    <h3 className="mt-2 text-base font-semibold text-ink">
                       {t.phase}
                     </h3>
-                    <p className="mt-2 text-xs text-breeze-slate leading-relaxed">
+                    <p className="mt-2 text-xs text-sub leading-relaxed">
                       {t.desc}
                     </p>
                   </div>
@@ -710,13 +710,13 @@ export default function Home() {
       </section>
 
       {/* ── Section 10: Team + Track Record ── */}
-      <section id="team" className="bg-breeze-offwhite py-20 md:py-28">
+      <section id="team" className="bg-panel py-20 md:py-28">
         <div className="max-w-6xl mx-auto px-6">
           <div className="max-w-2xl mb-14">
-            <h2 className="text-3xl md:text-4xl font-bold text-breeze-navy">
+            <h2 className="text-3xl md:text-4xl font-semibold text-ink">
               Who&apos;s behind Breeze
             </h2>
-            <p className="mt-4 text-lg text-breeze-slate">
+            <p className="mt-4 text-lg text-sub">
               Four operators with 60+ combined years in Shenzhen supply chain,
               smart hardware, and cross-border delivery.
             </p>
@@ -725,19 +725,19 @@ export default function Home() {
             {team.map((m) => (
               <div
                 key={m.name}
-                className="bg-white rounded-xl p-6 border border-gray-100"
+                className="bg-white rounded-xl p-6 border border-hairline"
               >
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={m.avatar}
                   alt={m.name}
-                  className="w-20 h-20 rounded-full mb-4 bg-breeze-teal/10"
+                  className="w-20 h-20 rounded-full mb-4 bg-hw/10"
                 />
-                <h3 className="text-lg font-semibold text-breeze-navy">
+                <h3 className="text-lg font-semibold text-ink">
                   {m.name}
                 </h3>
-                <p className="text-sm text-breeze-teal font-medium">{m.role}</p>
-                <p className="mt-3 text-sm text-breeze-slate leading-relaxed">
+                <p className="text-sm text-ink font-medium">{m.role}</p>
+                <p className="mt-3 text-sm text-sub leading-relaxed">
                   {m.bio}
                 </p>
               </div>
@@ -745,12 +745,12 @@ export default function Home() {
           </div>
 
           {/* Track Record subsection */}
-          <div className="mt-20 border-t border-breeze-navy/10 pt-16">
+          <div className="mt-20 border-t border-ink/10 pt-16">
             <div className="max-w-2xl mb-10">
-              <h3 className="text-2xl md:text-3xl font-bold text-breeze-navy">
+              <h3 className="text-2xl md:text-3xl font-semibold text-ink">
                 10+ Years. Not a New Company.
               </h3>
-              <p className="mt-4 text-base text-breeze-slate">
+              <p className="mt-4 text-base text-sub">
                 Before Breeze Hardware, our team shipped production at scale:
               </p>
             </div>
@@ -758,20 +758,20 @@ export default function Home() {
               {trackRecord.map((p) => (
                 <div
                   key={p.title}
-                  className="bg-white rounded-xl p-6 border border-gray-100"
+                  className="bg-white rounded-xl p-6 border border-hairline"
                 >
-                  <h4 className="font-semibold text-breeze-navy text-base">
+                  <h4 className="font-semibold text-ink text-base">
                     {p.title}
                   </h4>
-                  <p className="mt-1 text-sm text-breeze-teal font-medium">
+                  <p className="mt-1 text-sm text-ink font-medium">
                     {p.subtitle}
                   </p>
-                  <p className="mt-3 text-sm text-breeze-slate leading-relaxed">
+                  <p className="mt-3 text-sm text-sub leading-relaxed">
                     {p.desc}
                   </p>
                   {p.coverage && (
-                    <p className="mt-4 pt-4 border-t border-gray-100 text-xs text-breeze-slate">
-                      <span className="font-semibold text-breeze-navy">
+                    <p className="mt-4 pt-4 border-t border-hairline text-xs text-sub">
+                      <span className="font-semibold text-ink">
                         Press:
                       </span>{" "}
                       {p.coverage}
@@ -780,7 +780,7 @@ export default function Home() {
                 </div>
               ))}
             </div>
-            <p className="mt-8 text-sm text-breeze-slate italic max-w-3xl">
+            <p className="mt-8 text-sm text-sub italic max-w-3xl">
               Breeze&apos;s co-founder Jett Fu is AirPop&apos;s founder &amp;
               CEO. AirPop Halo was delivered by the same supply-chain and
               engineering team now powering Breeze.
@@ -793,20 +793,20 @@ export default function Home() {
       <section id="faq" className="bg-white py-20 md:py-28">
         <div className="max-w-4xl mx-auto px-6">
           <div className="max-w-2xl mb-14">
-            <h2 className="text-3xl md:text-4xl font-bold text-breeze-navy">
+            <h2 className="text-3xl md:text-4xl font-semibold text-ink">
               Frequently asked
             </h2>
-            <p className="mt-4 text-lg text-breeze-slate">
+            <p className="mt-4 text-lg text-sub">
               Real questions from founders we&apos;ve talked with.
             </p>
           </div>
           <div className="space-y-6">
             {faqs.map((f, i) => (
-              <div key={i} className="border-b border-gray-100 pb-6">
-                <h3 className="text-lg font-semibold text-breeze-navy">
+              <div key={i} className="border-b border-hairline pb-6">
+                <h3 className="text-lg font-semibold text-ink">
                   {f.q}
                 </h3>
-                <p className="mt-3 text-breeze-slate leading-relaxed">{f.a}</p>
+                <p className="mt-3 text-sub leading-relaxed">{f.a}</p>
               </div>
             ))}
           </div>
@@ -814,23 +814,23 @@ export default function Home() {
       </section>
 
       {/* ── Section 12: Contact ── */}
-      <section id="contact" className="bg-breeze-offwhite py-20 md:py-28">
+      <section id="contact" className="bg-panel py-20 md:py-28">
         <div className="max-w-6xl mx-auto px-6">
           <div className="max-w-xl mx-auto text-center">
-            <h2 className="text-3xl md:text-4xl font-bold text-breeze-navy">
+            <h2 className="text-3xl md:text-4xl font-semibold text-ink">
               Ready to build?
             </h2>
-            <p className="mt-4 text-lg text-breeze-slate">
+            <p className="mt-4 text-lg text-sub">
               Tell us about your project. We&apos;ll respond within 24 hours
               with a preliminary assessment.
             </p>
           </div>
           <ContactForm />
-          <p className="mt-8 text-center text-sm text-breeze-slate">
+          <p className="mt-8 text-center text-sm text-sub">
             Or email us directly at{" "}
             <a
               href="mailto:hello@breezehw.com"
-              className="text-breeze-teal font-medium hover:underline"
+              className="text-ink font-medium underline decoration-hw decoration-2 underline-offset-4"
             >
               hello@breezehw.com
             </a>
@@ -839,13 +839,13 @@ export default function Home() {
       </section>
 
       {/* ── Section 7: Footer ── */}
-      <footer className="bg-breeze-deep text-gray-400 py-14">
+      <footer className="bg-ink text-sub-dark py-14">
         <div className="max-w-6xl mx-auto px-6">
           <div className="grid sm:grid-cols-4 gap-10">
             <div>
               <div className="flex items-center gap-2 mb-3">
-                <WindIcon className="w-6 h-6 text-breeze-teal" />
-                <span className="text-white text-xl font-bold tracking-wide">
+                <WindIcon className="w-6 h-6 text-hw" />
+                <span className="text-white text-xl font-semibold tracking-wide">
                   BREEZE
                 </span>
               </div>
@@ -932,7 +932,7 @@ export default function Home() {
               </ul>
             </div>
           </div>
-          <div className="mt-12 pt-8 border-t border-white/10 text-xs text-gray-500">
+          <div className="mt-12 pt-8 border-t border-white/10 text-xs text-sub-dark">
             © 2026 Breeze. All rights reserved.
           </div>
         </div>

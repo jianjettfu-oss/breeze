@@ -95,13 +95,13 @@ export default function FAQPage() {
       <Nav />
       <main className="max-w-3xl mx-auto px-6 py-12">
         <header className="mb-10">
-          <p className="text-xs uppercase tracking-wider text-[#2DD4A8] font-semibold mb-2">
+          <p className="text-xs uppercase tracking-wider text-ink font-semibold mb-2">
             FAQ
           </p>
-          <h1 className="text-3xl sm:text-4xl font-bold text-[#1B3A5C] leading-tight">
+          <h1 className="text-3xl sm:text-4xl font-semibold text-ink leading-tight">
             Direct answers about Breeze
           </h1>
-          <p className="mt-4 text-base text-[#64748B] leading-relaxed">
+          <p className="mt-4 text-base text-sub leading-relaxed">
             How we work, how we charge, who we&apos;re for, and when you should pick someone else.
             No marketing fluff.
           </p>
@@ -109,21 +109,21 @@ export default function FAQPage() {
 
         <section className="space-y-8">
           {QAS.map((qa, i) => (
-            <article key={i} className="border-b border-gray-100 pb-8 last:border-b-0">
-              <h2 className="text-lg sm:text-xl font-semibold text-[#1B3A5C] mb-3">
+            <article key={i} className="border-b border-hairline pb-8 last:border-b-0">
+              <h2 className="text-lg sm:text-xl font-semibold text-ink mb-3">
                 {qa.q}
               </h2>
-              <p className="text-[15px] text-[#3F546B] leading-relaxed">{qa.a}</p>
+              <p className="text-[15px] text-body leading-relaxed">{qa.a}</p>
             </article>
           ))}
         </section>
 
-        <footer className="mt-12 pt-8 border-t border-gray-100">
-          <p className="text-sm text-[#64748B] leading-relaxed">
+        <footer className="mt-12 pt-8 border-t border-hairline">
+          <p className="text-sm text-sub leading-relaxed">
             Question not answered here? Email{" "}
             <a
               href="mailto:hello@breezehw.com"
-              className="text-[#2DD4A8] hover:underline font-medium"
+              className="text-ink underline decoration-hw decoration-2 underline-offset-4 font-medium"
             >
               hello@breezehw.com
             </a>{" "}
@@ -132,49 +132,49 @@ export default function FAQPage() {
           <div className="mt-6 flex flex-wrap gap-3 text-sm">
             <Link
               href="/tools/bom-estimator"
-              className="px-4 py-2 rounded-lg bg-[#1B3A5C] text-white font-medium hover:bg-[#1B3A5C]/90 transition-colors"
+              className="px-4 py-2 rounded-lg bg-ink text-white font-medium hover:bg-ink/90 transition-colors"
             >
               Try BOM Estimator →
             </Link>
             <Link
               href="/tools/nre-simulator"
-              className="px-4 py-2 rounded-lg border border-gray-200 text-[#1B3A5C] font-medium hover:border-[#2DD4A8] transition-colors"
+              className="px-4 py-2 rounded-lg border border-hairline text-ink font-medium hover:border-hw transition-colors"
             >
               NRE Simulator →
             </Link>
             <Link
               href="/tools/dfm-checklist"
-              className="px-4 py-2 rounded-lg border border-gray-200 text-[#1B3A5C] font-medium hover:border-[#2DD4A8] transition-colors"
+              className="px-4 py-2 rounded-lg border border-hairline text-ink font-medium hover:border-hw transition-colors"
             >
               DFM Checklist →
             </Link>
             <Link
               href="/tools/cert-navigator"
-              className="px-4 py-2 rounded-lg border border-gray-200 text-[#1B3A5C] font-medium hover:border-[#2DD4A8] transition-colors"
+              className="px-4 py-2 rounded-lg border border-hairline text-ink font-medium hover:border-hw transition-colors"
             >
               Certification Navigator →
             </Link>
             <Link
               href="/ai-hardware-cost"
-              className="px-4 py-2 rounded-lg border border-gray-200 text-[#1B3A5C] font-medium hover:border-[#2DD4A8] transition-colors"
+              className="px-4 py-2 rounded-lg border border-hairline text-ink font-medium hover:border-hw transition-colors"
             >
               Cost guide →
             </Link>
             <Link
               href="/evt-dvt-pvt"
-              className="px-4 py-2 rounded-lg border border-gray-200 text-[#1B3A5C] font-medium hover:border-[#2DD4A8] transition-colors"
+              className="px-4 py-2 rounded-lg border border-hairline text-ink font-medium hover:border-hw transition-colors"
             >
               EVT/DVT/PVT guide →
             </Link>
             <Link
               href="/ai-design-to-factory"
-              className="px-4 py-2 rounded-lg border border-gray-200 text-[#1B3A5C] font-medium hover:border-[#2DD4A8] transition-colors"
+              className="px-4 py-2 rounded-lg border border-hairline text-ink font-medium hover:border-hw transition-colors"
             >
               AI design → factory guide →
             </Link>
             <a
               href="/breeze-deck.pdf"
-              className="px-4 py-2 rounded-lg border border-gray-200 text-[#1B3A5C] font-medium hover:border-[#2DD4A8] transition-colors"
+              className="px-4 py-2 rounded-lg border border-hairline text-ink font-medium hover:border-hw transition-colors"
             >
               Read the deck (PDF) →
             </a>

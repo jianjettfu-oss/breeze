@@ -55,8 +55,8 @@ export const guides = [
 
 export default function ToolCrossLinks({ current }: { current: ToolSlug }) {
   return (
-    <section className="mt-16 pt-10 border-t border-gray-100" aria-labelledby="more-tools">
-      <h2 id="more-tools" className="text-xl font-semibold text-[#1B3A5C] mb-5">
+    <section className="mt-16 pt-10 border-t border-hairline" aria-labelledby="more-tools">
+      <h2 id="more-tools" className="text-xl font-semibold text-ink mb-5">
         Free tools and guides
       </h2>
       <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -66,10 +66,10 @@ export default function ToolCrossLinks({ current }: { current: ToolSlug }) {
             <li key={l.slug}>
               <Link
                 href={l.href}
-                className="block h-full rounded-xl border border-gray-100 p-4 hover:border-[#2DD4A8] transition-colors"
+                className="block h-full rounded-xl border border-hairline p-4 hover:border-hw transition-colors"
               >
-                <span className="block text-sm font-semibold text-[#1B3A5C]">{l.title} →</span>
-                <span className="mt-1 block text-xs text-[#64748B] leading-relaxed">{l.desc}</span>
+                <span className="block text-sm font-semibold text-ink">{l.title} →</span>
+                <span className="mt-1 block text-xs text-sub leading-relaxed">{l.desc}</span>
               </Link>
             </li>
           ))}
@@ -77,10 +77,10 @@ export default function ToolCrossLinks({ current }: { current: ToolSlug }) {
           <li key={g.href}>
             <Link
               href={g.href}
-              className="block h-full rounded-xl border border-gray-100 p-4 hover:border-[#2DD4A8] transition-colors"
+              className="block h-full rounded-xl border border-hairline p-4 hover:border-hw transition-colors"
             >
-              <span className="block text-sm font-semibold text-[#1B3A5C]">{g.title} →</span>
-              <span className="mt-1 block text-xs text-[#64748B] leading-relaxed">{g.desc}</span>
+              <span className="block text-sm font-semibold text-ink">{g.title} →</span>
+              <span className="mt-1 block text-xs text-sub leading-relaxed">{g.desc}</span>
             </Link>
           </li>
         ))}

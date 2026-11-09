@@ -3,8 +3,8 @@
 import { useState, type FormEvent } from "react";
 
 const field =
-  "w-full border border-gray-200 rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-breeze-teal/40 focus:border-breeze-teal transition-colors";
-const label = "block text-sm font-medium text-breeze-navy mb-1.5";
+  "w-full border border-hairline rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-hw/40 focus:border-hw transition-colors";
+const label = "block text-sm font-medium text-ink mb-1.5";
 
 type Status = { kind: "idle" } | { kind: "sending" } | { kind: "sent" } | { kind: "error"; message: string };
 
@@ -36,9 +36,9 @@ export function ContactForm() {
 
   if (status.kind === "sent") {
     return (
-      <div className="mt-12 max-w-lg mx-auto rounded-lg border border-breeze-teal/40 bg-breeze-teal/5 px-6 py-8 text-center" role="status">
-        <p className="text-lg font-semibold text-breeze-navy">Thanks. We have your project.</p>
-        <p className="mt-2 text-sm text-breeze-slate">We&apos;ll reply within 24 hours with a preliminary assessment.</p>
+      <div className="mt-12 max-w-lg mx-auto rounded-lg border border-hw/40 bg-hw/5 px-6 py-8 text-center" role="status">
+        <p className="text-lg font-semibold text-ink">Thanks. We have your project.</p>
+        <p className="mt-2 text-sm text-sub">We&apos;ll reply within 24 hours with a preliminary assessment.</p>
       </div>
     );
   }
@@ -101,12 +101,12 @@ export function ContactForm() {
         <input id="website" name="website" type="text" tabIndex={-1} autoComplete="off" />
       </div>
       {status.kind === "error" && (
-        <p className="text-sm text-red-600" role="alert">{status.message}</p>
+        <p className="text-sm text-danger" role="alert">{status.message}</p>
       )}
       <button
         type="submit"
         disabled={status.kind === "sending"}
-        className="w-full bg-breeze-teal text-white px-6 py-3.5 rounded-lg font-semibold hover:bg-breeze-teal/90 transition-colors flex items-center justify-center gap-2 disabled:opacity-60"
+        className="w-full bg-hw text-ink px-6 py-3.5 rounded-lg font-semibold hover:bg-hw/90 transition-colors flex items-center justify-center gap-2 disabled:opacity-60"
       >
         {status.kind === "sending" ? "Sending…" : "Get in Touch"}
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4" aria-hidden="true">

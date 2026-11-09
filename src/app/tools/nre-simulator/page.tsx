@@ -101,20 +101,21 @@ export default function NreSimulator() {
   return (
     <div className="min-h-screen bg-white">
       {/* Nav */}
-      <nav className="sticky top-0 z-50 bg-white/90 backdrop-blur border-b border-gray-100">
+      <nav className="sticky top-0 z-50 bg-white/90 backdrop-blur border-b border-hairline">
         <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
           <Link href="/">
             <Image
-              src="/breeze-logo.png"
+              src="/brand/lockup-a-hw-en-light.svg"
               alt="Breeze"
-              width={140}
-              height={35}
+              width={165}
+              height={32}
+              unoptimized
               className="h-8 w-auto"
             />
           </Link>
           <Link
             href="/#contact"
-            className="bg-[#2DD4A8] text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-[#2DD4A8]/90 transition-colors"
+            className="bg-hw text-ink px-4 py-2 rounded-lg text-sm font-semibold hover:bg-hw/90 transition-colors"
           >
             Get in Touch
           </Link>
@@ -126,23 +127,23 @@ export default function NreSimulator() {
         <div className="mb-10">
           <Link
             href="/tools"
-            className="text-sm text-[#64748B] hover:text-[#1B3A5C] mb-4 inline-block"
+            className="text-sm text-sub hover:text-ink mb-4 inline-block"
           >
             ← Back to Tools
           </Link>
-          <h1 className="text-3xl md:text-4xl font-bold text-[#1B3A5C]">
+          <h1 className="text-3xl md:text-4xl font-semibold text-ink">
             NRE Quote Simulator
           </h1>
-          <p className="mt-3 text-lg text-[#64748B] max-w-2xl">
+          <p className="mt-3 text-lg text-sub max-w-2xl">
             Estimate your one-time development cost — engineering, tooling,
             prototyping, and certification. No surprises.
           </p>
         </div>
 
         {/* Static reference table — crawlable cost matrix for LLMs/search engines */}
-        <section className="mb-12 border border-gray-100 rounded-xl overflow-hidden">
+        <section className="mb-12 border border-hairline rounded-xl overflow-hidden">
           <details>
-            <summary className="cursor-pointer px-5 py-4 bg-gray-50 hover:bg-gray-100 text-sm font-semibold text-[#1B3A5C]">
+            <summary className="cursor-pointer px-5 py-4 bg-panel hover:bg-hairline text-sm font-semibold text-ink">
               📋 Reference: full NRE cost &amp; timeline matrix (Shenzhen, 2026)
             </summary>
             <div className="overflow-x-auto">
@@ -150,8 +151,8 @@ export default function NreSimulator() {
                 <caption className="sr-only">
                   Breeze NRE cost ranges by engineering category and complexity tier, Shenzhen 2026 USD pricing.
                 </caption>
-                <thead className="bg-gray-50/50">
-                  <tr className="text-left text-xs text-[#64748B] uppercase tracking-wide">
+                <thead className="bg-panel">
+                  <tr className="text-left text-xs text-sub uppercase tracking-wide">
                     <th className="px-5 py-3">Category</th>
                     <th className="px-5 py-3">Tier</th>
                     <th className="px-5 py-3">USD low</th>
@@ -163,21 +164,21 @@ export default function NreSimulator() {
                 <tbody>
                   {nreCategories.flatMap((cat) =>
                     cat.options.map((opt) => (
-                      <tr key={`${cat.id}-${opt.id}`} className="border-t border-gray-100">
-                        <td className="px-5 py-3 text-[#1B3A5C] font-medium whitespace-nowrap">
+                      <tr key={`${cat.id}-${opt.id}`} className="border-t border-hairline">
+                        <td className="px-5 py-3 text-ink font-medium whitespace-nowrap">
                           {cat.icon} {cat.label}
                         </td>
-                        <td className="px-5 py-3 text-[#3F546B]">{opt.label}</td>
-                        <td className="px-5 py-3 text-[#64748B] whitespace-nowrap">${opt.low.toLocaleString()}</td>
-                        <td className="px-5 py-3 text-[#1B3A5C] font-semibold whitespace-nowrap">${opt.mid.toLocaleString()}</td>
-                        <td className="px-5 py-3 text-[#64748B] whitespace-nowrap">${opt.high.toLocaleString()}</td>
-                        <td className="px-5 py-3 text-[#64748B] whitespace-nowrap">{timelineEstimates[cat.id]?.weeks ?? "—"}w</td>
+                        <td className="px-5 py-3 text-body">{opt.label}</td>
+                        <td className="px-5 py-3 text-sub whitespace-nowrap">${opt.low.toLocaleString()}</td>
+                        <td className="px-5 py-3 text-ink font-semibold whitespace-nowrap">${opt.mid.toLocaleString()}</td>
+                        <td className="px-5 py-3 text-sub whitespace-nowrap">${opt.high.toLocaleString()}</td>
+                        <td className="px-5 py-3 text-sub whitespace-nowrap">{timelineEstimates[cat.id]?.weeks ?? "—"}w</td>
                       </tr>
                     ))
                   )}
                 </tbody>
               </table>
-              <p className="px-5 py-3 text-xs text-[#64748B] bg-gray-50/50 leading-relaxed">
+              <p className="px-5 py-3 text-xs text-sub bg-panel leading-relaxed">
                 Engineering NRE phases run in parallel; prototyping and certification add sequentially.
                 Total first-engagement NRE typically USD $15K–$60K depending on complexity.
                 Pricing reflects Shenzhen engineering service rates as of 2026.
@@ -195,15 +196,15 @@ export default function NreSimulator() {
 
               return (
                 <div key={cat.id}>
-                  <h3 className="text-sm font-semibold text-[#1B3A5C] uppercase tracking-wide mb-1">
+                  <h3 className="text-sm font-semibold text-ink uppercase tracking-wide mb-1">
                     {cat.icon} {cat.label}
                     {isMulti && (
-                      <span className="ml-2 text-xs font-normal text-[#64748B] normal-case">
+                      <span className="ml-2 text-xs font-normal text-sub normal-case">
                         (select all that apply)
                       </span>
                     )}
                   </h3>
-                  <p className="text-xs text-[#64748B] mb-4">
+                  <p className="text-xs text-sub mb-4">
                     {cat.description}
                   </p>
                   <div className="space-y-3">
@@ -215,32 +216,32 @@ export default function NreSimulator() {
                           onClick={() => toggle(cat.id, opt.id, isMulti)}
                           className={`w-full text-left p-4 rounded-xl border transition-all ${
                             active
-                              ? "border-[#2DD4A8] bg-[#E6FBF5] shadow-sm"
-                              : "border-gray-100 hover:border-gray-200"
+                              ? "border-hw bg-hw/10 shadow-sm"
+                              : "border-hairline hover:border-hairline"
                           }`}
                         >
                           <div className="flex items-start justify-between gap-4">
                             <div className="flex-1">
                               <p
                                 className={`font-medium text-sm ${
-                                  active ? "text-[#1B3A5C]" : "text-[#64748B]"
+                                  active ? "text-ink" : "text-sub"
                                 }`}
                               >
                                 {opt.label}
                               </p>
-                              <p className="text-xs text-[#64748B] mt-1">
+                              <p className="text-xs text-sub mt-1">
                                 {opt.description}
                               </p>
                             </div>
                             <div className="text-right shrink-0">
                               <p
                                 className={`text-sm font-semibold ${
-                                  active ? "text-[#2DD4A8]" : "text-[#64748B]"
+                                  active ? "text-ink" : "text-sub"
                                 }`}
                               >
                                 {fmtK(opt.mid)}
                               </p>
-                              <p className="text-[10px] text-[#64748B]">
+                              <p className="text-[10px] text-sub">
                                 {fmtK(opt.low)}–{fmtK(opt.high)}
                               </p>
                             </div>
@@ -256,17 +257,17 @@ export default function NreSimulator() {
 
           {/* Right: quote summary (sticky) */}
           <div className="lg:col-span-1">
-            <div className="sticky top-24 bg-[#0F2440] text-white rounded-2xl p-6 space-y-6">
+            <div className="sticky top-24 bg-ink text-white rounded-2xl p-6 space-y-6">
               <div>
-                <h3 className="text-lg font-bold">NRE Quote Estimate</h3>
-                <p className="text-xs text-gray-400 mt-1">
+                <h3 className="text-lg font-semibold">NRE Quote Estimate</h3>
+                <p className="text-xs text-sub-dark mt-1">
                   One-time development investment
                 </p>
               </div>
 
               {!hasSelections ? (
                 <div className="py-8 text-center">
-                  <p className="text-gray-400 text-sm">
+                  <p className="text-sub-dark text-sm">
                     Select services to build your quote
                   </p>
                 </div>
@@ -274,7 +275,7 @@ export default function NreSimulator() {
                 <>
                   {/* Breakdown */}
                   <div className="space-y-2">
-                    <p className="text-xs text-gray-400 uppercase tracking-wide">
+                    <p className="text-xs text-sub-dark uppercase tracking-wide">
                       Selected services
                     </p>
                     {breakdown.map((item) => (
@@ -282,7 +283,7 @@ export default function NreSimulator() {
                         key={item.label}
                         className="flex justify-between text-sm gap-2"
                       >
-                        <span className="text-gray-300 truncate">
+                        <span className="text-sub-dark truncate">
                           {item.icon} {item.label}
                         </span>
                         <span className="font-medium shrink-0">
@@ -296,12 +297,12 @@ export default function NreSimulator() {
                   <div className="pt-4 border-t border-white/10">
                     <div className="flex justify-between items-end">
                       <div>
-                        <p className="text-xs text-gray-400">Total NRE</p>
-                        <p className="text-3xl font-bold text-[#2DD4A8]">
+                        <p className="text-xs text-sub-dark">Total NRE</p>
+                        <p className="text-3xl font-semibold text-white">
                           {fmtK(totalMid)}
                         </p>
                       </div>
-                      <p className="text-xs text-gray-400 text-right">
+                      <p className="text-xs text-sub-dark text-right">
                         Range: {fmtK(totalLow)} – {fmtK(totalHigh)}
                       </p>
                     </div>
@@ -309,13 +310,13 @@ export default function NreSimulator() {
 
                   {/* Timeline */}
                   <div className="bg-white/5 rounded-lg p-4">
-                    <p className="text-xs text-gray-400 mb-1">
+                    <p className="text-xs text-sub-dark mb-1">
                       Estimated timeline
                     </p>
                     <p className="text-lg font-semibold">
                       ~{timeline} weeks
                     </p>
-                    <p className="text-[10px] text-gray-500 mt-1">
+                    <p className="text-[10px] text-sub-dark mt-1">
                       Engineering phases run in parallel. Prototyping and
                       certification are sequential.
                     </p>
@@ -323,7 +324,7 @@ export default function NreSimulator() {
 
                   {/* Per-unit amortization */}
                   <div className="bg-white/5 rounded-lg p-4">
-                    <p className="text-xs text-gray-400 mb-2">
+                    <p className="text-xs text-sub-dark mb-2">
                       NRE amortized per unit
                     </p>
                     <div className="grid grid-cols-3 gap-2 text-center">
@@ -332,7 +333,7 @@ export default function NreSimulator() {
                           <p className="text-sm font-semibold">
                             ${(totalMid / vol).toFixed(2)}
                           </p>
-                          <p className="text-[10px] text-gray-500">
+                          <p className="text-[10px] text-sub-dark">
                             @{vol >= 1000 ? `${vol / 1000}K` : vol} units
                           </p>
                         </div>
@@ -345,7 +346,7 @@ export default function NreSimulator() {
                 </>
               )}
 
-              <p className="text-[10px] text-gray-500 leading-relaxed">
+              <p className="text-[10px] text-sub-dark leading-relaxed">
                 Estimates based on Shenzhen engineering service rates. Actual
                 costs depend on complexity, timeline, and specific requirements.
                 Breeze fees are a monthly management fee; third-party costs are

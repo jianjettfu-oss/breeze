@@ -9,47 +9,77 @@ Photo backgrounds, professional fonts, hardware company aesthetics.
 import os
 import random
 import shutil
+import sys
 from reportlab.lib.pagesizes import A4
 from reportlab.lib.units import mm
 from reportlab.lib.colors import Color, HexColor, white
+from reportlab.lib.utils import ImageReader
 from reportlab.pdfgen import canvas
 from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
 
-# --- Font Registration (unify with website: Inter body + JetBrains Mono for data) ---
+# --- Font Registration (Breeze VI type tokens: IBM Plex Sans 400/600 + Plex Mono 400) ---
+# Owner of the type tokens: digital-me data/brand/breeze/tokens.json. Fonts are OFL-1.1 (assets/fonts/OFL-IBM-Plex.txt).
 _FONT_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "assets", "fonts")
 
 def _register_fonts():
-    """Register Inter + JetBrains Mono. Falls back to Helvetica if font files missing."""
-    try:
-        pdfmetrics.registerFont(TTFont("Inter", os.path.join(_FONT_DIR, "Inter-Regular.ttf")))
-        pdfmetrics.registerFont(TTFont("Inter-Bold", os.path.join(_FONT_DIR, "Inter-Bold.ttf")))
-        pdfmetrics.registerFont(TTFont("Inter-Medium", os.path.join(_FONT_DIR, "Inter-Medium.ttf")))
-        pdfmetrics.registerFont(TTFont("Inter-SemiBold", os.path.join(_FONT_DIR, "Inter-SemiBold.ttf")))
-        pdfmetrics.registerFont(TTFont("JetBrainsMono", os.path.join(_FONT_DIR, "JetBrainsMonoNerdFontMono-Regular.ttf")))
-        return ("Inter", "Inter-Bold", "JetBrainsMono")
-    except Exception as e:
-        print(f"[warn] Font registration failed ({e}); falling back to Helvetica")
-        return ("Helvetica", "Helvetica-Bold", "Courier")
+    """Register the Plex faces. A missing file stops the build: a silent Helvetica fallback ships an off-brand PDF."""
+    faces = {
+        "IBMPlexSans": "IBMPlexSans-400.ttf",
+        "IBMPlexSans-SemiBold": "IBMPlexSans-600.ttf",
+        "IBMPlexMono": "IBMPlexMono-400.ttf",
+    }
+    for name, fn in faces.items():
+        path = os.path.join(_FONT_DIR, fn)
+        if not os.path.exists(path):
+            sys.exit(f"[error] font file missing: {path}")
+        pdfmetrics.registerFont(TTFont(name, path))
+    return ("IBMPlexSans", "IBMPlexSans-SemiBold", "IBMPlexMono")
 
 SANS, SANS_BOLD, MONO = _register_fonts()
 
-# --- Brand Colors ---
+# --- Brand Colors (Breeze VI tokens v0.2.0-r4; owner: digital-me data/brand/breeze/tokens.json) ---
+# House rules: the Hardware accent (TEAL) is never a text colour. Text is INK on light grounds and WHITE on ink
+# grounds; a TEAL fill carries INK text; small text on ink is SUB_DARK. The light ground is white.
+# NAVY / DEEP_NAVY keep their names for the drawing code below and now both hold ink.
+TEAL_R, TEAL_G, TEAL_B = 0x2D/255, 0xD4/255, 0xA8/255
+INK_R, INK_G, INK_B = 0x1B/255, 0x25/255, 0x28/255
+HAIR_R, HAIR_G, HAIR_B = 0xE8/255, 0xEC/255, 0xEF/255
 TEAL = HexColor("#2DD4A8")
-NAVY = HexColor("#1B3A5C")
-DEEP_NAVY = HexColor("#0F2440")
-LIGHT_TEAL = HexColor("#E6FBF5")
-SLATE = HexColor("#64748B")
+INK = HexColor("#1B2528")
+NAVY = INK
+DEEP_NAVY = INK
+LIGHT_TEAL = Color(TEAL_R, TEAL_G, TEAL_B, alpha=0.10)
+SLATE = HexColor("#5C6E70")
+SUB_DARK = HexColor("#A7B4B5")
+BODY = HexColor("#3A4E50")
+LABEL = HexColor("#8A9B9D")  # large or decorative text only (step numerals)
+DANGER = HexColor("#B42318")  # problem markers; the site's XIcon uses the same token
+HAIRLINE = HexColor("#E8ECEF")
+PANEL = Color(HAIR_R, HAIR_G, HAIR_B, alpha=0.40)
 WHITE = white
 
-TEAL_R, TEAL_G, TEAL_B = 0x2D/255, 0xD4/255, 0xA8/255
-NAVY_R, NAVY_G, NAVY_B = 0x1B/255, 0x3A/255, 0x5C/255
-DEEP_R, DEEP_G, DEEP_B = 0x0F/255, 0x24/255, 0x40/255
+NAVY_R, NAVY_G, NAVY_B = INK_R, INK_G, INK_B
+DEEP_R, DEEP_G, DEEP_B = INK_R, INK_G, INK_B
+
+
+def hw_underline(c, x, y, text, font, size, align="left", weight=None, gap=None):
+    """The Hardware accent marks a word from below (the site's .accent-mark); the word keeps its text colour."""
+    w = c.stringWidth(text, font, size)
+    x0 = {"left": x, "centre": x - w / 2, "right": x - w}[align]
+    t = size * 0.14 if weight is None else weight
+    g = size * 0.16 if gap is None else gap
+    c.saveState()
+    c.setFillColor(TEAL)
+    c.rect(x0, y - g - t, w, t, fill=1, stroke=0)
+    c.restoreState()
 
 # --- Paths ---
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 LOGO_LIGHT = os.path.join(BASE_DIR, "public", "breeze-logo.png")
 LOGO_WHITE = os.path.join(BASE_DIR, "public", "breeze-logo-white.png")
+_lw, _lh = ImageReader(LOGO_WHITE).getSize()
+LOGO_WHITE_ASPECT = _lw / _lh
 PHOTO_PCB = os.path.join(BASE_DIR, "assets", "photos", "pcb-closeup.jpg")
 PHOTO_CIRCUIT = os.path.join(BASE_DIR, "assets", "photos", "circuit-board.jpg")
 PHOTO_COMPONENTS = os.path.join(BASE_DIR, "assets", "photos", "components.jpg")
@@ -253,7 +283,7 @@ def draw_photo_strip(c, photo_path, page_w, page_h, strip_h=120):
     """Draw a photo strip at the top of the page with dark overlay."""
     c.drawImage(photo_path, 0, page_h - strip_h, width=page_w, height=strip_h,
                 preserveAspectRatio=False)
-    c.setFillColor(Color(0, 0, 0, alpha=0.50))
+    c.setFillColor(Color(INK_R, INK_G, INK_B, alpha=0.50))
     c.rect(0, page_h - strip_h, page_w, strip_h, fill=True, stroke=False)
 
 
@@ -312,7 +342,7 @@ def draw_stat_callout(c, x, y, w, h, value_text, label_text, font_size_val=18, f
     c.saveState()
     c.setFillColor(TEAL)
     c.roundRect(x, y, w, h, 6, fill=1, stroke=0)
-    c.setFillColor(WHITE)
+    c.setFillColor(INK)
     c.setFont(SANS_BOLD, font_size_val)
     c.drawCentredString(x + w/2, y + h - font_size_val - 8, value_text)
     c.setFont(SANS, font_size_label)
@@ -403,8 +433,8 @@ def draw_team_page(c, W, H, MARGIN):
         cx = MARGIN + col * (card_w + card_gap)
         cy = y - row * (card_h + 14) - card_h
 
-        c.setFillColor(Color(0.99, 0.99, 0.99, 1))
-        c.setStrokeColor(Color(0, 0, 0, 0.1))
+        c.setFillColor(PANEL)
+        c.setStrokeColor(HAIRLINE)
         c.setLineWidth(0.5)
         c.roundRect(cx, cy, card_w, card_h, 8, fill=1, stroke=1)
 
@@ -427,7 +457,7 @@ def draw_team_page(c, W, H, MARGIN):
         c.setFillColor(NAVY)
         c.setFont(SANS_BOLD, 14 if is_portrait else 15)
         c.drawCentredString(avatar_cx, cy + card_h - avatar_size - 40, name)
-        c.setFillColor(TEAL)
+        c.setFillColor(INK)
         c.setFont(SANS, 10)
         c.drawCentredString(avatar_cx, cy + card_h - avatar_size - 55, role)
 
@@ -472,7 +502,7 @@ def draw_track_record_page(c, W, H, MARGIN):
         ty = y - tr_h
 
         c.setFillColor(WHITE)
-        c.setStrokeColor(Color(0, 0, 0, 0.12))
+        c.setStrokeColor(HAIRLINE)
         c.setLineWidth(0.5)
         c.roundRect(tx, ty, tr_w, tr_h, 6, fill=1, stroke=1)
         # Teal left accent strip
@@ -489,7 +519,7 @@ def draw_track_record_page(c, W, H, MARGIN):
             ty_title -= 15
 
         # Subtitle
-        c.setFillColor(TEAL)
+        c.setFillColor(INK)
         c.setFont(SANS, 9.5)
         sub_lines = wrap_text(c, subtitle, SANS, 9.5, tr_w - 28)
         sy = ty_title - 2
@@ -509,7 +539,7 @@ def draw_track_record_page(c, W, H, MARGIN):
 
         # Press (bottom of card)
         if press:
-            c.setStrokeColor(Color(0, 0, 0, 0.08))
+            c.setStrokeColor(HAIRLINE)
             c.setLineWidth(0.5)
             c.line(tx + 14, ty + 40, tx + tr_w - 14, ty + 40)
             c.setFillColor(Color(NAVY_R, NAVY_G, NAVY_B, 0.6))
@@ -589,7 +619,7 @@ def draw_timeline_page(c, W, H, MARGIN):
         c.circle(rail_x, cy, 6, fill=0, stroke=1)
 
         # Week label (teal, bold, uppercase)
-        c.setFillColor(TEAL)
+        c.setFillColor(INK)
         c.setFont(SANS_BOLD, 9)
         c.drawString(label_x, cy + 2, week.upper())
 
@@ -654,7 +684,7 @@ def draw_pricing_page(c, W, H, MARGIN):
             c.setStrokeColor(TEAL)
             c.setLineWidth(2)
         else:
-            c.setStrokeColor(Color(0, 0, 0, 0.15))
+            c.setStrokeColor(HAIRLINE)
             c.setLineWidth(0.7)
         c.roundRect(cx, cy, card_w, card_h, 8, fill=1, stroke=1)
 
@@ -663,7 +693,7 @@ def draw_pricing_page(c, W, H, MARGIN):
         if featured:
             c.setFillColor(Color(TEAL_R, TEAL_G, TEAL_B, 0.12))
             c.roundRect(cx + 16, inner_y - 4, 120, 18, 3, fill=1, stroke=0)
-            c.setFillColor(TEAL)
+            c.setFillColor(INK)
             c.setFont(SANS_BOLD, 7.5)
             c.drawString(cx + 22, inner_y + 2, "MOST ENGAGEMENTS")
             inner_y -= 24
@@ -755,7 +785,7 @@ def draw_comparison_page(c, W, H, MARGIN):
     for ci, cell in enumerate(COMPARISON_ROWS[0]):
         if ci == 0:
             x_pos = MARGIN + 8
-            c.setFillColor(Color(1, 1, 1, 0.7))
+            c.setFillColor(SUB_DARK)
             c.setFont(SANS_BOLD, 9 if is_portrait else 10)
         elif ci == 1:
             x_pos = MARGIN + feature_col_w + 8
@@ -763,7 +793,7 @@ def draw_comparison_page(c, W, H, MARGIN):
             c.setFont(SANS_BOLD, 11 if is_portrait else 12)
         else:
             x_pos = MARGIN + feature_col_w + (ci - 1) * company_col_w + 8
-            c.setFillColor(Color(1, 1, 1, 0.75))
+            c.setFillColor(SUB_DARK)
             c.setFont(SANS_BOLD, 8.5 if is_portrait else 9.5)
         c.drawString(x_pos, y - header_h + 10, cell)
 
@@ -774,7 +804,7 @@ def draw_comparison_page(c, W, H, MARGIN):
         ry = y - row_h
 
         if ri % 2 == 0:
-            c.setFillColor(Color(0.97, 0.97, 0.97, 1))
+            c.setFillColor(PANEL)
             c.rect(MARGIN, ry, CW, row_h, fill=1, stroke=0)
 
         c.setFillColor(Color(TEAL_R, TEAL_G, TEAL_B, 0.05))
@@ -817,7 +847,7 @@ def generate_portrait_kit():
     MARGIN = 50
     CW = W - 2 * MARGIN
 
-    c = canvas.Canvas(OUT_KIT, pagesize=A4)
+    c = canvas.Canvas(OUT_KIT, pagesize=A4, initialFontName=SANS)
     c.setTitle("Breeze - AI Hardware Engineering Partner")
     c.setAuthor("Breeze")
 
@@ -848,19 +878,20 @@ def generate_portrait_kit():
 
     # Logo
     logo_w = 220
-    logo_h = logo_w * 202 / 1168
+    logo_h = logo_w / LOGO_WHITE_ASPECT
     c.drawImage(LOGO_WHITE, W/2 - logo_w/2, H - 230, logo_w, logo_h, mask='auto')
 
     # Tagline
     c.setFillColor(WHITE)
     c.setFont(SANS_BOLD, 30)
     c.drawCentredString(W/2, H - 320, "Your Engineering Partner")
-    c.setFillColor(TEAL)
+    c.setFillColor(WHITE)
     c.setFont(SANS_BOLD, 30)
     c.drawCentredString(W/2, H - 358, "for AI Hardware")
+    hw_underline(c, W/2, H - 358, "for AI Hardware", SANS_BOLD, 30, align="centre")
 
     # Subtitle
-    c.setFillColor(Color(1, 1, 1, 0.7))
+    c.setFillColor(SUB_DARK)
     c.setFont(SANS, 12)
     c.drawCentredString(W/2, H - 400, "From concept to production -- BOM optimization, DFM,")
     c.drawCentredString(W/2, H - 416, "prototyping, and manufacturing. China supply chain")
@@ -879,11 +910,11 @@ def generate_portrait_kit():
                           font_size_val=20, font_size_label=9)
 
     # Contact
-    c.setFillColor(Color(1, 1, 1, 0.5))
+    c.setFillColor(SUB_DARK)
     c.setFont(SANS, 10)
     c.drawCentredString(W/2, 90, "hello@breezehw.com  |  breezehw.com  |  Shenzhen, China")
     c.setFont(SANS, 9)
-    c.setFillColor(Color(1, 1, 1, 0.35))
+    c.setFillColor(SUB_DARK)
     c.drawCentredString(W/2, 70, "No equity. No MOQ surprises. Just engineering.")
 
     # =================================================================
@@ -906,7 +937,7 @@ def generate_portrait_kit():
     callout_h = 50
     c.setFillColor(Color(DEEP_R, DEEP_G, DEEP_B, 0.95))
     c.roundRect(MARGIN, y, CW, callout_h, 6, fill=1, stroke=0)
-    c.setFillColor(TEAL)
+    c.setFillColor(WHITE)
     c.setFont(SANS_BOLD, 24)
     c.drawString(MARGIN + 18, y + 15, "80%")
     c.setFillColor(WHITE)
@@ -922,12 +953,12 @@ def generate_portrait_kit():
         px = MARGIN + col * (col_w + 20)
         py = y - row * 120
 
-        c.setFillColor(Color(0.97, 0.97, 0.97, 1))
+        c.setFillColor(PANEL)
         c.setStrokeColor(Color(TEAL_R, TEAL_G, TEAL_B, 0.15))
         c.setLineWidth(0.5)
         c.roundRect(px, py - 70, col_w, 95, 5, fill=1, stroke=1)
 
-        c.setFillColor(HexColor("#EF4444"))
+        c.setFillColor(DANGER)
         c.circle(px + 16, py + 8, 6, fill=1, stroke=0)
         c.setFillColor(WHITE)
         c.setFont(SANS_BOLD, 8)
@@ -966,7 +997,7 @@ def generate_portrait_kit():
     c.setFillColor(WHITE)
     c.setFont(SANS_BOLD, 22)
     c.drawString(MARGIN, H - 50, "Concept to Production in 6 Steps")
-    c.setFillColor(Color(1, 1, 1, 0.7))
+    c.setFillColor(SUB_DARK)
     c.setFont(SANS, 12)
     c.drawString(MARGIN, H - 70, "A clear, predictable path from your idea to manufactured product.")
 
@@ -978,7 +1009,7 @@ def generate_portrait_kit():
         bx = MARGIN + col * (CW/2 + 5)
         by = y - row * 140
 
-        c.setFillColor(Color(TEAL_R, TEAL_G, TEAL_B, 0.15))
+        c.setFillColor(LABEL)
         c.setFont(SANS_BOLD, 44)
         c.drawString(bx, by - 10, num)
 
@@ -1021,7 +1052,7 @@ def generate_portrait_kit():
     y -= 55
     c.setFillColor(TEAL)
     c.roundRect(MARGIN, y, CW, 44, 6, fill=1, stroke=0)
-    c.setFillColor(WHITE)
+    c.setFillColor(INK)
     c.setFont(MONO, 22)
     c.drawString(MARGIN + 20, y + 13, "$26.40 / unit")
     c.setFont(SANS, 11)
@@ -1048,7 +1079,7 @@ def generate_portrait_kit():
             header_font = SANS_BOLD
             data_font = SANS_BOLD
         elif ridx == len(BOM_TABLE) - 2:
-            c.setFillColor(Color(0.95, 0.95, 0.95, 1))
+            c.setFillColor(PANEL)
             c.rect(MARGIN, ry - 5, CW, row_h, fill=1, stroke=0)
             c.setFillColor(NAVY)
             header_font = SANS_BOLD
@@ -1057,7 +1088,7 @@ def generate_portrait_kit():
             if ridx % 2 == 0:
                 c.setFillColor(Color(TEAL_R, TEAL_G, TEAL_B, 0.04))
                 c.rect(MARGIN, ry - 5, CW, row_h, fill=1, stroke=0)
-            c.setFillColor(NAVY if ridx % 2 == 0 else HexColor("#334155"))
+            c.setFillColor(NAVY if ridx % 2 == 0 else BODY)
             header_font = SANS
             data_font = SANS
 
@@ -1099,7 +1130,7 @@ def generate_portrait_kit():
     c.setFillColor(WHITE)
     c.setFont(SANS_BOLD, 22)
     c.drawString(MARGIN, H - 50, "DFM: Top 10 Pitfalls in AI Hardware")
-    c.setFillColor(Color(1, 1, 1, 0.7))
+    c.setFillColor(SUB_DARK)
     c.setFont(SANS, 12)
     c.drawString(MARGIN, H - 70, "Mistakes we've seen (and fixed) across 50+ hardware projects.")
 
@@ -1162,7 +1193,7 @@ def generate_portrait_kit():
             c.setFillColor(NAVY)
             c.setFont(SANS, 10)
 
-        c.setStrokeColor(Color(0.9, 0.9, 0.9, 1))
+        c.setStrokeColor(HAIRLINE)
         c.setLineWidth(0.3)
         c.line(MARGIN, ry - 6, MARGIN + CW, ry - 6)
 
@@ -1185,7 +1216,7 @@ def generate_portrait_kit():
     c.setStrokeColor(TEAL)
     c.setLineWidth(1)
     c.roundRect(MARGIN, y - tip_h + 20, CW, tip_h, 5, fill=1, stroke=1)
-    c.setFillColor(TEAL)
+    c.setFillColor(INK)
     c.setFont(SANS_BOLD, 12)
     c.drawString(MARGIN + 14, y + 4, "Pro Tip")
     c.setFillColor(NAVY)
@@ -1215,8 +1246,8 @@ def generate_portrait_kit():
         card_h = 115
         card_y = y - card_h
 
-        c.setFillColor(Color(0.98, 0.98, 0.98, 1))
-        c.setStrokeColor(Color(0.92, 0.92, 0.92, 1))
+        c.setFillColor(PANEL)
+        c.setStrokeColor(HAIRLINE)
         c.setLineWidth(0.5)
         c.roundRect(MARGIN, card_y, CW, card_h, 5, fill=1, stroke=1)
         c.setFillColor(TEAL)
@@ -1224,7 +1255,7 @@ def generate_portrait_kit():
 
         c.setFillColor(TEAL)
         c.circle(MARGIN + 28, card_y + card_h - 25, 14, fill=1, stroke=0)
-        c.setFillColor(WHITE)
+        c.setFillColor(INK)
         c.setFont(SANS_BOLD, 14)
         c.drawCentredString(MARGIN + 28, card_y + card_h - 30, str(idx + 1))
 
@@ -1240,9 +1271,10 @@ def generate_portrait_kit():
             c.drawString(MARGIN + 22, ty, ln)
             ty -= 15
 
-        c.setFillColor(TEAL)
+        c.setFillColor(INK)
         c.setFont(SANS_BOLD, 10)
         c.drawString(MARGIN + 22, card_y + 12, url)
+        hw_underline(c, MARGIN + 22, card_y + 12, url, SANS_BOLD, 10, weight=1.2, gap=3)
 
         y -= card_h + 15
 
@@ -1251,19 +1283,20 @@ def generate_portrait_kit():
     badge_h = 56
     c.setFillColor(DEEP_NAVY)
     c.roundRect(MARGIN, y - badge_h, CW, badge_h, 6, fill=1, stroke=0)
-    c.setFillColor(TEAL)
+    c.setFillColor(WHITE)
     c.setFont(SANS_BOLD, 7.5)
     c.drawString(MARGIN + 16, y - 16, "OPEN SOURCE")
     c.setFillColor(WHITE)
     c.setFont(SANS_BOLD, 12)
     c.drawString(MARGIN + 16, y - 32, "AI Hardware Toolkit")
-    c.setFillColor(Color(1, 1, 1, 0.7))
+    c.setFillColor(SUB_DARK)
     c.setFont(SANS, 9)
     c.drawString(MARGIN + 16, y - 46,
                  "Same BOM data, DFM checklists, NRE guidelines we use every day -- free on GitHub.")
-    c.setFillColor(TEAL)
+    c.setFillColor(WHITE)
     c.setFont(SANS_BOLD, 9)
     c.drawRightString(MARGIN + CW - 16, y - 32, "github.com/jianjettfu-oss/ai-hardware-toolkit")
+    hw_underline(c, MARGIN + CW - 16, y - 32, "github.com/jianjettfu-oss/ai-hardware-toolkit", SANS_BOLD, 9, align="right", weight=1, gap=2.5)
 
     # =================================================================
     # PAGE 11: WHY BREEZE  --  pcb-closeup FULL BLEED + navy 80% overlay
@@ -1271,7 +1304,7 @@ def generate_portrait_kit():
     c.showPage()
     page_num[0] += 1
     draw_photo_bg(c, PHOTO_PCB, W, H, overlay_alpha=0.80)
-    draw_footer(c, W, page_num[0], text_color=Color(1, 1, 1, 0.5))
+    draw_footer(c, W, page_num[0], text_color=SUB_DARK)
 
     y = H - MARGIN
 
@@ -1279,7 +1312,7 @@ def generate_portrait_kit():
     c.setFont(SANS_BOLD, 30)
     y -= 35
     c.drawString(MARGIN, y, "Why Breeze?")
-    c.setFillColor(Color(1, 1, 1, 0.7))
+    c.setFillColor(SUB_DARK)
     c.setFont(SANS, 14)
     y -= 22
     c.drawString(MARGIN, y, "Four reasons founders choose us over brokers and trading companies.")
@@ -1306,7 +1339,7 @@ def generate_portrait_kit():
         c.setFont(SANS_BOLD, 13)
         c.drawString(bx + 15, by + card_h - 25, title)
 
-        c.setFillColor(Color(1, 1, 1, 0.85))
+        c.setFillColor(WHITE)
         c.setFont(SANS, 11)
         lines = wrap_text(c, desc, SANS, 11, bw - 30)
         ty = by + card_h - 44
@@ -1316,13 +1349,13 @@ def generate_portrait_kit():
 
     # Bottom comparison bar
     y -= 2 * (card_h + 22) + 50
-    c.setFillColor(Color(0, 0, 0, 0.3))
+    c.setFillColor(Color(1, 1, 1, 0.06))
     c.roundRect(MARGIN, y - 5, CW, 60, 5, fill=1, stroke=0)
     c.setFillColor(WHITE)
     c.setFont(SANS_BOLD, 12)
     c.drawString(MARGIN + 18, y + 35, "Breeze vs. the alternatives:")
     c.setFont(SANS, 11)
-    c.setFillColor(Color(1, 1, 1, 0.85))
+    c.setFillColor(WHITE)
     c.drawString(MARGIN + 18, y + 17, "Trading companies add 20-40% margin and zero engineering value.")
     c.drawString(MARGIN + 18, y + 1, "In-house teams cost $500K+/year and take 6+ months to hire. We're ready now.")
 
@@ -1346,7 +1379,7 @@ def generate_portrait_kit():
     c.rect(0, H - 4, W, 4, fill=1, stroke=0)  # top bar
     c.rect(W/2 - 40, H - 100, 80, 3, fill=1, stroke=0)  # divider
 
-    draw_footer(c, W, page_num[0], text_color=Color(1, 1, 1, 0.4))
+    draw_footer(c, W, page_num[0], text_color=SUB_DARK)
 
     c.setFillColor(WHITE)
     c.setFont(SANS_BOLD, 30)
@@ -1375,7 +1408,7 @@ def generate_portrait_kit():
         c.setFont(SANS_BOLD, 14)
         c.drawString(MARGIN + 55, box_y + box_h - 18, title)
 
-        c.setFillColor(Color(1, 1, 1, 0.7))
+        c.setFillColor(SUB_DARK)
         c.setFont(SANS, 11)
         lines = wrap_text(c, desc, SANS, 11, CW - 70)
         ty = box_y + box_h - 38
@@ -1401,21 +1434,22 @@ def generate_portrait_kit():
     c.roundRect(MARGIN, y - card_h + 30, CW, card_h, 8, fill=1, stroke=1)
 
     mini_logo_w = 130
-    mini_logo_h = mini_logo_w * 202 / 1168
+    mini_logo_h = mini_logo_w / LOGO_WHITE_ASPECT
+    c.setFillAlpha(1)  # the card fill above leaves alpha 0.06 in the graphics state; images obey it too
     c.drawImage(LOGO_WHITE, MARGIN + 20, y - 5, mini_logo_w, mini_logo_h, mask='auto')
 
     c.setFillColor(WHITE)
     c.setFont(SANS_BOLD, 12)
     c.drawString(MARGIN + 20, y - 30, "hello@breezehw.com")
     c.setFont(SANS, 11)
-    c.setFillColor(Color(1, 1, 1, 0.7))
+    c.setFillColor(SUB_DARK)
     c.drawString(MARGIN + 20, y - 48, "breezehw.com")
     c.drawString(MARGIN + 20, y - 64, "Shenzhen, China")
 
-    c.setFillColor(TEAL)
+    c.setFillColor(WHITE)
     c.setFont(SANS_BOLD, 11)
     c.drawRightString(MARGIN + CW - 20, y - 30, "Your Engineering Partner for AI Hardware")
-    c.setFillColor(Color(1, 1, 1, 0.5))
+    c.setFillColor(SUB_DARK)
     c.setFont(SANS, 10)
     c.drawRightString(MARGIN + CW - 20, y - 48, "Fixed sprint + monthly fee  |  No equity  |  Full IP transfer")
 
@@ -1433,7 +1467,7 @@ def generate_landscape_deck():
     M = 50
     CW = W - 2 * M
 
-    c = canvas.Canvas(OUT_DECK, pagesize=(W, H))
+    c = canvas.Canvas(OUT_DECK, pagesize=(W, H), initialFontName=SANS)
     c.setTitle("Breeze - AI Hardware Pitch Deck")
     c.setAuthor("Breeze")
 
@@ -1468,19 +1502,20 @@ def generate_landscape_deck():
 
     # Logo
     logo_w = 240
-    logo_h = logo_w * 202 / 1168
+    logo_h = logo_w / LOGO_WHITE_ASPECT
     c.drawImage(LOGO_WHITE, W/2 - logo_w/2, H - 150, logo_w, logo_h, mask='auto')
 
     # Title
     c.setFillColor(WHITE)
     c.setFont(SANS_BOLD, 42)
     c.drawCentredString(W/2, H - 240, "Your Engineering Partner")
-    c.setFillColor(TEAL)
+    c.setFillColor(WHITE)
     c.setFont(SANS_BOLD, 42)
     c.drawCentredString(W/2, H - 290, "for AI Hardware")
+    hw_underline(c, W/2, H - 290, "for AI Hardware", SANS_BOLD, 42, align="centre")
 
     # Subtitle
-    c.setFillColor(Color(1, 1, 1, 0.65))
+    c.setFillColor(SUB_DARK)
     c.setFont(SANS, 18)
     c.drawCentredString(W/2, H - 330, "BOM optimization  |  DFM  |  Prototyping  |  Manufacturing")
 
@@ -1494,7 +1529,7 @@ def generate_landscape_deck():
         draw_stat_callout(c, sx_start + i * (stat_w + stat_gap), 55, stat_w, stat_h, val, lbl,
                           font_size_val=22, font_size_label=10)
 
-    c.setFillColor(Color(1, 1, 1, 0.4))
+    c.setFillColor(SUB_DARK)
     c.setFont(SANS, 10)
     c.drawCentredString(W/2, 30, "hello@breezehw.com  |  breezehw.com  |  Shenzhen, China")
 
@@ -1510,7 +1545,7 @@ def generate_landscape_deck():
     # 80% callout
     c.setFillColor(Color(DEEP_R, DEEP_G, DEEP_B, 0.95))
     c.roundRect(M + 10, H - 115, CW - 10, 40, 5, fill=1, stroke=0)
-    c.setFillColor(TEAL)
+    c.setFillColor(WHITE)
     c.setFont(SANS_BOLD, 24)
     c.drawString(M + 25, H - 106, "80%")
     c.setFillColor(WHITE)
@@ -1525,7 +1560,7 @@ def generate_landscape_deck():
         px = M + 10 + col * (col_w + 20)
         py = y_start - row * 82
 
-        c.setFillColor(HexColor("#EF4444"))
+        c.setFillColor(DANGER)
         c.circle(px + 10, py - 4, 6, fill=1, stroke=0)
         c.setFillColor(WHITE)
         c.setFont(SANS_BOLD, 8)
@@ -1564,7 +1599,7 @@ def generate_landscape_deck():
     c.setFillColor(WHITE)
     c.setFont(SANS_BOLD, 32)
     c.drawString(M, H - 45, "Concept to Production in 6 Steps")
-    c.setFillColor(Color(1, 1, 1, 0.7))
+    c.setFillColor(SUB_DARK)
     c.setFont(SANS, 14)
     c.drawString(M, H - 68, "A clear, predictable path from idea to product.")
 
@@ -1576,7 +1611,7 @@ def generate_landscape_deck():
         bx = M + col * (col_w + 20)
         by = y_start - row * 195
 
-        c.setFillColor(Color(TEAL_R, TEAL_G, TEAL_B, 0.15))
+        c.setFillColor(LABEL)
         c.setFont(SANS_BOLD, 42)
         c.drawString(bx, by - 10, num)
 
@@ -1607,7 +1642,7 @@ def generate_landscape_deck():
     # $26.40 callout
     c.setFillColor(TEAL)
     c.roundRect(M + 10, H - 118, 320, 30, 5, fill=1, stroke=0)
-    c.setFillColor(WHITE)
+    c.setFillColor(INK)
     c.setFont(MONO, 18)
     c.drawString(M + 25, H - 112, "$26.40 / unit")
     c.setFont(SANS, 12)
@@ -1669,7 +1704,7 @@ def generate_landscape_deck():
     c.setFillColor(WHITE)
     c.setFont(SANS_BOLD, 32)
     c.drawString(M, H - 45, "DFM: Top 10 Pitfalls")
-    c.setFillColor(Color(1, 1, 1, 0.7))
+    c.setFillColor(SUB_DARK)
     c.setFont(SANS, 14)
     c.drawString(M, H - 68, "Mistakes we've seen (and fixed) across 50+ hardware projects.")
 
@@ -1683,7 +1718,7 @@ def generate_landscape_deck():
 
         c.setFillColor(TEAL)
         c.circle(px + 10, py - 2, 10, fill=1, stroke=0)
-        c.setFillColor(WHITE)
+        c.setFillColor(INK)
         c.setFont(SANS_BOLD, 10)
         c.drawCentredString(px + 10, py - 5, str(idx + 1))
 
@@ -1729,7 +1764,7 @@ def generate_landscape_deck():
                 c.rect(M + 10, ry - 5, CW - 20, row_h, fill=1, stroke=0)
             c.setFillColor(NAVY)
             c.setFont(SANS, 10)
-            c.setStrokeColor(Color(0.9, 0.9, 0.9, 1))
+            c.setStrokeColor(HAIRLINE)
             c.setLineWidth(0.2)
             c.line(M + 10, ry - 5, M + CW - 10, ry - 5)
 
@@ -1749,7 +1784,7 @@ def generate_landscape_deck():
     c.setStrokeColor(TEAL)
     c.setLineWidth(0.8)
     c.roundRect(M + 10, tip_y, CW - 20, 40, 4, fill=1, stroke=1)
-    c.setFillColor(TEAL)
+    c.setFillColor(INK)
     c.setFont(SANS_BOLD, 11)
     c.drawString(M + 25, tip_y + 22, "Pro Tip:")
     c.setFillColor(NAVY)
@@ -1778,7 +1813,7 @@ def generate_landscape_deck():
         bx = M + col * (card_w + 25)
         by = y_start - row * (card_h + 15) - card_h
 
-        c.setFillColor(Color(0.97, 0.97, 0.97, 1))
+        c.setFillColor(PANEL)
         c.setStrokeColor(Color(TEAL_R, TEAL_G, TEAL_B, 0.15))
         c.setLineWidth(0.4)
         c.roundRect(bx, by, card_w, card_h, 4, fill=1, stroke=1)
@@ -1787,7 +1822,7 @@ def generate_landscape_deck():
 
         c.setFillColor(TEAL)
         c.circle(bx + 22, by + card_h - 20, 12, fill=1, stroke=0)
-        c.setFillColor(WHITE)
+        c.setFillColor(INK)
         c.setFont(SANS_BOLD, 12)
         c.drawCentredString(bx + 22, by + card_h - 24, str(idx + 1))
 
@@ -1803,24 +1838,26 @@ def generate_landscape_deck():
             c.drawString(bx + 14, ty, ln)
             ty -= 14
 
-        c.setFillColor(TEAL)
+        c.setFillColor(INK)
         c.setFont(SANS_BOLD, 10)
         c.drawString(bx + 14, by + 10, url)
+        hw_underline(c, bx + 14, by + 10, url, SANS_BOLD, 10, weight=1.2, gap=3)
 
     # OSS badge bottom
     badge_y = y_start - 2 * (card_h + 15) - 15
     badge_h = 42
     c.setFillColor(DEEP_NAVY)
     c.roundRect(M, badge_y - badge_h, CW, badge_h, 5, fill=1, stroke=0)
-    c.setFillColor(TEAL)
+    c.setFillColor(WHITE)
     c.setFont(SANS_BOLD, 7.5)
     c.drawString(M + 16, badge_y - 14, "OPEN SOURCE")
     c.setFillColor(WHITE)
     c.setFont(SANS_BOLD, 13)
     c.drawString(M + 16, badge_y - 30, "AI Hardware Toolkit -- free on GitHub")
-    c.setFillColor(TEAL)
+    c.setFillColor(WHITE)
     c.setFont(SANS_BOLD, 10)
     c.drawRightString(M + CW - 16, badge_y - 24, "github.com/jianjettfu-oss/ai-hardware-toolkit")
+    hw_underline(c, M + CW - 16, badge_y - 24, "github.com/jianjettfu-oss/ai-hardware-toolkit", SANS_BOLD, 10, align="right", weight=1.2, gap=3)
 
     # =================================================================
     # SLIDE 11: WHY BREEZE  --  pcb-closeup FULL BLEED + navy 80%
@@ -1829,12 +1866,12 @@ def generate_landscape_deck():
     page_num[0] += 1
     draw_photo_bg(c, PHOTO_PCB, W, H, overlay_alpha=0.80)
     draw_footer(c, W, page_num[0] - 1, footer_y=15, font_size=10,
-                text_color=Color(1, 1, 1, 0.5))
+                text_color=SUB_DARK)
 
     c.setFillColor(WHITE)
     c.setFont(SANS_BOLD, 42)
     c.drawString(M + 10, H - 60, "Why Breeze?")
-    c.setFillColor(Color(1, 1, 1, 0.7))
+    c.setFillColor(SUB_DARK)
     c.setFont(SANS, 16)
     c.drawString(M + 10, H - 84, "Four reasons founders choose us over brokers and trading companies.")
 
@@ -1858,7 +1895,7 @@ def generate_landscape_deck():
         c.setFont(SANS_BOLD, 14)
         c.drawString(bx + 14, by + card_h - 24, title)
 
-        c.setFillColor(Color(1, 1, 1, 0.85))
+        c.setFillColor(WHITE)
         c.setFont(SANS, 12)
         lines = wrap_text(c, desc, SANS, 12, card_w - 28)
         ty = by + card_h - 44
@@ -1868,9 +1905,9 @@ def generate_landscape_deck():
 
     # Bottom bar
     bar_y = 32
-    c.setFillColor(Color(0, 0, 0, 0.3))
+    c.setFillColor(Color(1, 1, 1, 0.06))
     c.roundRect(M + 10, bar_y, CW - 20, 32, 4, fill=1, stroke=0)
-    c.setFillColor(Color(1, 1, 1, 0.85))
+    c.setFillColor(WHITE)
     c.setFont(SANS, 11)
     c.drawCentredString(W/2, bar_y + 10,
                         "Trading companies: 20-40% margin, zero engineering.  |  "
@@ -1923,7 +1960,7 @@ def generate_landscape_deck():
 
         c.setFillColor(TEAL)
         c.circle(bx + step_w/2, by + step_h - 18, 14, fill=1, stroke=0)
-        c.setFillColor(WHITE)
+        c.setFillColor(INK)
         c.setFont(SANS_BOLD, 14)
         c.drawCentredString(bx + step_w/2, by + step_h - 23, num)
 
@@ -1931,18 +1968,18 @@ def generate_landscape_deck():
         c.setFont(SANS_BOLD, 14)
         c.drawCentredString(bx + step_w/2, by + 35, title)
 
-        c.setFillColor(Color(1, 1, 1, 0.6))
+        c.setFillColor(SUB_DARK)
         c.setFont(SANS, 12)
         c.drawCentredString(bx + step_w/2, by + 14, desc)
 
     # Logo + contact
     logo_w = 160
-    logo_h = logo_w * 202 / 1168
+    logo_h = logo_w / LOGO_WHITE_ASPECT
     c.drawImage(LOGO_WHITE, W/2 - logo_w/2, 60, logo_w, logo_h, mask='auto')
-    c.setFillColor(Color(1, 1, 1, 0.5))
+    c.setFillColor(SUB_DARK)
     c.setFont(SANS, 11)
     c.drawCentredString(W/2, 42, "hello@breezehw.com  |  breezehw.com")
-    c.setFillColor(Color(1, 1, 1, 0.35))
+    c.setFillColor(SUB_DARK)
     c.setFont(SANS, 9)
     c.drawCentredString(W/2, 25, "No equity. No MOQ surprises. Just engineering.")
 
@@ -1958,7 +1995,8 @@ if __name__ == "__main__":
     generate_portrait_kit()
     generate_landscape_deck()
 
-    shutil.copy2(OUT_KIT, os.path.join(DOWNLOADS, "Breeze-Outreach-Kit-2026.pdf"))
-    shutil.copy2(OUT_DECK, os.path.join(DOWNLOADS, "Breeze-Deck-2026.pdf"))
-    print(f"Copies saved to ~/Downloads/")
+    if "--no-copy" not in sys.argv:
+        shutil.copy2(OUT_KIT, os.path.join(DOWNLOADS, "Breeze-Outreach-Kit-2026.pdf"))
+        shutil.copy2(OUT_DECK, os.path.join(DOWNLOADS, "Breeze-Deck-2026.pdf"))
+        print("Copies saved to ~/Downloads/")
     print("Done.")

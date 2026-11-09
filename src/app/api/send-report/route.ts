@@ -32,18 +32,18 @@ function buildEmailHtml(tool: string, data: Record<string, unknown>): string {
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
-<body style="margin:0; padding:0; background:#f4f4f5; font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
-  <table width="100%" cellpadding="0" cellspacing="0" style="background:#f4f4f5; padding:40px 20px;">
+<body style="margin:0; padding:0; background:#FFFFFF; font-family:'IBM Plex Sans','Noto Sans SC',sans-serif;">
+  <table width="100%" cellpadding="0" cellspacing="0" style="background:#FFFFFF; padding:40px 20px;">
     <tr>
       <td align="center">
         <table width="600" cellpadding="0" cellspacing="0" style="background:#ffffff; border-radius:12px; overflow:hidden;">
           <!-- Header -->
           <tr>
-            <td style="background:#0F2440; padding:32px 40px;">
+            <td style="background:#1B2528; padding:32px 40px;">
               <table width="100%" cellpadding="0" cellspacing="0">
                 <tr>
                   <td>
-                    <span style="font-size:24px; font-weight:700; color:#2DD4A8; letter-spacing:-0.5px;">Breeze</span>
+                    <span style="font-size:24px; font-weight:600; color:#FFFFFF; letter-spacing:-0.5px;">Breeze</span>
                     <span style="font-size:14px; color:rgba(255,255,255,0.5); margin-left:8px;">Hardware Engineering</span>
                   </td>
                 </tr>
@@ -54,18 +54,18 @@ function buildEmailHtml(tool: string, data: Record<string, unknown>): string {
           <!-- Title -->
           <tr>
             <td style="padding:32px 40px 16px;">
-              <h1 style="margin:0; font-size:22px; font-weight:700; color:#0F2440;">Your ${toolName}</h1>
-              <p style="margin:8px 0 0; font-size:14px; color:#64748B;">Here's a summary of your selections and estimates.</p>
+              <h1 style="margin:0; font-size:22px; font-weight:600; color:#1B2528;">Your ${toolName}</h1>
+              <p style="margin:8px 0 0; font-size:14px; color:#5C6E70;">Here's a summary of your selections and estimates.</p>
             </td>
           </tr>
 
           <!-- Data Table -->
           <tr>
             <td style="padding:0 40px 32px;">
-              <table width="100%" cellpadding="0" cellspacing="0" style="border:1px solid #e2e8f0; border-radius:8px; overflow:hidden;">
+              <table width="100%" cellpadding="0" cellspacing="0" style="border:1px solid #E8ECEF; border-radius:8px; overflow:hidden;">
                 <tr>
-                  <td style="background:#f8fafc; padding:12px 16px; font-size:12px; font-weight:600; color:#64748B; text-transform:uppercase; letter-spacing:0.5px; border-bottom:1px solid #e2e8f0;">Item</td>
-                  <td style="background:#f8fafc; padding:12px 16px; font-size:12px; font-weight:600; color:#64748B; text-transform:uppercase; letter-spacing:0.5px; border-bottom:1px solid #e2e8f0; text-align:right;">Value</td>
+                  <td style="background:#FFFFFF; padding:12px 16px; font-size:12px; font-weight:600; color:#5C6E70; text-transform:uppercase; letter-spacing:0.5px; border-bottom:1px solid #E8ECEF;">Item</td>
+                  <td style="background:#FFFFFF; padding:12px 16px; font-size:12px; font-weight:600; color:#5C6E70; text-transform:uppercase; letter-spacing:0.5px; border-bottom:1px solid #E8ECEF; text-align:right;">Value</td>
                 </tr>
 ${rows}
               </table>
@@ -75,11 +75,11 @@ ${rows}
           <!-- CTA -->
           <tr>
             <td style="padding:0 40px 32px;">
-              <table width="100%" cellpadding="0" cellspacing="0" style="background:#f0fdf9; border-radius:8px; border:1px solid #d1fae5;">
+              <table width="100%" cellpadding="0" cellspacing="0" style="background:#FFFFFF; border-radius:8px; border:1px solid #E8ECEF;">
                 <tr>
                   <td style="padding:24px;">
-                    <p style="margin:0 0 8px; font-size:16px; font-weight:600; color:#0F2440;">Want a precise quote?</p>
-                    <p style="margin:0; font-size:14px; color:#64748B;">Simply reply to this email with your project details and we'll prepare a detailed proposal within 24 hours.</p>
+                    <p style="margin:0 0 8px; font-size:16px; font-weight:600; color:#1B2528;">Want a precise quote?</p>
+                    <p style="margin:0; font-size:14px; color:#5C6E70;">Simply reply to this email with your project details and we'll prepare a detailed proposal within 24 hours.</p>
                   </td>
                 </tr>
               </table>
@@ -88,14 +88,14 @@ ${rows}
 
           <!-- Footer -->
           <tr>
-            <td style="background:#f8fafc; padding:24px 40px; border-top:1px solid #e2e8f0;">
-              <p style="margin:0; font-size:12px; color:#94a3b8;">
+            <td style="background:#FFFFFF; padding:24px 40px; border-top:1px solid #E8ECEF;">
+              <p style="margin:0; font-size:12px; color:#5C6E70;">
                 Breeze Hardware Engineering &middot; Your Shenzhen Engineering Partner for AI Hardware
               </p>
               <p style="margin:8px 0 0; font-size:12px;">
-                <a href="https://breezehw.com" style="color:#2DD4A8; text-decoration:none;">breezehw.com</a>
+                <a href="https://breezehw.com" style="color:#1B2528; text-decoration:underline;">breezehw.com</a>
               </p>
-              <p style="margin:12px 0 0; font-size:11px; color:#cbd5e1;">
+              <p style="margin:12px 0 0; font-size:11px; color:#5C6E70;">
                 These estimates are based on current Shenzhen market pricing and may vary based on specific requirements.
               </p>
             </td>
@@ -195,18 +195,18 @@ function buildRows(tool: string, data: Record<string, unknown>): string {
     .map((r) => {
       if (r.section) {
         return `                <tr>
-                  <td colspan="2" style="background:#f0f9ff; padding:10px 16px; font-size:11px; font-weight:700; color:#0F2440; text-transform:uppercase; letter-spacing:0.5px; border-bottom:1px solid #e2e8f0;">${escapeHtml(r.label)}</td>
+                  <td colspan="2" style="background:#FFFFFF; padding:10px 16px; font-size:11px; font-weight:600; color:#1B2528; text-transform:uppercase; letter-spacing:0.5px; border-bottom:1px solid #E8ECEF;">${escapeHtml(r.label)}</td>
                 </tr>`;
       }
       if (r.highlight) {
         return `                <tr>
-                  <td style="padding:14px 16px; font-size:14px; font-weight:700; color:#0F2440; border-bottom:1px solid #e2e8f0; background:#f0fdf9;">${escapeHtml(r.label)}</td>
-                  <td style="padding:14px 16px; font-size:14px; font-weight:700; color:#2DD4A8; text-align:right; border-bottom:1px solid #e2e8f0; background:#f0fdf9;">${escapeHtml(r.value)}</td>
+                  <td style="padding:14px 16px; font-size:14px; font-weight:600; color:#1B2528; border-bottom:1px solid #E8ECEF; background:#FFFFFF;">${escapeHtml(r.label)}</td>
+                  <td style="padding:14px 16px; font-size:14px; font-weight:600; color:#1B2528; text-align:right; border-bottom:1px solid #E8ECEF; background:#FFFFFF;">${escapeHtml(r.value)}</td>
                 </tr>`;
       }
       return `                <tr>
-                  <td style="padding:10px 16px; font-size:13px; color:#334155; border-bottom:1px solid #e2e8f0;">${escapeHtml(r.label)}</td>
-                  <td style="padding:10px 16px; font-size:13px; color:#334155; text-align:right; border-bottom:1px solid #e2e8f0;">${escapeHtml(r.value)}</td>
+                  <td style="padding:10px 16px; font-size:13px; color:#3A4E50; border-bottom:1px solid #E8ECEF;">${escapeHtml(r.label)}</td>
+                  <td style="padding:10px 16px; font-size:13px; color:#3A4E50; text-align:right; border-bottom:1px solid #E8ECEF;">${escapeHtml(r.value)}</td>
                 </tr>`;
     })
     .join("\n");

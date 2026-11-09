@@ -25,18 +25,18 @@ export default function ToolsIndex() {
       <Nav />
       <main className="max-w-4xl mx-auto px-6 py-12">
         <header className="mb-10">
-          <p className="text-xs uppercase tracking-wider text-[#2DD4A8] font-semibold mb-2">
+          <p className="text-xs uppercase tracking-wider text-ink font-semibold mb-2">
             Tools
           </p>
-          <h1 className="text-3xl sm:text-4xl font-bold text-[#1B3A5C] leading-tight">
+          <h1 className="text-3xl sm:text-4xl font-semibold text-ink leading-tight">
             Free tools for AI hardware founders
           </h1>
-          <p className="mt-4 text-base text-[#64748B] leading-relaxed">
+          <p className="mt-4 text-base text-sub leading-relaxed">
             Four free tools, no sign-up. The reference data behind them (component prices,
             engineering rates, certification costs and timelines) is open on{" "}
             <a
               href="https://github.com/jianjettfu-oss/ai-hardware-toolkit"
-              className="text-[#2DD4A8] hover:underline font-medium"
+              className="text-ink underline decoration-hw decoration-2 underline-offset-4 font-medium"
             >
               GitHub
             </a>
@@ -49,34 +49,34 @@ export default function ToolsIndex() {
             <li key={t.slug}>
               <Link
                 href={t.href}
-                className="block h-full rounded-xl border border-gray-100 p-6 hover:border-[#2DD4A8] transition-colors"
+                className="block h-full rounded-xl border border-hairline p-6 hover:border-hw transition-colors"
               >
-                <h2 className="text-lg font-semibold text-[#1B3A5C]">{t.title} →</h2>
-                <p className="mt-2 text-sm text-[#64748B] leading-relaxed">{t.desc}</p>
+                <h2 className="text-lg font-semibold text-ink">{t.title} →</h2>
+                <p className="mt-2 text-sm text-sub leading-relaxed">{t.desc}</p>
               </Link>
             </li>
           ))}
         </ul>
 
-        <p className="mt-12 text-sm text-[#64748B] leading-relaxed">
+        <p className="mt-12 text-sm text-sub leading-relaxed">
           Want the numbers worked through for three example devices? Read{" "}
-          <Link href="/ai-hardware-cost" className="text-[#2DD4A8] hover:underline font-medium">
+          <Link href="/ai-hardware-cost" className="text-ink underline decoration-hw decoration-2 underline-offset-4 font-medium">
             what an AI hardware device costs to build
           </Link>
           . Planning prototype builds? See{" "}
-          <Link href="/evt-dvt-pvt" className="text-[#2DD4A8] hover:underline font-medium">
+          <Link href="/evt-dvt-pvt" className="text-ink underline decoration-hw decoration-2 underline-offset-4 font-medium">
             what EVT, DVT and PVT must each prove
           </Link>
           . Drew your design with AI tools? Read{" "}
-          <Link href="/ai-design-to-factory" className="text-[#2DD4A8] hover:underline font-medium">
+          <Link href="/ai-design-to-factory" className="text-ink underline decoration-hw decoration-2 underline-offset-4 font-medium">
             what to check before it goes to a factory
           </Link>
           . Questions about fees, timelines or minimum runs? See the{" "}
-          <Link href="/faq" className="text-[#2DD4A8] hover:underline font-medium">
+          <Link href="/faq" className="text-ink underline decoration-hw decoration-2 underline-offset-4 font-medium">
             FAQ
           </Link>
           , or{" "}
-          <Link href="/#contact" className="text-[#2DD4A8] hover:underline font-medium">
+          <Link href="/#contact" className="text-ink underline decoration-hw decoration-2 underline-offset-4 font-medium">
             tell us what you&apos;re building
           </Link>
           .
