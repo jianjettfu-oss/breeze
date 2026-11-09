@@ -7,7 +7,10 @@ import { clientIp, escapeHtml, isEmail, rateLimit } from "@/lib/request-guard";
 const KNOWN_TOOLS = new Set(["bom-estimator", "dfm-checklist", "nre-simulator", "cert-navigator"]);
 const MAX_DATA_CHARS = 20_000;
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+// Built on first use, not at module load: `new Resend(undefined)` throws, and a build without the key
+// (Vercel Preview has none) failed at "collect page data". A missing key now fails inside the handler's try.
+let client: Resend | null = null;
+const resend = () => (client ??= new Resend(process.env.RESEND_API_KEY));
 
 interface ReportRequest {
   tool: string;
@@ -289,7 +292,7 @@ export async function POST(request: Request) {
     // Store lead first (even if email fails)
     storeLead(email, tool, data);
 
-    const { error } = await resend.emails.send({
+    const { error } = await resend().emails.send({
       from: "Breeze <hello@breezehw.com>",
       to: [email],
       subject: toolSubjects[tool] || `Your ${tool} Report from Breeze`,
@@ -308,7 +311,7 @@ export async function POST(request: Request) {
     // Admin notification — structured subject for DM lead monitor.
     // Fire-and-forget; lead UX is not blocked if this fails.
     try {
-      await resend.emails.send({
+      await resend().emails.send({
         from: "Breeze Leads <hello@breezehw.com>",
         to: ["hello@breezehw.com"],
         subject: `[BREEZE LEAD] ${tool} — ${email}`,

@@ -2,7 +2,10 @@ import { NextResponse } from "next/server";
 import { Resend } from "resend";
 import { clean, clientIp, isEmail, rateLimit } from "@/lib/request-guard";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+// Built on first use, not at module load: `new Resend(undefined)` throws, and a build without the key
+// (Vercel Preview has none) failed at "collect page data". A missing key now fails inside the handler's try.
+let client: Resend | null = null;
+const resend = () => (client ??= new Resend(process.env.RESEND_API_KEY));
 
 const VOLUMES = new Set(["", "100", "1000", "10000", "100000"]);
 const STAGES = new Set(["", "idea", "design", "prototype", "production"]);
@@ -76,7 +79,7 @@ export async function POST(request: Request) {
 
   try {
     // Subject format is parsed by DM's breeze-leads-monitor: `[BREEZE LEAD] <tool> — <email>`.
-    const { error } = await resend.emails.send({
+    const { error } = await resend().emails.send({
       from: "Breeze Leads <hello@breezehw.com>",
       to: ["hello@breezehw.com"],
       replyTo: email,
