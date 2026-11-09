@@ -2,9 +2,9 @@
 // 1. every colour-utility class written in src/ resolves to a selector in the compiled CSS (an unknown class
 //    — a typo, a removed token, two classes glued together — generates no CSS and fails silently);
 // 2. no state variant repeats its base (`bg-x hover:bg-x` is a hover that changes nothing).
-// Usage: node class-audit.mjs <site-root>
+// Usage: node site-class-audit.mjs <site-root>
 import { readFileSync, readdirSync, statSync } from 'node:fs';
-import { join } from 'node:path';
+import { join, relative } from 'node:path';
 const root = process.argv[2];
 const walk = d => readdirSync(d).flatMap(f => { const p = join(d, f); return statSync(p).isDirectory() ? walk(p) : [p]; });
 const css = walk(join(root, '.next/static')).filter(f => f.endsWith('.css')).map(f => readFileSync(f, 'utf8')).join('\n');
@@ -21,11 +21,11 @@ for (const f of walk(join(root, 'src')).filter(f => /\.(tsx|ts|jsx|js)$/.test(f)
     for (const c of classes) {
       const k = COLOUR.exec(c);
       if (!k || NONCOLOUR.test(k[1])) continue;
-      if (!css.includes('.' + esc(c))) { unknown++; console.log(`UNKNOWN  ${f.slice(root.length + 1)}:${line}  ${c}`); }
+      if (!css.includes('.' + esc(c))) { unknown++; console.log(`UNKNOWN  ${relative(root, f)}:${line}  ${c}`); }
     }
     for (const c of classes) {
       const v = /^(hover|focus|active|group-hover):(.+)$/.exec(c);
-      if (v && classes.includes(v[2])) { same++; console.log(`NO-OP    ${f.slice(root.length + 1)}:${line}  ${c}`); }
+      if (v && classes.includes(v[2])) { same++; console.log(`NO-OP    ${relative(root, f)}:${line}  ${c}`); }
     }
   }
 }
