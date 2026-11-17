@@ -10,7 +10,7 @@
     "check:brand": "node brand/brand-check.mjs --selftest && node brand/brand-check.mjs --no-design --root src --root scripts --root public && next build && node brand/site-class-audit.mjs ."
   },
   "dependencies": {
-    "next": "16.4.3",
+    "next": "16.4.5",
     "react": "19.2.4",
     "react-dom": "19.2.4",
     "resend": "^6.12.0"
